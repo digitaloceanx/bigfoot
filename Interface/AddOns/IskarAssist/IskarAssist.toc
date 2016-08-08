@@ -1,0 +1,14 @@
+﻿## Interface: 70000
+## Title: Iskar Assist
+## Title-zhCN: [大脚][集]艾斯卡助手
+## Title-zhTW: [大腳][集]艾斯卡助手
+## Notes: |cffbc8f8fHelps with the Encounter agaist Iskar on Hellfire Citadel.|r
+## Notes-zhCN: |cff00ff00IskarAssist|r
+## Notes-zhTW: |cff00ff00IskarAssist|r
+## SavedVariables: IskarAssistDB
+## Dependencies: BigFoot
+## X-Revision: BigFoot
+
+Libs\DF\load.xml
+
+IskarAssist.lua

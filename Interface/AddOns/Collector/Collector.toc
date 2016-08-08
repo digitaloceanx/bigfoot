@@ -1,0 +1,14 @@
+## Interface: 70000
+## Title: Collector
+## Title-zhCN: |cffff565e[网易]|r 魔兽达人
+## Title-zhTW: |cffff565e[網易]|r 魔獸達人
+## Notes-zhCN: |cff00ff00Collector|r
+## Notes-zhTW: |cff00ff00Collector|r
+## Version: 70000.01
+## SavedVariables: COLLECTOR_DB
+## X-WoWBox-Ver: 1
+## Dependencies: Blizzard_Collections,BigFoot
+## X-Revision: BigFoot
+## LoadOnDemand: 1
+
+Load.xml

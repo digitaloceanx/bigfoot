@@ -1,0 +1,600 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Script file="ModelChange.lua"/>
+
+	<Frame name="mcInsetFrameTemplate" virtual="true">
+		<Size x="64" y="64" />
+		<Layers>
+			<Layer level="BACKGROUND" textureSubLevel="-5">
+				<Texture parentKey="Bg" file="Interface\BlackMarket\BlackMarketBackground-Tile" horizTile="true" vertTile="true">
+					<Anchors>
+						<Anchor point="TOPLEFT" />
+						<Anchor point="BOTTOMRIGHT" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BACKGROUND" textureSubLevel="-2">
+				<Texture>
+					<Anchors>
+						<Anchor point="TOPLEFT" />
+						<Anchor point="BOTTOMRIGHT" />
+					</Anchors>
+					<Color r="1" g="1" b="1" />
+					<Gradient orientation="VERTICAL">
+						<MaxColor r="0" g="0" b="0" a="0.34" />
+						<MinColor r="0" g="0" b="0" a="0.5" />
+					</Gradient>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER" textureSubLevel="-5">
+				<Texture parentKey="InsetBorderTopLeft" inherits="UI-Frame-InnerTopLeft">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Bg" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="InsetBorderTopRight" inherits="UI-Frame-InnerTopRight">
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativeKey="$parent.Bg" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="InsetBorderBottomLeft" inherits="UI-Frame-InnerBotLeftCorner">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativeKey="$parent.Bg" y="-1" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="InsetBorderBottomRight" inherits="UI-Frame-InnerBotRight">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Bg" y="-1" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="InsetBorderTop" inherits="_UI-Frame-InnerTopTile">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.InsetBorderTopLeft" relativePoint="TOPRIGHT" />
+						<Anchor point="TOPRIGHT" relativeKey="$parent.InsetBorderTopRight" relativePoint="TOPLEFT" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="InsetBorderBottom" inherits="_UI-Frame-InnerBotTile">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativeKey="$parent.InsetBorderBottomLeft" relativePoint="BOTTOMRIGHT" />
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.InsetBorderBottomRight" relativePoint="BOTTOMLEFT" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="InsetBorderLeft" inherits="!UI-Frame-InnerLeftTile">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.InsetBorderTopLeft" relativePoint="BOTTOMLEFT" x="0" y="0" />
+						<Anchor point="BOTTOMLEFT" relativeKey="$parent.InsetBorderBottomLeft" relativePoint="TOPLEFT" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="InsetBorderRight" inherits="!UI-Frame-InnerRightTile">
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativeKey="$parent.InsetBorderTopRight" relativePoint="BOTTOMRIGHT" />
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.InsetBorderBottomRight" relativePoint="TOPRIGHT" />
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
+
+	<Button name="mcCategoryTemplate" virtual="true">
+		<Size x="176" y="38" />
+		<Layers>
+			<Layer layer="BACKGROUND">
+				<Texture parentKey="Category" inherits="store-category" setAllPoints="true"/>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString parentKey="Text" inherits="GameFontNormal" wordwrap="true" justifyH="LEFT">
+					<Size x="120" y="38" />
+					<Anchors>
+						<Anchor point="LEFT" x="36" y="4" />
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture parentKey="NewItems" inherits="store-icon-new-icon-new" hidden="true">
+					<Anchors>
+						<Anchor point="RIGHT" x="-8" y="2" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK" textureSubLevel="1">
+				<Texture parentKey="SelectedTexture" inherits="store-category-selected" hidden="true" alphaMode="ADD">
+					<Anchors>
+						<Anchor point="CENTER" relativePoint="CENTER" x="0" y="2" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="HighlightTexture" inherits="store-category-hover" hidden="true" alphaMode="ADD">
+					<Anchors>
+						<Anchor point="CENTER" relativePoint="CENTER" x="0" y="2" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture parentKey="Icon">
+					<Size x="64" y="64"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeKey="$parent" relativePoint="LEFT" x="15" y="2"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter function="mcCategory_OnEnter" />
+			<OnLeave function="mcCategory_OnLeave" />
+			<OnClick function="mcCategory_OnClick" />
+		</Scripts>
+	</Button>
+
+	<Button name="mcCardTemplate" virtual="true" hidden="true">
+		<Size x="146" y="209" />
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Card" inherits="store-card" setAllPoints="true"/>
+			</Layer>
+			<Layer level="BACKGROUND" textureSubLevel="2">
+				<Texture parentKey="Shadows" inherits="store-card-petshadow" hidden="true">
+					<Anchors>
+						<Anchor point="CENTER" x="0" y="0" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture parentKey="Icon" hidden="true">
+					<Size x="63" y="63" />
+					<Anchors>
+						<Anchor point="TOP" x="0" y="-36" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK" textureSubLevel="-1">
+				<Texture parentKey="IconBorder" inherits="store-itemicon-border" hidden="true">
+					<Anchors>
+						<Anchor point="TOP" x="0" y="-33" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString parentKey="ProductName" inherits="GameFontNormalMed3" justifyV="TOP" wordwrap="true">
+					<Size x="140" y="30" />
+					<Anchors>
+						<Anchor point="BOTTOM" x="0" y="10" />
+					</Anchors>
+					<Color r="1.0" g="1.0" b="1.0" />
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK" textureSubLevel="1">
+				<Texture parentKey="SelectedTexture" inherits="store-card-selected" hidden="true" alphaMode="ADD">
+					<Anchors>
+						<Anchor point="CENTER" relativePoint="CENTER" x="0" y="0" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="UpgradeArrow" inherits="store-icon-upgradearrow" hidden="true">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.IconBorder" relativePoint="BOTTOMRIGHT" x="-3" y="4"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK" textureSubLevel="2">
+				<Texture parentKey="HighlightTexture" inherits="store-card-hover" hidden="true" alphaMode="ADD">
+					<Anchors>
+						<Anchor point="CENTER" relativePoint="CENTER" x="0" y="0" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK" textureSubLevel="3">
+				<Texture parentKey="NewTexture" inherits="store-corner-new" hidden="true">
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="1" y="3" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="HotTexture" inherits="store-corner-hot" hidden="true">
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="1" y="2" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="DiscountRight" inherits="store-corner-discount-right" hidden="true">
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="1" y="-2" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="DiscountLeft" inherits="store-corner-discount-left" hidden="true">
+					<Anchors>
+						<Anchor point="RIGHT" relativeKey="$parent.DiscountRight" relativePoint="LEFT" x="-40" y="0" />
+					</Anchors>
+				</Texture>
+				<Texture parentKey="DiscountMiddle" inherits="store-corner-discount-middle" hidden="true">
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.DiscountLeft" relativePoint="RIGHT" />
+						<Anchor point="RIGHT" relativeKey="$parent.DiscountRight" relativePoint="LEFT" />
+					</Anchors>
+				</Texture>
+				<FontString parentKey="DiscountText" inherits="GameFontNormalMed2" justifyH="CENTER" text="-25%" hidden="true">
+					<Size x="50" y="30" />
+					<Anchors>
+						<Anchor point="CENTER" relativeKey="$parent.DiscountMiddle" relativePoint="CENTER" x="1" y="2" />
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<!-- 模型 -->
+			<PlayerModel parentKey="Model" creature="12257" hidden="true">
+				<Size x="126" y="184" />
+				<Anchors>
+					<Anchor point="BOTTOM" x="0" y="20" />
+				</Anchors>
+				<Scripts>
+					<OnUpdate function="mcCardModel_OnUpdate" />
+				</Scripts>
+			</PlayerModel>
+			<!-- 放大镜 -->
+			<Button parentKey="Magnifier" enableMouse="true" hidden="true">
+				<Size x="31" y="35" />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="8" y="-8" />
+				</Anchors>
+				<NormalTexture inherits="store-icon-magnifyingglass" />
+				<HighlightTexture inherits="store-icon-magnifyingglass" alphaMode="ADD" />
+				<Scripts>
+					<OnClick function="mcCardMagnifyingGlass_OnClick" />
+					<OnEnter function="mcCardMagnifyingGlass_OnEnter" />
+					<OnLeave function="mcCardMagnifyingGlass_OnLeave" />
+					<OnShow>
+						self:SetFrameLevel(self:GetParent().Model:GetFrameLevel()+1);
+					</OnShow>
+				</Scripts>
+			</Button>
+			<!-- 确认已有按钮 -->
+			<Frame parentKey="Checkmark" hidden="true">
+				<Size x="27" y="27"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-8" y="-8" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<Texture inherits="store-icon-checkmark" setAllPoints="true"/>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnShow>
+						self:SetFrameLevel(self:GetParent().Model:GetFrameLevel()+1);
+					</OnShow>
+				</Scripts>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnEnter function="mcCard_OnEnter" />
+			<OnLeave function="mcCard_OnLeave" />
+			<OnClick function="mcCard_OnClick" />
+			<OnDragStart function="mcCard_OnDragStart" />
+			<OnDragStop function="mcCard_OnDragStop" />
+		</Scripts>
+	</Button>
+
+	<Button name="mcButtonTemplate" virtual="true">
+		<Size x="40" y="22" />
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Left" file="Interface\Buttons\UI-Panel-Button-Up">
+					<Size x="12" y="22" />
+					<Anchors>
+						<Anchor point="TOPLEFT" />
+						<Anchor point="BOTTOMLEFT" />
+					</Anchors>
+					<TexCoords left="0" right="0.09375" top="0" bottom="0.6875" />
+				</Texture>
+				<Texture parentKey="Right" file="Interface\Buttons\UI-Panel-Button-Up">
+					<Size x="12" y="22" />
+					<Anchors>
+						<Anchor point="TOPRIGHT" />
+						<Anchor point="BOTTOMRIGHT" />
+					</Anchors>
+					<TexCoords left="0.53125" right="0.625" top="0" bottom="0.6875" />
+				</Texture>
+				<Texture parentKey="Middle" file="Interface\Buttons\UI-Panel-Button-Up">
+					<Size x="12" y="22" />
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT" />
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" relativePoint="BOTTOMLEFT" />
+					</Anchors>
+					<TexCoords left="0.09375" right="0.53125" top="0" bottom="0.6875" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				if ( not self:IsEnabled() ) then
+					self.Left:SetTexture("Interface\\Buttons\\UI-Panel-Button-Disabled");
+					self.Middle:SetTexture("Interface\\Buttons\\UI-Panel-Button-Disabled");
+					self.Right:SetTexture("Interface\\Buttons\\UI-Panel-Button-Disabled");
+				end
+			</OnLoad>
+			<OnMouseDown>
+				if ( self:IsEnabled() ) then
+					self.Left:SetTexture("Interface\\Buttons\\UI-Panel-Button-Down");
+					self.Middle:SetTexture("Interface\\Buttons\\UI-Panel-Button-Down");
+					self.Right:SetTexture("Interface\\Buttons\\UI-Panel-Button-Down");
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				if ( self:IsEnabled() ) then
+					self.Left:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");
+					self.Middle:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");
+					self.Right:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");
+				end
+			</OnMouseUp>
+			<OnShow function="mcButton_OnShow" />
+			<OnDisable>
+				self.Left:SetTexture("Interface\\Buttons\\UI-Panel-Button-Disabled");
+				self.Middle:SetTexture("Interface\\Buttons\\UI-Panel-Button-Disabled");
+				self.Right:SetTexture("Interface\\Buttons\\UI-Panel-Button-Disabled");
+			</OnDisable>
+			<OnEnable>
+				self.Left:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");
+				self.Middle:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");
+				self.Right:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up");
+			</OnEnable>
+		</Scripts>
+		<ButtonText parentKey="Text" />
+		<NormalFont style="GameFontNormalLarge" />
+		<HighlightFont style="GameFontHighlightLarge" />
+		<DisabledFont style="GameFontDisableLarge" />
+		<HighlightTexture inherits="UIPanelButtonHighlightTexture" />
+	</Button>
+
+	<Frame name="ModelChangeFrame" parent="UIParent" inherits="PortraitFrameTemplate" enableMouse="true" movable="true" hidden="true">
+		<Size x="800" y="537" />
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset x="-50" y="20" />
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer layer="ARTWORK">
+				<FontString parentKey="PageText" inherits="GameFontHighlight" justifyH="RIGHT">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" x="-98" y="46" />
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer layer="OVERLAY">
+				<FontString parentKey="BrowseNotice" inherits="GameFontNormalMed2" justifyH="LEFT" justifyV="TOP">
+					<Size x="166" y="0" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="16" y="-166" />
+					</Anchors>
+				</FontString>
+				<FontString parentKey="Notice" inherits="GameFontWhite" justifyH="LEFT">
+					<Size x="166" y="0" />
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="16" y="15" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame parentKey="LeftInset" useParentLevel="true" inherits="mcInsetFrameTemplate">
+				<Size x="192" y="496" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="4" y="-40" />
+					<Anchor point="BOTTOMLEFT" x="4" y="6" />
+				</Anchors>
+			</Frame>
+			<Frame parentKey="RightInset" useParentLevel="true" inherits="mcInsetFrameTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="-6" y="-40" />
+					<Anchor point="BOTTOMLEFT" relativeKey="$parent.LeftInset" relativePoint="BOTTOMRIGHT" x="2" y="0" />
+				</Anchors>
+			</Frame>
+			<Button parentKey="reSetButton" inherits="mcButtonTemplate" enableMouse="true" hidden="true">
+				<Size x="140" y="30" />
+				<Animations>
+					<AnimationGroup parentKey="PulseAnim">
+						<Alpha childKey="Flash" change="1.0" duration="0.5" order="1"/>
+						<Alpha childKey="Flash" change="-1.0" duration="0.5" order="2"/>
+					</AnimationGroup>
+				</Animations>
+				<Anchors>
+					<Anchor point="BOTTOM" relativeKey="$parent.RightInset" relativePoint="BOTTOM" x="-211" y="26" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY" textureSubLevel="1">
+						<Texture parentKey="Flash" file="Interface\Buttons\UI-Panel-Button-Glow" alphaMode="ADD" alpha="0">
+							<Size x="165" y="41"/>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+							<TexCoords left="0.0" right="0.75" top="0.0" bottom="0.609375"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick function="reSetButton_OnClick" />
+					<OnSizeChanged>
+						self.Flash:SetSize(self:GetWidth()*1.17857, self:GetHeight()*1.3);
+					</OnSizeChanged>
+				</Scripts>
+			</Button>
+			<Button parentKey="applyButton" inherits="mcButtonTemplate" enableMouse="true" hidden="true">
+				<Size x="140" y="30" />
+				<Animations>
+					<AnimationGroup parentKey="PulseAnim">
+						<Alpha childKey="Flash" change="1.0" duration="0.5" order="1"/>
+						<Alpha childKey="Flash" change="-1.0" duration="0.5" order="2"/>
+					</AnimationGroup>
+				</Animations>
+				<Anchors>
+					<Anchor point="BOTTOM" relativeKey="$parent.RightInset" relativePoint="BOTTOM" x="0" y="26" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY" textureSubLevel="1">
+						<Texture parentKey="Flash" file="Interface\Buttons\UI-Panel-Button-Glow" alphaMode="ADD" alpha="0">
+							<Size x="165" y="41"/>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+							<TexCoords left="0.0" right="0.75" top="0.0" bottom="0.609375"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick function="applyButton_OnClick" />
+					<OnSizeChanged>
+						self.Flash:SetSize(self:GetWidth()*1.17857, self:GetHeight()*1.3);
+					</OnSizeChanged>
+				</Scripts>
+			</Button>
+			<CheckButton parentKey="applyCB" inherits="OptionsCheckButtonTemplate" enableMouse="true" hidden="true">
+				<Size x="30" y="30" />
+				<Anchors>
+					<Anchor point="BOTTOM" relativeKey="$parent.RightInset" relativePoint="BOTTOM" x="86" y="26" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						ModelChangeVariable.ModelChangeApply = self:GetChecked();
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText("勾选后立即生效,并关闭窗口");
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
+			<Button parentKey="PrevPageButton" id="1">
+				<Size x="32" y="32" />
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="-57" y="36" />
+				</Anchors>
+				<Scripts>
+					<OnClick function="mcChangePage" />
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Up" />
+				<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Down" />
+				<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Disabled" />
+				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
+			</Button>
+			<Button parentKey="NextPageButton" id="2">
+				<Size x="32" y="32" />
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="-22" y="36" />
+				</Anchors>
+				<Scripts>
+					<OnClick function="mcChangePage" />
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up" />
+				<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down" />
+				<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Disabled" />
+				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
+			</Button>
+			<!-- 左侧导航 -->
+			<Button parentArray="CategoryFrames" inherits="mcCategoryTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.LeftInset" relativePoint="TOPLEFT" x="9" y="-20" />
+				</Anchors>
+			</Button>
+			<!-- 右侧内容 -->
+			<Button parentArray="ProductCards" inherits="mcCardTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.RightInset" relativePoint="TOPLEFT" x="6" y="-6" />
+				</Anchors>
+				<Scripts>
+					<OnLoad function="mcCard_OnLoad" />
+				</Scripts>
+			</Button>
+			<Frame parentKey="SideDressUpFrame" enableMouse="true" hidden="true">
+				<Size>
+					<AbsDimension x="255" y="537"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPRIGHT" x="-8" y="0"/>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="11" top="11" bottom="11" />
+					</BackgroundInsets>
+				</Backdrop>
+				<Frames>
+					<PlayerModel name="mcSideDressUpModel" scale="1.0" inherits="ModelWithControlsTemplate">
+						<Size>
+							<AbsDimension x="256" y="511"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="5" y="-13"/>
+							<Anchor point="BOTTOMRIGHT" x="-11" y="11"/>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								Model_OnLoad(self, MODELFRAME_MAX_PLAYER_ZOOM, nil, nil, CharacterModelFrame_OnMouseUp);
+								self:RegisterEvent("UNIT_MODEL_CHANGED");
+							</OnLoad>
+							<OnReceiveDrag>
+								AutoEquipCursorItem();
+							</OnReceiveDrag>
+							<OnEvent>
+								self:SetUnit("player");
+							</OnEvent>
+						</Scripts>
+						<Frames>
+							<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+								<Anchors>
+									<Anchor point="CENTER" relativeTo="mcSideDressUpModel" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="1" y="1"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										HideUIPanel(self:GetParent():GetParent());
+									</OnClick>
+								</Scripts>
+							</Button>
+						</Frames>
+					</PlayerModel>
+				</Frames>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad function="ModelChangeFrame_OnLoad" />
+			<OnDragStart>self:StartMoving()</OnDragStart>
+			<OnDragStop>self:StopMovingOrSizing()</OnDragStop>
+			<OnShow function="ModelChangeFrame_OnShow" />
+			<OnEvent function="ModelChangeFrame_OnEvent" />
+		</Scripts>
+	</Frame>
+
+	<Frame name="ModelChangeHelpBox" parent="UIParent" inherits="GlowBoxTemplate" frameStrata="HIGH" hidden="true">
+		<Size x="155" y="30"/>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString parentKey="Text" inherits="GameFontHighlightLeft" justifyV="TOP">
+					<Size x="188" y="0"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="16" y="-12"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame parentKey="Arrow" inherits="GlowBoxArrowTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" x="-2" y="16"/>
+				</Anchors>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self.Text:SetSpacing(4);
+				SetClampedTextureRotation(self.Arrow.Arrow, 270);
+				SetClampedTextureRotation(self.Arrow.Glow, 270);
+				self.Arrow.Glow:ClearAllPoints();
+				self.Arrow.Glow:SetPoint("LEFT", self, "RIGHT");
+			</OnLoad>
+			<OnShow>
+				self:SetHeight(self.Text:GetHeight()+30);
+			</OnShow>
+		</Scripts>
+	</Frame>
+</Ui>

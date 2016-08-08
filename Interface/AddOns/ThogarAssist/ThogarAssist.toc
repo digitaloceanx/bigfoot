@@ -1,0 +1,17 @@
+## Interface: 70000
+## Title: Thogar Assist
+## Title-zhCN: [大脚][集]索戈尔助手
+## Title-zhTW: [大腳][集]索戈爾助手
+## Notes: |cffbc8f8fDisplays incoming trains in the Thogar encounter.|r
+## Notes-zhCN: |cff00ff00ThogarAssist|r
+## Notes-zhTW: |cff00ff00ThogarAssist|r
+## Author: Elvador
+## SavedVariables: ThogarAssistDB
+## Dependencies: BigFoot
+## X-Revision: BigFoot
+
+Locales\enUS.lua
+Locales\zhCN.lua
+Locales\zhTW.lua
+
+ThogarAssist.lua

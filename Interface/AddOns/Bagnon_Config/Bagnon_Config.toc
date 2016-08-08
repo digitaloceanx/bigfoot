@@ -1,0 +1,19 @@
+## Interface: 70000
+## Title: Bagnon Config
+## Title-zhCN: [大脚][集]整合背包-设置
+## Title-zhTW: [大腳][集]整合背包-設置
+## Notes: |cffbc8f8fLoad on demand configuration for Bagnon|r
+## Notes-zhCN: |cff00ff00Bagnon_Config|r
+## Notes-zhTW: |cff00ff00Bagnon_Config|r
+## Author: Tuller & Jaliborc (João Cardoso)
+## Dependencies: Bagnon
+## LoadOnDemand: 1
+## Version: 7.0.3
+## X-Revision: BigFoot
+
+..\Bagnon\libs\Poncho-1.0\Poncho-1.0.xml
+..\Bagnon\libs\Sushi-3.0\Sushi-3.0.xml
+
+localization\localization.xml
+group.lua
+panels.lua

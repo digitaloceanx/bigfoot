@@ -1,0 +1,34 @@
+## Interface: 70000
+## Title: Master Plan
+## Title-zhCN: [大脚][集]要塞助手
+## Title-zhTW: [大腳][集]要塞助手
+## Notes: Garrision missions UI tweaks.
+## Notes-zhCN: |cff00ff00MasterPlan|r
+## Notes-zhTW: |cff00ff00MasterPlan|r
+## Author: foxlit
+## X-Website: https://www.townlong-yak.com/master-plan/
+## SavedVariablesPerCharacter: MasterPlanPC
+## Version: 0.99
+## X-Version-Key: journey
+## Dependencies: BigFoot
+## X-Revision: BigFoot
+## LoadOnDemand: 1
+
+Libs/Evie.lua
+Libs/Reframe.lua
+
+PlanA\PlanA.lua
+
+Locale.lua
+
+Mark-50.lua
+GarrisonAPI-Data.lua
+GarrisonAPI.lua
+MasterPlan.lua
+MissionsUI.lua
+GarrisonMissions.lua
+GarrisonFollowers.lua
+FollowerSummary.lua
+ShipMoI.lua
+LandingCache.lua
+LandingAlts.lua

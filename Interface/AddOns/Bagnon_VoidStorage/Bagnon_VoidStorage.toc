@@ -1,0 +1,16 @@
+## Interface: 70000
+## Title: Bagnon Void Storage
+## Title-zhCN: [大脚][集]整合背包-虚空仓库
+## Title-zhTW: [大腳][集]整合背包-虛空倉庫
+## Notes: |cffbc8f8fSingle window display for your void storage|r
+## Notes-zhCN: |cff00ff00Bagnon_VoidStorage|r
+## Notes-zhTW: |cff00ff00Bagnon_VoidStorage|r
+## Author: Jaliborc (João Cardoso)
+## RequiredDeps: Bagnon
+## LoadOnDemand: 1
+## Version: 7.0.3
+## X-Revision: BigFoot
+
+localization\localization.xml
+components\components.xml
+main.lua

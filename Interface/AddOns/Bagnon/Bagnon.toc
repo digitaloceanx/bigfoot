@@ -1,0 +1,22 @@
+## Interface: 70000
+## Title: Bagnon
+## Title-zhCN: [大脚][集]整合背包
+## Title-zhTW: [大腳][集]整合背包
+## Notes: |cffbc8f8fSingle window displays for your inventory and bank|r
+## Notes-zhCN: |cff00ff00Bagnon|r
+## Notes-zhTW: |cff00ff00Bagnon|r
+## Author: Tuller & Jaliborc (João Cardoso)
+## Version: 7.0.3
+## SavedVariables: Bagnon_Sets
+## Dependencies: BigFoot
+## X-Revision: BigFoot
+## LoadOnDemand: 1
+
+libs\libs.xml
+
+common\localization\localization.xml
+common\core\core.xml
+common\components\components.xml
+
+components\components.xml
+main.lua

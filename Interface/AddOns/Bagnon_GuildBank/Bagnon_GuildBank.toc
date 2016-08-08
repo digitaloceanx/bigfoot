@@ -1,0 +1,16 @@
+## Interface: 70000
+## Title: Bagnon Guild Bank
+## Title-zhCN: [大脚][集]整合背包-公会银行
+## Title-zhTW: [大腳][集]整合背包-公會銀行
+## Notes: |cffbc8f8fSingle window display for your guild bank|r
+## Notes-zhCN: |cff00ff00Bagnon_GuildBank|r
+## Notes-zhTW: |cff00ff00Bagnon_GuildBank|r
+## Author: Tuller & Jaliborc (João Cardoso)
+## RequiredDeps: Bagnon
+## LoadOnDemand: 1
+## Version: 7.0.3
+## X-Revision: BigFoot
+
+localization\localization.xml
+components\components.xml
+main.lua

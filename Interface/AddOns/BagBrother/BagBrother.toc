@@ -1,0 +1,18 @@
+## Interface: 70000
+## Title: BagBrother
+## Title-zhCN: [大脚][集]整合背包-离线银行
+## Title-zhTW: [大腳][集]整合背包-离线银行
+## Notes: |cffbc8f8fStores your characters inventory, bank, vault and guild bank, so that you may view them from anywhere.|r
+## Notes-zhCN: |cff00ff00BagBrother|r
+## Notes-zhTW: |cff00ff00BagBrother|r
+## Author: Jaliborc (João Cardoso)
+## SavedVariables: BrotherBags
+## Dependencies: BigFoot
+## X-Revision: BigFoot
+## LoadOnDemand: 1
+
+Startup.lua
+Events.lua
+API.lua
+
+Tests.lua
