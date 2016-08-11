@@ -203,7 +203,7 @@ function CreateFrames_SpecialFrames_Show(index)
 	local eaf = _G[sFramePrefix..index];
 	if (eaf ~= nil) then
 		-- 已建立特殊能力框架，直接更新
-		local iPowerType = format("%i",(index - 1000000) / 10)
+		local iPowerType = floor((index - 1000000) / 10)		
 		if (index == EA_SpecPower.LifeBloom.frameindex[1]) then
 			EventAlert_UpdateLifeBloom("player");
 		elseif ((index == EA_SpecPower.LunarPower.frameindex[1]) or (index == EA_SpecPower.LunarPower.frameindex[2])) then

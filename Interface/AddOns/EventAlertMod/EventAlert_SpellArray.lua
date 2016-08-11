@@ -1,5 +1,7 @@
--- Prevent tainting global _.
+﻿-- Prevent tainting global _.
 local _
+local _G = _G
+
 
 local function CopyTable(SrcTable)
 	local TarTable = {};
@@ -86,56 +88,73 @@ function EventAlert_LoadSpellArray()
 	EADef_Items[EA_CLASS_DK] = {
 		-- Primary Alert / 本職業提醒區
 		["ITEMS"] = {
-			[48707] = {enable=true,},   -- 反魔法護罩
-			[48792] = {enable=true,},   -- 冰錮堅韌
-			[49039] = {enable=true,},   -- 巫妖之軀
-			[49222] = {enable=true,},   -- 骸骨之盾
-			[51124] = {enable=true,},   -- Killing  Machine / 殺戮酷刑
-			[52424] = {enable=true,},   -- 反擊風暴
-			[53386] = {enable=true,},   -- Cinderglacier (Runeforge) /  冰燼
-			[57330] = {enable=true,},   -- 凜冬號角
-			[59052] = {enable=true,},   -- Rime (Freezing Fog) / 冰封之霧
-			[81141] = {enable=true,},   -- 赤血災禍
-			[81340] = {enable=true,},	-- 末日突降
-			[96171] = {enable=true,},	-- 大墓地的意志
-			[101568] = {enable=true,},	-- 黑暗援助
-			[50421] = {enable=true, stack=5,},	 -- 血之气息
+			[48707] = {enable=true,self=true},   	-- 反魔法護罩
+			[48792] = {enable=true,self=true},   	-- 冰錮堅韌
+			[49039] = {enable=true,self=true},   	-- 巫妖之軀			
+			[51124] = {enable=true,self=true},   	-- 殺戮酷刑
+			[57330] = {enable=true,self=true},   	-- 凜冬號角
+			[59052] = {enable=true,self=true},   	-- 凝霜
+			[81141] = {enable=true,self=true},   	-- 赤血災禍
+			[81256] = {enable=true,self=true},   	-- 符文武器幻舞
+			[194879] = {enable=true,self=true},   	-- 冰結之爪
+			[196770] = {enable=true,self=true},   	-- 冷酷凜冬
+			[212552] = {enable=true,self=true},   	-- 闇境靈行
+			[207127] = {enable=true,self=true},		-- 飢狂符文武器
+			[55233] = {enable=true,self=true},		-- 血族之裔
 		},
 		-- Alternate Alert / 本職業額外提醒區
 		["ALTITEMS"] = {
-			[56815] = {enable=true,},   -- Rune Strike / 符文打擊
+			
 		},
 		-- Target Alert / 目標提醒區
 		["TARITEMS"] = {
 			[55095] = {enable=true, self=true,},    -- 冰霜熱疫
-			[55078] = {enable=true, self=true,},    -- 血魄瘟疫
-			[81130] = {enable=true, self=true,},    -- 血色熱疫
-			[81326] = {enable=true, self=false},	-- 物理易傷
-			[115798] = {enable=true, self=false,},	-- 弱化攻擊
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
-		},
+			[55078] = {enable=true, self=true,},    -- 血魄瘟疫		
+			[194310] = {enable=true, self=true,},    -- 膿瘡傷口
+			[191587] = {enable=true, self=true,},    -- 惡性瘟疫
+			[206940] = {enable=true, self=true,},    -- 血魄印記
+			
+			},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
-			[43265] = {enable=false,},   -- 死亡凋零
-			[45524] = {enable=false,},   -- 冰鍊術
-			[47476] = {enable=false,},   -- 絞殺
-			[47528] = {enable=false,},   -- 心智冰封
-			[48707] = {enable=false,},   -- 反魔法護罩
-			[48721] = {enable=false,},   -- 沸血術
-			[48792] = {enable=false,},   -- 冰錮堅韌
-			[49020] = {enable=false,},   -- 滅寂
-			[49576] = {enable=false,},   -- 死亡之握
-			[49998] = {enable=false,},   -- 死亡打擊
-			[77575] = {enable=false,},   -- 疫病爆發
-			[85948] = {enable=false,},   -- 膿瘡潰擊
+			[43265] = {enable=true,},   	-- 死亡凋零
+			[45524] = {enable=true,},   	-- 冰鍊術
+			[47476] = {enable=true,},   	-- 絞殺
+			[47528] = {enable=true,},   	-- 心智冰封
+			[48707] = {enable=true,},   	-- 反魔法護罩
+			[48721] = {enable=true,},   	-- 沸血術
+			[48792] = {enable=true,},   	-- 冰錮堅韌
+			[49020] = {enable=true,},   	-- 滅寂
+			[49576] = {enable=true,},   	-- 死亡之握
+			[49998] = {enable=true,},   	-- 死亡打擊
+			[77575] = {enable=true,},   	-- 疫病爆發
+			[85948] = {enable=true,},   	-- 膿瘡潰擊
+			[47568] = {enable=true,},   	-- 強力符文武器
+			[49143] = {enable=true,},   	-- 冰霜打擊
+			[51271] = {enable=true,},   	-- 冰霜之柱
+			[196770] = {enable=true,},   	-- 冷酷凜冬
+			[49184] = {enable=true,},   	-- 凜風衝擊
+			[212552] = {enable=true,},   	-- 闇境靈行
+			[207167] = {enable=true,},   	-- 致盲凍雨
+			[207127] = {enable=true,},   	-- 飢狂符文武器
+			[152279] = {enable=true,},   	-- 辛德拉苟莎之息
+			[194913] = {enable=true,},   	-- 冰川突進
+			[207256] = {enable=true,},   	-- 滅體抹殺
+			[55233] = {enable=true},		-- 血族之裔
+			[206930] = {enable=true},		-- 碎心打擊
+			[221562] = {enable=true},		-- 窒息術
+			[195292] = {enable=true},		-- 死亡的撫慰
+			[195182] = {enable=true},		-- 撕骨裂髓
+			[108199] = {enable=true},		-- 血魔之握
+			[206977] = {enable=true},		-- 血魄之鏡
+			[194844] = {enable=true},		-- 骸骨風暴
+			[194679] = {enable=true},		-- 符文轉化
+			[219809] = {enable=true},		-- 墓碑
+			[221699] = {enable=true},		-- 血魄轉化
+			[55090] = {enable=true},		-- 天譴打擊
+			[47541] = {enable=true},		-- 死亡纏繞
+			
+			
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -213,58 +232,78 @@ function EventAlert_LoadSpellArray()
 	EADef_Items[EA_CLASS_DRUID] = {
 		-- Primary Alert / 本職業提醒區
 		["ITEMS"] = {
-			[16870] = {enable=true,},   -- Omen of Clarity / 清晰預兆
-			[16886] = {enable=true,},   -- Nature's Grace / 自然之賜
-			[48517] = {enable=true,},   -- Eclipse / 日蝕
-			[48518] = {enable=true,},   -- Eclipse / 月蝕
-			[50334] = {enable=true,},   -- Berserk / 狂暴
-			[52610] = {enable=true,},   -- Savage Roar / 兇蠻咆嘯
-			[81192] = {enable=true,},   -- 月沐
-			[93400] = {enable=true,},   -- 射星術
-			[93622] = {enable=true,},   -- 狂暴(免費割碎)
-			[100977] = {enable=true,},  -- 共生
-
-			[69369] = {enable=true,},  -- 掠食者的迅捷
-			[48391] = {enable=true,},  -- 枭兽狂乱
+			[774] = {enable=true,},  	 	-- 回春術
+			[1850] = {enable=true,},   		-- 突進
+			[5215] = {enable=true,},   -- 潛行
+			[5217] = {enable=true,},   -- 猛虎之怒
+			[16870] = {enable=true,},   -- 節能施法(恢復專精)
+			[22812] = {enable=true,},   -- 樹皮術
+			[93622] = {enable=true,},   -- 割碎!(守護專精)
+			[102543] = {enable=true,},   -- 化身:叢林之王
+			[106951] = {enable=true,},   -- 狂暴(野性專精)
+			[69369] = {enable=true,},   -- 猛獸迅捷
+			[135700] = {enable=true,},   -- 節能施法(野性專精)
+			[137452] = {enable=true,},   -- 獸性位移
+			[158792] = {enable=true,},   -- 粉碎(守護專精)
+			[145152] = {enable=true,},   -- 血爪(野性專精)			
+			[164545] = {enable=true,},   -- 日之活化			
+			[164547] = {enable=true,},   -- 月之活化			
+			[192081] = {enable=true,},   -- 鋼鐵毛皮
+			[194223] = {enable=true,},   -- 星穹連線
+			
 		},
 		-- Alternate Alert / 本職業額外提醒區
 		["ALTITEMS"] = {
 		},
 		-- Target Alert / 目標提醒區
-		["TARITEMS"] = {
-			--[770] = {enable=true, self=true,},    -- Faerie Fire / 精靈之火
-			--[16857] = {enable=true, self=true,},  -- Faerie Fire (Feral) / 精靈之火(野性)
-			--[48564] = {enable=true, self=true,},  -- Mangle(Bear) / 割碎(熊形態)
-			[99] = {enable=true, self=true,},       -- 挫志咆哮
+		["TARITEMS"] = {			
+			
 			[774] = {enable=true, self=true,},      -- 回春術
 			[1079] = {enable=true, self=true,},     -- Rip / 撕扯
 			[1822] = {enable=true, self=true,},     -- Rake / 掃擊
 			[5570] = {enable=true, self=true,},     -- Insect Swarm / 蟲群
-			[8921] = {enable=true, self=true,},     -- Moonfire / 月火術
-			[33745] = {enable=true, self=true,},    -- Lacerate / 割裂
-			[33763] = {enable=true, self=true,},    -- 生命之花
-			[33876] = {enable=true, self=true,},    -- Mangle(Cat) / 割碎(獵豹形態)
-			[52610] = {enable=true, self=true,},    -- 兇蠻咆哮
-			[81326] = {enable=true, self=false},	-- 物理易傷
+			[8921] = {enable=true, self=true,},     -- Moonfire / 月火術		
+			[33763] = {enable=true, self=true,},    -- 生命之花						
 			[93402] = {enable=true, self=true,},    -- Moonfire / 日炎術
-			[115798] = {enable=true, self=false,},	-- 弱化攻擊
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
+			
+			[155625] = {enable=true, self=true,},	-- 月火術(月之鼓舞)
+			[164812] = {enable=true, self=true,},	-- 月火術(月能)(平衡專精)
+			[164815] = {enable=true, self=true,},	-- 日炎術(日能)(平衡專精)
+			[192090] = {enable=true, self=true,},	-- 痛擊
+			[155722] = {enable=true, self=true,},	-- 掃擊
+			[197637] = {enable=true, self=true,},	-- 星之活化
+			[202347] = {enable=true, self=true,},	-- 星光閃焰
+			
 		},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
-			[17116] = {enable=false,},   -- 自然迅捷
-			[18562] = {enable=false,},   -- 迅癒
-			[29166] = {enable=false,},   -- 啟動
-			[48438] = {enable=false,},   -- 野性痊癒
-			[78674] = {enable=false,},   -- 星湧術
+			[17116] = {enable=true,},   -- 自然迅捷
+			[18562] = {enable=true,},   -- 迅癒
+			[29166] = {enable=true,},   -- 啟動
+			[48438] = {enable=true,},   -- 野性痊癒
+			[78674] = {enable=true,},   -- 星湧術
+			
+			[5215] = {enable=true,},   	-- 潛行
+			[6807] = {enable=true,},   	-- 槌擊
+			[22812] = {enable=true,},   -- 樹皮術
+			[22842] = {enable=true,},   -- 狂暴恢復
+			[33917] = {enable=true,},   -- 割碎			
+			[52610] = {enable=true,},   -- 兇蠻咆哮
+			[61336] = {enable=true,},   -- 求生本能
+			[77758] = {enable=true,},   -- 痛擊
+			[78675] = {enable=true,},   -- 太陽光束
+			[102280] = {enable=true,},  -- 獸性位移
+			[1850] = {enable=true,},   	-- 突進
+			[80313] = {enable=true,},   	-- 粉碎
+			[102543] = {enable=true,},   	-- 化身:叢林之王
+			[102793] = {enable=true,},   	-- 厄索之旋
+			[106951] = {enable=true,},   	-- 狂暴
+			[155835] = {enable=true,},   	-- 針刺毛皮
+			[192081] = {enable=true,},   	-- 鋼鐵毛皮
+			[192083] = {enable=true,},   	-- 厄索印記
+			[194223] = {enable=true,},   	-- 星穹連線
+			[202028] = {enable=true,},   	-- 兇蠻刈殺("刈"音同"意") 
+			[204066] = {enable=true,},   	-- 月之光
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -576,46 +615,56 @@ function EventAlert_LoadSpellArray()
 		-- Primary Alert / 本職業提醒區
 		["ITEMS"] = {
 			[3045] = {enable=true,},    -- 急速射擊
-			[34471] = {enable=true,},   -- 獸心
 			[34477] = {enable=true,},   -- 誤導
-			[35079] = {enable=true,},   -- 誤導
-			[53220] = {enable=true,},   -- Improved Stead Shot / 強化穩固射擊
 			[53257] = {enable=true,},   -- 眼鏡蛇之擊
-			[53434] = {enable=true,},   -- 狂野呼喚
-			[56453] = {enable=true,},   -- Lock and Load / 蓄勢待發
+			[61684] = {enable=true,},   -- 突進(獵人寵物)
 			[70728] = {enable=true,},   -- 攻擊弱點
-			[82925] = {enable=true,},   -- 準備、就緒、瞄準…
-			[82926] = {enable=true,},   -- 射擊!
-			[89388] = {enable=true,},   -- 攻擊敵人
-			[94007] = {enable=true,},   -- 連殺
-			[95712] = {enable=true,},   -- X光瞄準器
-
-			[34720] = {enable=true, stack=3,},   -- 狩猎刺激
-			[82925] = {enable=true, stack=3,},   -- 准备，端枪，瞄准……
+			[95712] = {enable=true,},   -- X光瞄準
+			[118455] = {enable=true,},   -- 獸劈斬
+			[185791] = {enable=true,},   -- 野性呼喚
+			[186254] = {enable=true,},   -- 狂野怒火
+			[186265] = {enable=true,},   -- 巨龜守護
+			[193530] = {enable=true,},   -- 野性守護
+			[217200] = {enable=true,},   -- 凶暴狂亂
+			[186257] = {enable=true,},   -- 野性守護
+			
 		},
 		-- Alternate Alert / 本職業額外提醒區
 		["ALTITEMS"] = {
-			[53351] = {enable=true,},   -- Kill Shot / 擊殺射擊
+			
 		},
 		-- Target Alert / 目標提醒區
 		["TARITEMS"] = {
-			[118253] = {enable=true, self=true,},     -- 毒蛇釘刺
-			[1130] = {enable=true, self=true,},     -- 獵人印記
-			[19503] = {enable=true, self=true,},    -- 驅散射擊
-			[63468] = {enable=true, self=true,},    -- 穿透射擊
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
+			[5116] = {enable=true,self=true,},   	-- 震盪射擊
+			[54680] = {enable=true,self=true,},   	-- 暴猛撕咬(奇特技能)			
+			[131894] = {enable=true,self=false,},   -- 黑鴉獵殺
+			[132951] = {enable=true,self=false,},   -- 照明彈
+			[117405] = {enable=true,self=false,},   -- 禁錮射擊
+			
+			
 		},
 		-- Spell Cooldown Alert / 本職業技能CD區
-		["SCDITEMS"] = {
-			[781] = {enable=false,},     -- 逃脫
+		["SCDITEMS"] = {			
+			[17253] = {enable=true,},     -- 撕咬(基礎攻擊)
+			[16827] = {enable=true,},     -- 爪擊(基礎攻擊)			
+			[61684] = {enable=true,},     -- 突進(寵物)
+			[54644] = {enable=true,},     -- 冰息術(奇美拉)
+			[92380] = {enable=true,},     -- 霜暴之息(奇美拉)
+			[160065] = {enable=true,},     -- 裂筋(異種蟲族)
+			[90361] = {enable=true,},     -- 心靈治療(靈獸)
+			[54680] = {enable=true,},     -- 暴猛撕咬(魔暴龍)
+			[781] = {enable=true,},     	-- 逃脫
+			[217200] = {enable=true,},     -- 凶暴狂亂
+			[109304] = {enable=true,},     -- 心曠神怡
+			[147362] = {enable=true,},     -- 駁火反擊
+			[55709] = {enable=true,},     -- 鳳凰之心
+			[131894] = {enable=true,},     -- 黑鴉獵殺
+			[109248] = {enable=true,},     -- 禁錮射擊
+			[19574] = {enable=true,},     -- 狂野怒火
+			[193530] = {enable=true,},     -- 野性守護
+			[186257] = {enable=true,},     -- 獵豹守護
+			
+			
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -631,13 +680,11 @@ function EventAlert_LoadSpellArray()
 		["ITEMS"] = {
 			[12042] = {enable=true,},   -- 秘法強化
 			[12051] = {enable=true,},   -- 喚醒
-			[36032] = {enable=true, stack=4,},   -- Arcane Blast / 奧衝堆疊
+			[36032] = {enable=true,},   -- Arcane Blast / 奧衝堆疊
 			[44544] = {enable=true,},   -- Fingers of Frost / 冰霜之指
-			[48107] = {enable=true,},   -- 热力迸发
 			[48108] = {enable=true,},   -- Hot Streak / 焦炎之痕
 			[57761] = {enable=true,},   -- Brain Freeze / 腦部凍結
 			[64343] = {enable=true,},   -- 衝擊
-			[108843] = {enable=true,},   -- 炽热疾速
 			[79683] = {enable=true,},   -- Missile Barrage! / 秘法飛彈!
 			[87023] = {enable=true,},   -- 燒灼
 			[116257] = {enable=true,},   -- 塑能師之能 (喚醒)
@@ -651,25 +698,16 @@ function EventAlert_LoadSpellArray()
 			[22959] = {enable=true, self=true,},    -- 火焰重擊
 			[31589] = {enable=true, self=true,},    -- Slow / 減速術
 			[44457] = {enable=true, self=true,},    -- Living Bomb / 活體爆彈
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
-		},
+			},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
-			[122] = {enable=false,},     -- 冰霜新星
-			[1953] = {enable=false,},    -- 閃現
-			[12042] = {enable=false,},   -- 秘法強化
-			[12043] = {enable=false,},   -- 氣定神閒
-			[12051] = {enable=false,},   -- 喚醒
-			[44572] = {enable=false,},   -- 極度冰凍
-			[45438] = {enable=false,},   -- 寒冰屏障
+			[122] = {enable=true,},     -- 冰霜新星
+			[1953] = {enable=true,},    -- 閃現
+			[12042] = {enable=true,},   -- 秘法強化
+			[12043] = {enable=true,},   -- 氣定神閒
+			[12051] = {enable=true,},   -- 喚醒
+			[44572] = {enable=true,},   -- 極度冰凍
+			[45438] = {enable=true,},   -- 寒冰屏障
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -722,74 +760,45 @@ function EventAlert_LoadSpellArray()
 			[31842] = {enable=true,},   -- 神恩術
 			[31850] = {enable=true,},   -- 忠誠防衛者
 			[31884] = {enable=true,},   -- 復仇之怒
-			[53376] = {enable=true,},   -- 聖化之怒
 			[53657] = {enable=true,},   -- 純潔審判
-			[54149] = {enable=true,},   -- 聖光灌注
-			[54428] = {enable=true,},   -- 神性祈求
-			[59578] = {enable=true,},   -- Art of War / 戰爭藝術
+			[59578] = {enable=true,},   -- 戰爭藝術
 			[84963] = {enable=true,},   -- 異端審問
-			[85222] = {enable=false,},   -- 黎明曙光
-			[86659] = {enable=true,},   -- 遠古諸王守護者
-			[86698] = {enable=true,},   -- »·¥j½Ñ¤ý¦uÅ@ªÌ(DD)
+			[86659] = {enable=true,},   -- 遠古諸王守護者(坦)
+			[86698] = {enable=true,},   -- 遠古諸王守護者(DD)
+			[90174] = {enable=true,},	-- 神聖意圖
 			[105809] = {enable=true,},   -- 神聖復仇者
 			[114163] = {enable=true,},	-- 永恆之火
-			[88819] = {enable=true,},   -- 破曉之光
-			[90174] = {enable=false,},   -- 聖光之手
-			[115654] = {enable=false,},   -- 谴责雕文
-			[85416] = {enable=false,},   -- 大十字军
-			[121027] = {enable=false,},   -- 双重审判雕文
-
-			[114250] = {enable=true, stack=3,},   -- 无私治愈
-			[85247] = {enable=true, stack=3,},   -- 神圣能量
-			[114637] = {enable=true,},	-- ºaÄ£¾ÀÂS
-			[121467] = {enable=true,},	-- ³·¥Õ¤§¬Þ
-			[132403] = {enable=true,},	-- ¤½¥¿¤§¬Þ(´î¶Ë)
+			[114637] = {enable=true,},	-- 榮耀壁壘
+			[121467] = {enable=true,},	-- 雪白之盾
+			[132403] = {enable=true,},	-- 公正之盾(減傷)
 		},
 		-- Alternate Alert / 本職業額外提醒區
-		["ALTITEMS"] = {
-			[24275] = {enable=true,},   -- Hammer of Wrath / 憤怒之錘
-		},
+		["ALTITEMS"] = {},
 		-- Target Alert / 目標提醒區
 		["TARITEMS"] = {
 			[853] = {enable=true, self=true,},      -- 制裁之錘
-			[2812] = {enable=true, self=true,},     -- 神聖憤怒
 			[10326] = {enable=true, self=true,},    -- 退邪術
 			[20066] = {enable=true, self=true,},    -- 懺悔
 			[31803] = {enable=true, self=true,},    -- 譴責
-			[81298] = {enable=true, self=true},				-- 奉獻
+			[81298] = {enable=true, self=true},		-- 奉獻
 			[81326] = {enable=true, self=false},	-- 物理易傷
-			[110300] = {enable=true, self=true,},	-- ¸o¤§­«¾á
+			[110300] = {enable=true, self=true,},	-- 罪之重擔
 			[114163] = {enable=true, self=true,},	-- 永恆之火
-			[114916] = {enable=true, self=true,},	-- 死刑宣判
-			[115798] = {enable=true, self=false,},	-- 弱化攻擊
-			[117737] = {enable=true, self=false,},	-- 癲狂
-			[117756] = {enable=true, self=false,},	-- 怯懦
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- 納拉卡煞之觸
-			[127372] = {enable=true, self=false,},	-- 不穩定血清
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
+			[114916] = {enable=true, self=true,},	-- 死刑宣判			
 		},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
-			[498] = {enable=false,},     -- 聖佑術
-			[853] = {enable=false,},     -- 制裁之鎚
-			[2812] = {enable=false,},    -- 神聖憤怒
-			[20066] = {enable=false,},   -- 懺悔
-			[20925] = {enable=false,},   -- 崇聖護盾
-			[20271] = {enable=false,},   -- 審判
-			[20473] = {enable=false,},   -- 神聖震擊
-			[26573] = {enable=false,},   -- 奉獻
-			[28730] = {enable=false,},   -- 奧流之術
-			[35395] = {enable=false,},   -- 十字軍聖擊
-			[54428] = {enable=false,},   -- 神性祈求
-			[96231] = {enable=false,},   -- 責難
-			[114157] = {enable=false,},   -- 死刑宣判
-			[114158] = {enable=false,},   -- 聖光之錘
-			[114165] = {enable=false,},   -- 神聖稜石
-			[115750] = {enable=false,},   -- 盲目之光
+			[498] = {enable=true,},     -- 聖佑術
+			[853] = {enable=true,},     -- 制裁之鎚
+			[20066] = {enable=true,},   -- 懺悔
+			[20925] = {enable=true,},   -- 崇聖護盾
+			[28730] = {enable=true,},   -- 奧流之術
+			[54428] = {enable=true,},   -- 神性祈求
+			[96231] = {enable=true,},   -- 責難
+			[114157] = {enable=true,},   -- 死刑宣判
+			[114158] = {enable=true,},   -- 聖光之錘
+			[114165] = {enable=true,},   -- 神聖稜石
+			[115750] = {enable=true,},   -- 盲目之光
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -993,24 +1002,17 @@ function EventAlert_LoadSpellArray()
 	EADef_Items[EA_CLASS_PRIEST] = {
 		-- Primary Alert / 本職業提醒區
 		["ITEMS"] = {
-			[17] = {enable=true,},      -- 真言術:盾
-			[6788] = {enable=true,},    -- 虛弱靈魂
-			[47585] = {enable=true,},   -- 影散
-			[63735] = {enable=true,},   -- 機緣回復
-			[77487] = {enable=true,},   -- 暗影寶珠
-			[81206] = {enable=true,},   -- 脈輪運轉:庇護
-			[81208] = {enable=true,},   -- 脈輪運轉:平靜
-			[81209] = {enable=true,},   -- 脈輪運轉:譴責
-			[81782] = {enable=true,},   -- 真言術:壁
-			[87153] = {enable=true,},   -- 黑天使
-			[87160] = {enable=true,},   -- 心靈熔蝕
-			[124430] = {enable=true,},   -- 神圣洞察
-			[114255] = {enable=true,},   -- 光明涌动
-
-			[81661] = {enable=true, stack=5,},   -- 福音传播
-			[63735] = {enable=true, stack=2,},   -- 妙手回春
-			[81292] = {enable=true, stack=2,},   -- 心灵尖刺雕文
-			[77487] = {enable=true, stack=3,},   -- 暗影宝珠
+			[17] = {enable=true,},      			-- 真言術:盾
+			[6788] = {enable=true,},    			-- 虛弱靈魂
+			[47585] = {enable=true,},  			 	-- 影散			
+			[81782] = {enable=true,},   			-- 真言術:壁
+			[87160] = {enable=true,overgrow=3},		-- 黑暗奔騰
+			[124430] = {enable=true,},   			-- 幽暗洞察
+			[194249] = {enable=true,},   			-- 虛無形態
+			[197937] = {enable=true,},   			-- 瘋狂殘念
+			[205372] = {enable=true,overgrow=5},   	-- 虛無射線
+			overgr
+			
 		},
 		-- Alternate Alert / 本職業額外提醒區
 		["ALTITEMS"] = {
@@ -1023,30 +1025,35 @@ function EventAlert_LoadSpellArray()
 			[6788] = {enable=true, self=true,},     -- Weakened Soul / 虛弱靈魂
 			[34914] = {enable=true, self=true,},    -- Vampiric Touch / 吸血之觸
 			[47753] = {enable=true, self=true,},    -- 神禦之盾
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
+			[217673] = {enable=true, self=true,overgrow=3},    -- 神禦之盾
+			
 		},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
-			[17] = {enable=false,},      -- 真言術:盾
-			[10060] = {enable=false,},   -- 注入能量
-			[28730] = {enable=false,},   -- 奧流之術
-			[32379] = {enable=false,},   -- 暗言術:死
-			[33206] = {enable=false,},   -- 痛苦鎮壓
-			[34433] = {enable=false,},   -- 暗影惡魔
-			[47540] = {enable=false,},   -- 懺悟
-			[47585] = {enable=false,},   -- 影散
-			[81700] = {enable=false,},   -- 大天使
-			[88684] = {enable=false,},   -- 聖言術:寧
-			[89485] = {enable=false,},   -- 心靈專注
+			[17] = {enable=true,},      -- 真言術:盾
+			[10060] = {enable=true,},   -- 注入能量			
+			[32379] = {enable=true,},   -- 暗言術:死
+			[33206] = {enable=true,},   -- 痛苦鎮壓
+			[34433] = {enable=true,},   -- 暗影惡魔
+			[47540] = {enable=true,},   -- 懺悟
+			[47585] = {enable=true,},   -- 影散
+			[81700] = {enable=true,},   -- 大天使
+			[88684] = {enable=true,},   -- 聖言術:寧
+			[89485] = {enable=true,},   -- 心靈專注
 			[126172] = {enable=true,},   -- 脈輪運轉
+			[123040] = {enable=true,},   -- 屈心魔
+			[205385] = {enable=true,},   -- 暗影暴擊
+			[205448] = {enable=true,},   -- 虛無箭
+			[228260] = {enable=true,},   -- 虛無爆發
+			[8092] = {enable=true,},   	-- 心靈震爆
+			[15487] = {enable=true,},   -- 沉默
+			[213634] = {enable=true,},   -- 驅淨疾病
+			[528] = {enable=true,},   -- 驅散魔法
+			[32375] = {enable=true,},   -- 群體驅散
+			[205369] = {enable=true,},   -- 心靈炸彈
+			[15286] = {enable=true,},   -- 吸血鬼的擁抱
+			
+			
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -1288,30 +1295,21 @@ function EventAlert_LoadSpellArray()
 			[59628] = {enable=true,},   -- 偷天換日
 			[58427] = {enable=true,},   -- 極限殺戮
 			[84590] = {enable=true,},   -- 致命殺陣
-			[121153] = {enable=true,},   -- 盲点
 		},
 		-- Alternate Alert / 本職業額外提醒區
 		["ALTITEMS"] = {
-			-- [14251] = {enable=true,},   -- Riposte / 還擊
+			
 		},
 		-- Target Alert / 目標提醒區
 		["TARITEMS"] = {
 			[1943] = {enable=true, self=true,},     -- 割裂
 			[84617] = {enable=true, self=true,},    -- 揭底之擊
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
+			
 		},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
-			[65961] = {enable=false,},   -- 暗影披風
-			[79140] = {enable=false,},   -- 宿怨
+			[65961] = {enable=true,},   -- 暗影披風
+			[79140] = {enable=true,},   -- 宿怨
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -1364,55 +1362,61 @@ function EventAlert_LoadSpellArray()
 	EADef_Items[EA_CLASS_SHAMAN] = {
 		-- Primary Alert / 本職業提醒區
 		["ITEMS"] = {
-			[324] = {enable=true, stack=7,},   -- 闪电之盾
-			[16166] = {enable=true,},	-- ºë³q¤¸¯À
-			[16188] = {enable=true,},	-- ¥ý¯ª¨³±¶
-			[16246] = {enable=true,},  -- 节能施法
-			[30884] = {enable=true,},	-- ¦ÛµM¦uÅ@ªÌ
-			[53390] = {enable=true,},  -- 潮汐奔涌
-			[53817] = {enable=true, stack=5,},  -- 氣漩武器
-			[73685] = {enable=true,},	-- ÄÀ©ñ¤j¦a¥Í©R
-			[79206] = {enable=true,},	-- ÆF¦æªÌ¤§½ç
-			[105763] = {enable=true,},	-- ¤ßÆF¿EÀy (ªk¤O¤§¼é)
-			[114050] = {enable=true,},	-- ¨ô¶V³N¡]¤¸¯À¡^
-			[114051] = {enable=true,},	-- ¨ô¶V³N¡]¼W±j¡^
-			[114052] = {enable=true,},	-- ¨ô¶V³N¡]«ì´_¡^
-			[114893] = {enable=true,},	-- ¥Û¤§¾ÀÂS
-			[118522] = {enable=true,},	-- ¤¸¯À½ÄÀ»
+			[192106] = {enable=true,},	-- 閃電之盾
+			[16166] = {enable=true,},	-- 精通元素						
+			[53390] = {enable=true,},	-- 治療之潮			
+			[73685] = {enable=true,},	-- 釋放大地生命
+			[79206] = {enable=true,},	-- 靈行者之賜
+			[105763] = {enable=true,},	-- 心靈激勵 (法力之潮)
+			[114050] = {enable=true,},	-- 卓越術（元素）
+			[114051] = {enable=true,},	-- 卓越術（增強）
+			[114052] = {enable=true,},	-- 卓越術（恢復）
+			[114893] = {enable=true,},	-- 石之壁壘
+			[118522] = {enable=true,},	-- 元素衝擊
+			[194084] = {enable=true,},	-- 火舌
+			[195222] = {enable=true,},	-- 風暴鞭笞
+			[196834] = {enable=true,},	-- 冰封打擊
+			[201898] = {enable=true,},	-- 風之歌
+			[215864] = {enable=true,},	-- 時雨
+			
 		},
 		-- Alternate Alert / 本職業額外提醒區
 		["ALTITEMS"] = {
 		},
 		-- Target Alert / 目標提醒區
 		["TARITEMS"] = {
-			[8050] = {enable=true, self=true,},     -- 烈焰震擊
-			[51514] = {enable=true, self=true,},	-- §¯³N
-			-- [100955] = {enable=true, self=true,},   -- 雷霆風暴
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
+			
+			[51514] = {enable=true, self=true,},	-- 妖術
+			
 		},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
-			[16166] = {enable=false,},	-- ºë³q¤¸¯À
-			[16188] = {enable=false,},	-- ¥ý¯ª¨³±¶
-			[16190] = {enable=false,},   -- 法力之潮圖騰
-			[51505] = {enable=false,},   -- 熔岩爆發
-			[61295] = {enable=false,},   -- 激流
-			[73680] = {enable=false,},   -- 釋放元素能量
-			[73920] = {enable=false,},   -- 治癒大雨
-			[79206] = {enable=false,},	-- ÆF¦æªÌ¤§½ç
-			[98008] = {enable=false,},	-- ÆF»î³sµ²¹ÏÄË
-			[108270] = {enable=false,},	-- ¬P¬ÉÂà²¾
-			[108271] = {enable=false,},	-- ¤¸¯À©I³ê
-			[108280] = {enable=false,},	-- ¥Û¤§¾ÀÂS¹ÏÄË
-			[108285] = {enable=false,},	-- ÀøÂ¡¤§¼é¹ÏÄË
+			[16166] = {enable=true,},	-- 精通元素			
+			[51505] = {enable=true,},	-- 熔岩爆發
+			[61295] = {enable=true,},	-- 激流			
+			[73920] = {enable=true,},	-- 治癒之雨
+			[79206] = {enable=true,},	-- 靈行者之賜
+			[98008] = {enable=true,},	-- 靈魂連結圖騰
+			[108270] = {enable=true,},	-- 石之壁壘圖騰
+			[108271] = {enable=true,},	-- 星界轉移
+			[108280] = {enable=true,},	-- 療癒之潮圖騰
+			[108285] = {enable=true,},	-- 元素呼喚
+			[2825] = {enable=true,},	-- 嗜血術
+			[51490] = {enable=true,},	-- 雷霆風暴
+			[51514] = {enable=true,},	-- 妖術
+			[17364] = {enable=true,},	-- 風暴打擊
+			[51533] = {enable=true,},	-- 野性之魂
+			[51886] = {enable=true,},	-- 淨化靈魂
+			[57994] = {enable=true,},	-- 削風術
+			[58875] = {enable=true,},	-- 幽魂步伐
+			[60103] = {enable=true,},	-- 熔岩爆擊
+			[187874] = {enable=true,},	-- 閃電轟擊
+			[193786] = {enable=true,},	-- 石化打擊
+			[193796] = {enable=true,},	-- 火舌打擊
+			[196834] = {enable=true,},	-- 冰封打擊
+			[215864] = {enable=true,},	-- 時雨
+			
+
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -1582,25 +1586,16 @@ function EventAlert_LoadSpellArray()
 			[47283] = {enable=true,},   -- Empowered Imp / 強力小鬼
 			[63158] = {enable=true,},   -- 屠虐
 			[63167] = {enable=true,},   -- 屠虐
-			[80240] = {enable=true,},   -- 浩劫
-			[34936] = {enable=true,},   -- 反冲
-			[88448] = {enable=true,},   -- 恶魔重生
-			[113858] = {enable=true,},	-- 黑暗灵魂：易爆
-			[117828] = {enable=true,},	-- 爆燃
-			[71165] = {enable=true,},   -- º²¤õ¤§¤ß
+			[71165] = {enable=true,},   -- 熔火之心
 			[85383] = {enable=true,},   -- 強化靈魂之火
-			[89937] = {enable=true,},	-- 魔能火花
-			[111400] = {enable=true,},	-- 爆燃冲刺
-			[122355] = {enable=true,},	-- 熔火之心
-
-			[108647] = {enable=true, stack=3,},   -- 爆燃灰烬
+			[89937] = {enable=true,},   -- 魔化火光
 		},
 		-- Alternate Alert / 本職業額外提醒區
 		["ALTITEMS"] = {
 		},
 		-- Target Alert / 目標提醒區
 		["TARITEMS"] = {
-			[146739] = {enable=true, self=true,},      -- Corruption / 腐蝕術
+			[172] = {enable=true, self=true,},      -- Corruption / 腐蝕術
 			[348] = {enable=true, self=true,},      -- Immolate / 獻祭
 			[686] = {enable=true, self=true,},      -- 末日災厄
 			[603] = {enable=true, self=true,},      -- 暗影箭
@@ -1611,22 +1606,13 @@ function EventAlert_LoadSpellArray()
 			[48181] = {enable=true, self=true,},    -- 蝕魂術
 			[50796] = {enable=true, self=true,},    -- 混沌箭
 			[80240] = {enable=true, self=true,},    -- 浩劫災厄
-			[86000] = {enable=true, self=true,},    -- 古爾丹詛咒
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
+			[86000] = {enable=true, self=true,},    -- 古爾丹詛咒			
 		},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
-			[17962] = {enable=false,},   -- 焚燒
-			[59672] = {enable=false,},   -- 惡魔化身
-			[71165] = {enable=false,},   -- 熔火之心
+			[17962] = {enable=true,},   -- 焚燒
+			[59672] = {enable=true,},   -- 惡魔化身
+			[71165] = {enable=true,},   -- 熔火之心
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -1640,59 +1626,88 @@ function EventAlert_LoadSpellArray()
 	EADef_Items[EA_CLASS_WARRIOR] = {
 		-- Primary Alert / 本職業提醒區
 		["ITEMS"] = {
-			[871] = {enable=true,},     -- 盾牆(防禦姿態)
-			[122016] = {enable=true,},    -- 激动
-			[2565] = {enable=true,},    -- 盾牌格檔(防禦姿態)
-			[12328] = {enable=true,},   -- 橫掃攻擊(戰鬥，狂暴姿態)
-			-- [12964] = {enable=true,},   -- 戰鬥沈思
-			[12975] = {enable=true,},   -- 破斧沈舟
-			-- [14202] = {enable=true,},   -- 狂怒(等級 3)
-			[16491] = {enable=true,},   -- 血之狂熱
-			-- [20230] = {enable=true,},   -- 反擊風暴(戰鬥姿態)
-			-- [23885] = {enable=true,},   -- 嗜血
-			[23920] = {enable=true,},   -- 法術反射(戰鬥，防禦姿態)
-			-- [29841] = {enable=true,},   -- 復甦之風(等級1)
-			[32216] = {enable=true,},   -- 勝利
-			[46916] = {enable=true,},   -- Bloodsurge (Slam) / 熱血沸騰
-			[50227] = {enable=true,},   -- 劍盾合壁
-			[52437] = {enable=true,},   -- 驟亡
-			[55694] = {enable=true,},   -- 狂怒恢復
-			-- [57516] = {enable=true,},   -- 狂怒(等級 2)
-			-- [57519] = {enable=true,},   -- 狂怒(等級 2)
-			-- [60503] = {enable=true,},   -- 血腥體驗
-			[65156] = {enable=true,},   -- 勢不可當
-			[82368] = {enable=true,},   -- 勝利
-			-- [84586] = {enable=true,},   -- 屠宰(等級 3)
-			-- [84620] = {enable=true,},   -- 堅守陣線
-			[85730] = {enable=true,},   -- 沉著殺機
-			[122510] = {enable=true,},   -- 最后通牒
-			[115945] = {enable=true,},   -- 断筋雕文
-			[125831] = {enable=true,},   -- 血之气息
-			[131116] = {enable=true,},   -- 怒击！
-			[46916] = {enable=true,},   -- 血脉贲张
-			[85739] = {enable=true,},   -- 绞肉机
+			[184362] = {enable=true,self=true},					--狂怒
+			[202539] = {enable=true,self=true,overgrow=3},		--狂亂
+			[206333] = {enable=true,self=true,overgrow=6},		--血腥體驗
+			[215572] = {enable=true,self=true},					--飛沫戰狂
+			[46924] = {enable=true,self=true},					--劍刃風暴
+			[107574] = {enable=true,self=true},					--巨像化身
+			[184364] = {enable=true,self=true},					--狂怒恢復		
+			[85739] = {enable=true,self=true},					--削骨斬肉
+			[118038] = {enable=true,self=true},					--劍下亡魂
+			[207982] = {enable=true,self=true,overgrow=3},		--集中怒氣
+			[188923] = {enable=true,self=true,overgrow=2},		--順劈斬
+			[23920] = {enable=true,self=true},					--法術反射
+			[125565] = {enable=true,self=true},					--挫志怒吼
+			[871] = {enable=true,self=true},					--盾牆
+			[202164] = {enable=true,self=true},					--英勇躍擊+70%跑速
+			
 		},
 		-- Alternate Alert / 本職業額外提醒區
 		["ALTITEMS"] = {
 		},
 		-- Target Alert / 目標提醒區
 		["TARITEMS"] = {
-			[81326] = {enable=true, self=false},	-- 物理易傷
-			[94009] = {enable=true, self=true,},    -- 撕裂
-			[115798] = {enable=true, self=false,},	-- 弱化攻擊
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
+			[5246] = {enable=true, self=false},				-- 破膽怒吼
+			[12323] = {enable=true, self=true},    			-- 刺耳怒吼
+			[132169] = {enable=true,self=false},    		-- 暴風怒擲
+			[132168] = {enable=true,self=false},    		-- 震攝波		
+			[113344] = {enable=true,self=true},    			-- 浴血
+			[46924] = {enable=true,self=false},    			-- 劍刃風暴
+			[118038] = {enable=true,self=false},			--劍下亡魂
+			[1715] = {enable=true,self=true},				--斷筋
+			[208086] = {enable=true,self=true},				--千鈞潰擊
+			[772] = {enable=true,self=true},				--撕裂
+			[115804] = {enable=true,self=true},				--致死重傷
+			[215537] = {enable=true,self=true},				--創傷
+			[147833] = {enable=true,self=true},				--阻擾
+			[23920] = {enable=true,self=false},				--法術反射
+			[871] = {enable=true,self=false},				--盾牆
+			[12975] = {enable=true,self=false},				--破釜沉舟
+			
+			
 		},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
-
+			[1719] = {enable=true},    		--戰鬥狂嘯
+			[12292] = {enable=true},    	--浴血
+			[18499] = {enable=true},    	--狂暴之怒
+			[107574] = {enable=true},    	--巨像化身
+			[184367] = {enable=true},    	--暴怒	
+			[46924] = {enable=true},    	--劍刃風暴
+			[100] = {enable=true},    		--衝鋒
+			[6544] = {enable=true},    		--英勇躍擊
+			[6552] = {enable=true},    		--拳擊
+			[85288] = {enable=true},    	--狂怒之擊
+			[23881] = {enable=true},    	--嗜血
+			[5308] = {enable=true},    		--斬殺
+			[163201] = {enable=true},    	--斬殺(武戰)
+			[107570] = {enable=true},    	--暴風怒擲
+			[46968] = {enable=true},    	--震攝波
+			[118038] = {enable=true},		--劍下亡魂
+			[34428] = {enable=true},		--勝利衝擊
+			[12294] = {enable=true},		--致死打擊
+			[845] = {enable=true},			--順劈斬
+			[167105] = {enable=true},		--千鈞潰擊
+			[207982] = {enable=true},		--集中怒氣
+			[152277] = {enable=true},		--劫毀旋刃(武戰)(招架+30%/12s)
+			[228920] = {enable=true},		--劫毀旋刃(防戰)(招架+30%/12s)
+			[198304] = {enable=true},		--攔截
+			[202168] = {enable=true},		--勝利在望
+			[23920] = {enable=true},		--法術反射
+			[1160] = {enable=true},			--挫志怒吼
+			[871] = {enable=true},			--盾牆
+			[6572] = {enable=true},			--復仇
+			[2565] = {enable=true},			--盾牌格檔
+			[23922] = {enable=true},		--盾牌猛擊
+			[6343] = {enable=true},			--雷霆一擊
+			[207982] = {enable=true},		--集中怒氣(武戰致死打擊增傷)
+			[204488] = {enable=true},		--集中怒氣(防戰盾牌猛擊增傷)
+			[12975] = {enable=true},		--破釜沉舟
+			
+			
+			
+			
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -1706,40 +1721,20 @@ function EventAlert_LoadSpellArray()
 	EADef_Items[EA_CLASS_MONK] = {
 		-- Primary Alert / 本職業提醒區
 		["ITEMS"] = {
-			[115175] = {enable=true,},   -- 舒和之霧
-			[118674] = {enable=true,},	-- 活力之雾
+			[115175] = {enable=true,},   -- 舒和之霧			
 			[119611] = {enable=true,},   -- 回生迷霧
 			[120954] = {enable=true,},   -- 石形絕釀
-			[125359] = {enable=true},	-- 猛虎之力
-			[132120] = {enable=true,},   -- 迷霧繚繞
-			[116768] = {enable=true,},	-- 踏风连击：幻灭踢
-			[118864] = {enable=true,},	-- 踏风连击：猛虎掌
-			[97272] = {enable=true, stack=4},		-- 气
-			[128939] = {enable=true, stack=15},	-- 飘渺酒
-			[115307] = {enable=true, stack=1, self=true, overgrow=1, redsectext=3, },	-- 酒醒淡定
+			
 		},
 		-- Alternate Alert / 本職業額外提醒區
 		["ALTITEMS"] = {
-			[115080] = {enable=true,},   -- 幽冥掌
 		},
 		-- Target Alert / 目標提醒區
-		["TARITEMS"] = {
-			[81326] = {enable=true, self=false},	-- 物理易傷
+		["TARITEMS"] = {			
 			[115078] = {enable=true, self=true,},   -- 點穴
 			[115175] = {enable=true, self=true,},   -- 舒和之霧
-			[115798] = {enable=true, self=false,},	-- 弱化攻擊
 			[119611] = {enable=true, self=true,},   -- 回生迷霧
-			[132120] = {enable=true, self=true,},   -- 迷霧繚繞
-			[115798] = {enable=true, self=false,},	-- ®z¤Æ§ðÀ»
-			[117737] = {enable=true, self=false,},	-- Åö¨g (Å]¥j¤s4¤ý)
-			[117756] = {enable=true, self=false,},	-- ©ÄÀ¶ (Å]¥j¤s4¤ý)
-			[123059] = {enable=true, self=false,},	-- °Ê·n (®£Äß5¤ý¼W¶Ëbuff)
-			[123471] = {enable=true, self=false},	-- ¼W±j (®£Äß¤§¤ß2¤ý)
-			[126958] = {enable=true, self=false,},	-- ¯Ç©Ô¥d·Ù¤§Ä² (Å]¥j¤s¤p©Ç)
-			[127372] = {enable=true, self=false,},	-- ¤£Ã­©w¦å²M
-			[131996] = {enable=true, self=false,},	-- µhÀ» (Â×¬u¥x4¤ý¤j©Û)			
-			[132726] = {enable=true, self=false,},	-- 成長
-			[136431] = {enable=true, self=false,},	-- Àt´ß½ÄÀ» (¹p¾^4¤ý¼W¶Ë)
+			
 		},
 		-- Spell Cooldown Alert / 本職業技能CD區
 		["SCDITEMS"] = {
@@ -1754,7 +1749,6 @@ function EventAlert_LoadSpellArray()
 			[115203] = {enable=true,},   -- 石形絕釀
 			[115288] = {enable=true,},   -- 凝神絕釀
 			[115399] = {enable=true,},   -- 真氣絕釀
-			[115546] = {enable=true,},   -- 嘲心嘯
 			[116705] = {enable=true,},   -- 天矛鎖喉手
 			[116847] = {enable=true,},   -- 飛玉疾風
 			[119381] = {enable=true,},   -- 掃葉腿
@@ -1771,61 +1765,40 @@ function EventAlert_LoadSpellArray()
 
 
 --------------------------------------------------------------------------------
--- Other / 跨職業共通區
+-- Other / 跨職業共通區 (包含自身BUFF/DEBUFF+目標BUFF/DEBUFF)
 --------------------------------------------------------------------------------
 	EADef_Items[EA_CLASS_OTHER] = {
-		[17] = {enable=true,},		-- ªª®v - ¯u¨¥³N:¬Þ
-		[7001] = {enable=true,},	-- ªª®v - ¥ú§ô¬u«ì´_
-		[10060] = {enable=true,},	-- ªª®v - ª`¤J¯à¶q
-		[16191] = {enable=true,},	-- ÂÄº¡ - ªk¤O¤§¼é¹ÏÄË
-		[29166] = {enable=true,},	-- ¼w¾|¨Ì - ±Ò°Ê
-		[33206] = {enable=true,},	-- ªª®v - µh­WÂíÀ£
-		[81782] = {enable=true,},	-- ªª®v - ¯u¨¥³N:¾À
-		[98007] = {enable=true,},	-- ÂÄº¡ - ÆF»î³sµ²¹ÏÄË
-
-		[32182] = {enable=true,},	-- ÂÄº¡ - ­^«i®ð·§
-		[80353] = {enable=true,},	-- ªk®v - ®É¶¡§á¦±
-		[90355] = {enable=true,},	-- Ây¤H - ¤W¥j¨g¶Ã
-
-		[104993] = {enable=true,},	-- ¥É»î (ªþÅ])
-		[116631] = {enable=true,},	-- ¥¨¹³ (ªþÅ])
-		[120032] = {enable=true,},	-- ¿ûÅK¤§»R (ªþÅ])
-		[125487] = {enable=true,},	-- ¥ú¯¾ (ªþÅ])
-		[125488] = {enable=true,},	-- ·t½÷ (ªþÅ])
-		[126266] = {enable=true,},	-- ±Ò»X (ªÅªº¤ôªG±í)
-		[126577] = {enable=true,},	-- ¤ßÆF¥ú½÷ (¦t©z¤§¥ú)
-		[126582] = {enable=true,},	-- ¤£²¾¤§¤O (¹p¯«ªº³Ì«á©R¥O)
-		[126599] = {enable=true,},	-- ¯e³t (»A¥É¨®¾r¨è¹³)
-		[126640] = {enable=true,},	-- ¯P¥ú (¤Ó¶§¤§»î)
-		[126646] = {enable=true,},	-- Ä²¸I¤£¤Î (¹ÚÆL¤§ª«)
-		[126657] = {enable=true,},	-- ÁB±¶ (·tÃú±Û´õ)
-		[128984] = {enable=true,},	-- ¤Ñ¯«½çºÖ (³·«ã¸tª«)
-		[128985] = {enable=true,},	-- ¤Ñ¯«½çºÖ (¨ª¦N¸tª«)
-		[128986] = {enable=true,},	-- ¤Ñ¯«½çºÖ (³·«ã¸tª«)
-		[128987] = {enable=true,},	-- ¤Ñ¯«½çºÖ (¥ÉÀs¸tª«)
-		[128988] = {enable=true,},	-- ¤Ñ¯«Å@¦ö («ã¥ü¸tª«)
-		[136087] = {enable=true,},	-- ·x¤ßªÌ (¼v¼ï¤§Å§ªº°í©w©G²Å)
-		[138728] = {enable=true,},	-- ¾Ô²¤Âà¶i (¼v¼ï¤§Å§ªº°í©w©G²Å)
-	
-		[117878] = {enable=true,overgrow=6},	-- ¶W¸ü (Å]¥j¤sÄ_®w5¤ý-¦ã©Ô±^)
-		[118091] = {enable=true,overgrow=5},	-- Á¶Âp¤§¦a (Â×¬u¥x1¤ý)
-		[118977] = {enable=true,redsectext=5},	-- µL¬È (Â×¬u¥x4¤ý)
-		[122752] = {enable=true,},	-- ·t¼v¤§®§ (Â×¬u¥x2¤ý)
-		[122768] = {enable=true,overgrow=8},	-- ®£©Æ³±¼v (Â×¬u¥x2¤ý)
-		[122858] = {enable=true,},	-- ¤é¥úÅ¢¸n (Â×¬u¥x2¤ý)
-		[123081] = {enable=true,},	-- ±Ó·P (®£Äß¤§¤ß3¤ý)
-		[123121] = {enable=true,overgrow=8},	-- ¼QÂq (Â×¬u¥x3¤ý)
-		[123180] = {enable=true,},	-- ¯e­·¨B (®£Äß¤§¤ß2¤ý)
-		[123474] = {enable=true,overgrow=2},	-- À£­Ë©ÊÅ§À» (®£Äß¤§¤ß2¤ý)
-		[123707] = {enable=true,overgrow=3},	-- ¤k¬Ó¤§²´ (®£Äß¤§¤ß6¤ý)
-		[130742] = {enable=true,redsectext=5},	-- µL¬È (Â×¬u¥x4¤ý)
-		
-		[136767] = {enable=true,overgrow=5},	-- ¤T­«¬ï¨ë (¹p¾^2¤ý)
-		[136903] = {enable=true,overgrow=9},	-- ÄY´H¤§À» (¹p¾^3¤ý-Á÷¤ý)
-		[136911] = {enable=true,overgrow=9},	-- ÄY´H¤§À» (¹p¾^3¤ý-Á÷¤ý)
-		[138002] = {enable=true,},	-- ¬y½è®ÄªG (¹p¾^1¤ý¼W¶Ë)
-		[138349] = {enable=true,},	-- ÀR¹q³Ð¶Ë (¹p¾^1¤ý)
-		[138389] = {enable=true,},	-- ÀR¹q³Ð¶Ë (¹p¾^1¤ý)
+		[80353] = {["enable"] = true,},
+		[64901] = {["enable"] = true,["name"] = "希望象徵",},
+		[29166] = {["enable"] = true,},
+		[102342] ={["enable"] = true,["name"] = "鐵樹皮術",},
+		[64844] = {["enable"] = true,["name"] = "神聖禮頌",},
+		[53563] = {["enable"] = true,["name"] = "聖光信標",},
+		[90355] = {["enable"] = true,},
+		[2825] = {["enable"] = true,["name"] = "嗜血",},
+		[10060] = {["enable"] = true,},
+		[81782] = {["enable"] = true,},
+		[33206] = {["enable"] = true,},
+		[32182] = {["enable"] = true,},
+		[98007] = {["enable"] = true,},
+		[1022] = {["enable"] = true,["name"] = "保護祝福",self=false},
+		[6940] = {["enable"] = true,["name"] = "犧牲祝福",self=false},
+		[47788] = {["enable"] = true,["name"] = "守護聖靈",self=false},
+		[1850] = {["enable"] = true,["name"] = "突進",self=false},
+		[146555] = {["enable"] = true,["name"] = "憤怒之鼓",self=false},
+		[215864] = {["enable"] = true,["name"] = "時雨",self=false},
+		[159234] = {enable=true,self=true},  	-- 自身BUFF:雷霆王印記
+		[186265] = {enable=true,self=false,},   -- 目標BUFF:巨龜守護 
+		[48707] = {enable=true,self=false,},   	-- 目標BUFF:反魔法護罩
+		[163505] = {enable=true,self=false,},  	-- 目標DEBUFF:掃擊(昏迷4秒)
+		[127797] = {enable=true, self=false,},	-- 目標DEBUFF:厄索之旋
+		[5211] = {enable=true, self=false,},	-- 目標DEBUFF:猛力重擊
+		[33786] = {enable=true, self=false,},	-- 目標DEBUFF:颶風術(榮譽天賦)
+		[5211] = {enable=true,self=false},  	-- 目標DEBUFF:猛力重擊
+		[45438] = {enable=true,self=false},  	-- 目標BUFF:寒冰屏障
+		[82691] = {enable=true,self=false},  	-- 目標DEBUFF:霜之環
+		[28271] = {enable=true,self=false},  	-- 目標DEBUFF:變形術
+		[228600] = {enable=true,self=false},  	-- 目標DEBUFF:冰川長槍
 		
 	}
 

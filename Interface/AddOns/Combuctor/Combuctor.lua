@@ -7,20 +7,11 @@
 Combuctor = LibStub('AceAddon-3.0'):NewAddon('Combuctor', 'AceEvent-3.0', 'AceConsole-3.0')
 local L = LibStub('AceLocale-3.0'):GetLocale('Combuctor')
 local CURRENT_VERSION = GetAddOnMetadata('Combuctor', 'Version')
-
-BF_OLDContainerFrame_Update = ContainerFrame_Update
-
-function BF_ContainerFrame_Update(frame)
-	if frame.size and tonumber(frame.size) then
-		BF_OLDContainerFrame_Update(frame)
-	end
-end
-ContainerFrame_Update = BF_ContainerFrame_Update
+local playerName,playerRealm = UnitName('player'),GetRealmName();
 
 --[[
 	Loading/Profile Functions
 --]]
-
 function Combuctor:OnInitialize()
 	self.profile = self:InitDB()
 
@@ -32,9 +23,6 @@ function Combuctor:OnInitialize()
 				self:UpdateVersion()
 			end
 		end
-	--new user
-	else
-		version = CURRENT_VERSION
 	end
 
 	--slash command support
@@ -42,13 +30,16 @@ function Combuctor:OnInitialize()
 	self:RegisterChatCommand('cbt', 'OnSlashCommand')
 end
 
+function Combuctor:UpdateVersion()
+	CombuctorDB4,BF_VoidStorageDB = nil,nil
+	self:InitDB()
+	self.db.version = CURRENT_VERSION
+end
+
 function Combuctor:InitDB()
 	if not CombuctorDB4 then
 		CombuctorDB4 = {
 			version = CURRENT_VERSION,
-			global = {
-				maxScale = 1.2,
-			},
 			profiles = {
 			}
 		}
@@ -60,9 +51,9 @@ end
 
 function Combuctor:GetProfile(player)
 	if not player then
-		player = UnitName('player')
+		player = playerName
 	end
-	return self.db.profiles[player .. ' - ' .. GetRealmName()]
+	return self.db.profiles[player .. ' - ' .. playerRealm]
 end
 
 local function addSet(sets, exclude, name, ...)
@@ -104,7 +95,7 @@ local function getDefaultBankSets()
 end
 
 function Combuctor:InitProfile()
-	local player, realm = UnitName('player'), GetRealmName();
+	local player, realm = playerName, playerRealm;
 	local numberSlot = 0
 	for i=0,4,1 do
 		numberSlot = numberSlot+GetContainerNumSlots(i)
@@ -139,18 +130,19 @@ function Combuctor:GetBaseProfile(ratio)
 	}
 end
 
-function Combuctor:UpdateVersion()
-	CombuctorDB4,BF_VoidStorageDB = nil,nil
-	self:InitDB()
-	self.db.version = CURRENT_VERSION
-end
-
 --[[
 	Events
 --]]
+local BF_OLDContainerFrame_Update = ContainerFrame_Update
+local function BF_ContainerFrame_Update(frame)
+	if frame.size and tonumber(frame.size) then
+		BF_OLDContainerFrame_Update(frame)
+	end
+end
+ContainerFrame_Update = BF_ContainerFrame_Update
 
 function Combuctor:OnEnable()
-	local profile = Combuctor:GetProfile(UnitName('player'))
+	local profile = Combuctor:GetProfile(playerName)
 	ContainerFrame_Update_ORIG = ContainerFrame_Update_ORIG or ContainerFrame_Update
 
 	self.frames = {
@@ -167,7 +159,6 @@ local OpenBag_ORIG = OpenBag;
 local ToggleBag_ORIG = ToggleBag;
 local OpenAllBags_ORIG = OpenAllBags ;
 local OpenBackPack_ORIG = OpenBackpack;
-local ToggleKeyRing_ORIG = ToggleKeyRing;
 local ToggleAllBags_ORIG = ToggleAllBags;
 local ToggleBackpack_ORIG = ToggleBackpack;
 
@@ -193,7 +184,7 @@ end
 
 local function m_ToggleAllBags(arg0,arg1)
 	if IsBackPackOpen() then
-		if not Combuctor.Autobackpack or GetTime()-Combuctor.Autobackpack>0.5 then
+		if not Combuctor.Autobackpack or GetTime() - Combuctor.Autobackpack > 0.5 then
 			hideBackPack();
 			if IsBackPackOpen() then
 				toggleBackPack();
@@ -205,29 +196,29 @@ local function m_ToggleAllBags(arg0,arg1)
 end
 
 local function toggleBag(bag,configBank,configBackPack)
-	if configBank==1 and configBackPack==1 then --integrate for both bank and backpack
+	if configBank == 1 and configBackPack == 1 then --integrate for both bank and backpack
 		Combuctor:Toggle(bag)
 		ContainerFrame_Update =function() end
-	elseif configBank==1 then --integrate for bank only
-		if bag ==-1 or bag >4 then
+	elseif configBank == 1 then --integrate for bank only
+		if bag == -1 or bag > 4 then
 			Combuctor:Toggle(bag)
 		else
 			ToggleBag_ORIG(bag)
 		end
-		ContainerFrame_Update =function(frame)
+		ContainerFrame_Update = function(frame)
 			local id = frame:GetID()
 			if id == -1 or id > 4 then
 			else
 				ContainerFrame_Update_ORIG(frame)
 			end
 		end
-	elseif configBackPack==1 then  --integrate for backpack only
-		if bag ==-1 or bag >4 then
+	elseif configBackPack == 1 then  --integrate for backpack only
+		if bag == -1 or bag > 4 then
 			ToggleBag_ORIG(bag)
 		else
 			Combuctor:Toggle(bag)
 		end
-		ContainerFrame_Update =function(frame)
+		ContainerFrame_Update = function(frame)
 			local id = frame:GetID()
 			if id == -1 or id > 4 then
 				ContainerFrame_Update_ORIG(frame)
@@ -239,22 +230,8 @@ local function toggleBag(bag,configBank,configBackPack)
 	end
 end
 
-local function toggleKeyRing()
-	Combuctor:Toggle(KEYRING_CONTAINER)
-end
-
 local function openAllBags()
 	Combuctor:Show(BACKPACK_CONTAINER)
-end
-
-local function bankOpened()
-	Combuctor:Show(BANK_CONTAINER, true)
-	Combuctor:Show(BACKPACK_CONTAINER, true)
-end
-
-local function bankClosed()
-	Combuctor:Hide(BANK_CONTAINER, true)
-	Combuctor:Hide(BACKPACK_CONTAINER, true)
 end
 
 function Combuctor:Show(bag, auto)
@@ -315,7 +292,6 @@ end
 
 function Combuctor:OnSlashCommand(msg)
 	local msg = msg and msg:lower()
-
 	if msg == 'bank' then
 		self:Toggle(BANK_CONTAINER)
 	elseif msg == 'bags' then
@@ -328,15 +304,6 @@ function Combuctor:OnSlashCommand(msg)
 		print('- bags: Toggle inventory')
 		print('- options: Shows the options menu')
 	end
-end
-
---[[ Utility Functions ]]--
-function Combuctor:SetMaxItemScale(scale)
-	self.db.global.maxScale = scale or 1
-end
-
-function Combuctor:GetMaxItemScale()
-	return self.db.global.maxScale
 end
 
 --utility function: create a widget class
@@ -368,7 +335,6 @@ function Combuctor:HookBagEvents(configBank,configBackPack)
 		OpenBag = m_ToggleAllBags;
 		OpenAllBags	= openAllBags;
 		OpenBackpack = showBackPack;
-		ToggleKeyRing = toggleKeyRing;
 		ToggleAllBags = m_ToggleAllBags;
 		ToggleBackpack = toggleBackPack;
 
@@ -380,7 +346,6 @@ function Combuctor:HookBagEvents(configBank,configBackPack)
 		OpenBag = OpenBag_ORIG;
 		OpenAllBags	= OpenAllBags_ORIG;
 		OpenBackpack = OpenBackPack_ORIG;
-		ToggleKeyRing = ToggleKeyRing_ORIG;
 		ToggleAllBags = ToggleAllBags_ORIG;
 		ToggleBackpack = ToggleBackpack_ORIG;
 
@@ -406,8 +371,8 @@ function Combuctor:HookBagEvents(configBank,configBackPack)
 				self:Show(BANK_CONTAINER, true);
 			end
 			if EnableBag then
-			Combuctor.Autobackpack =GetTime();
-			self:Show(BACKPACK_CONTAINER, true);
+				Combuctor.Autobackpack = GetTime();
+				self:Show(BACKPACK_CONTAINER, true);
 			end
 		end);
 		self:RegisterMessage('COMBUCTOR_BANK_CLOSED', function()

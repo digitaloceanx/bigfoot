@@ -21,6 +21,7 @@ function EventAlert_Icon_Options_Frame_Init()
 	EA_Icon_Options_Frame_SCD_UseCooldown:SetChecked(EA_Position.SCD_UseCooldown);
 	EA_Icon_Options_Frame_SpecFlag_HolyPower:SetChecked(EA_Config.SpecPowerCheck.HolyPower);
 	EA_Icon_Options_Frame_SpecFlag_RunicPower:SetChecked(EA_Config.SpecPowerCheck.RunicPower);
+	EA_Icon_Options_Frame_SpecFlag_Runes:SetChecked(EA_Config.SpecPowerCheck.Runes);
 	EA_Icon_Options_Frame_SpecFlag_SoulShards:SetChecked(EA_Config.SpecPowerCheck.SoulShards);
 	EA_Icon_Options_Frame_SpecFlag_LunarPower:SetChecked(EA_Config.SpecPowerCheck.LunarPower);
 	EA_Icon_Options_Frame_SpecFlag_ComboPoint:SetChecked(EA_Config.SpecPowerCheck.ComboPoint);
@@ -169,6 +170,9 @@ function EventAlert_Icon_Options_Frame_PaintAlertFrame()
 		if (EA_Config.SpecPowerCheck.RunicPower) then
 			EventAlert_Icon_Options_Frame_SetAlertFrameText(EAFrameSpec_10060, "", false);  -- Death Knight Runic
 		end
+		if (EA_Config.SpecPowerCheck.Runes) then
+			--EventAlert_Icon_Options_Frame_SetAlertFrameText(EAFrameSpec_10050, "", false);  -- Death Knight Runes
+		end
 	elseif (EA_playerClass == EA_CLASS_DRUID) then
 		if (EA_Config.SpecPowerCheck.ComboPoint) then
 			EventAlert_Icon_Options_Frame_SetAlertFrameText(EAFrameSpec_10000, "", false);  -- Druid Combo Point
@@ -216,6 +220,9 @@ function EventAlert_Icon_Options_Frame_PaintAlertFrame()
 	elseif (EA_playerClass == EA_CLASS_HUNTER) then --  支援獵人集中值
 		if (EA_Config.SpecPowerCheck.Focus) then
 			EventAlert_Icon_Options_Frame_SetAlertFrameText(EAFrameSpec_10020, "", false);  -- Hunter Focus
+		end
+		if (EA_Config.SpecPowerCheck.PetFocus) then
+			EventAlert_Icon_Options_Frame_SetAlertFrameText(EAFrameSpec_10021, "", false);  -- Hunter Pet Focus
 		end
 	elseif (EA_playerClass == EA_CLASS_MAGE) then --  支援秘法充能
 		if (EA_Config.SpecPowerCheck.ArcaneCharges) then

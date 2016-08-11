@@ -1,7 +1,7 @@
 --[[
     This file is part of Decursive.
     
-    Decursive (v 2.7.4.5) add-on for World of Warcraft UI
+    Decursive (v 2.7.4.7) add-on for World of Warcraft UI
     Copyright (C) 2006-2014 John Wellesz (archarodim AT teaser.fr) ( http://www.2072productions.com/to/decursive.php )
 
     Starting from 2009-10-31 and until said otherwise by its author, Decursive
@@ -17,7 +17,7 @@
     Decursive is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY.
     
-    This file was last updated on 2014-10-13T09:20:46Z
+    This file was last updated on 2016-07-25T17:41:14Z
 --]]
 -------------------------------------------------------------------------------
 
@@ -123,6 +123,7 @@ DC.ClassNumToLName = {
     [19]        = LC[DC.CLASS_WARRIOR],
     [20]        = LC[DC.CLASS_DEATHKNIGHT],
     [21]        = LC[DC.CLASS_MONK],
+    [22]        = LC[DC.CLASS_DEMONHUNTER],
 }
 
 DC.ClassLNameToNum = D:tReverse(DC.ClassNumToLName);
@@ -139,6 +140,7 @@ DC.ClassNumToUName = {
     [19]        = DC.CLASS_WARRIOR,
     [20]        = DC.CLASS_DEATHKNIGHT,
     [21]        = DC.CLASS_MONK,
+    [22]        = DC.CLASS_DEMONHUNTER,
 }
 
 DC.ClassUNameToNum = D:tReverse(DC.ClassNumToUName);
@@ -318,11 +320,11 @@ do
           4 --> our pet, Pets
 
           - 8 groups with 5 persons maximum per group
-          - 11 classes with 80 persons max for each class (Pets may be counted)
+          - 12 classes with 80 persons max for each class (Pets may be counted)
           - 80 persons for default (including possible pets)
 
           default indexes:  100 to 840 (player's index will be 900)
-          class indexes:    1,000, 2,000, 3,000, till 11,000
+          class indexes:    1,000, 2,000, 3,000, till 12,000
           Group indexes:    12,000, 24,000, 36,000, till 96,000
           Priority list:    10^5 till 10^7
           pet indexes:      Same as above but * -1
@@ -697,7 +699,7 @@ end
 --}}}
 
 -------------------------------------------------------------------------------
-T._LoadedFiles["Dcr_Raid.lua"] = "2.7.4.5";
+T._LoadedFiles["Dcr_Raid.lua"] = "2.7.4.7";
 
 -- "Your God is dead and no one cares"
 -- "If there is a Hell I'll see you there"

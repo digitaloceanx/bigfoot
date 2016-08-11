@@ -1,3 +1,4 @@
+
 --[[
 	InvData
 		A wrapper libary for accessing inventory data
@@ -15,7 +16,6 @@ end
 function InvData:AtBank()
 	return self.atBank
 end
-
 
 --[[
 	Bag Data Access
@@ -77,7 +77,6 @@ function InvData:GetItemInfo(bag, slot, player)
 	return link, count, texture, quality, locked, readable, cached
 end
 
-
 function InvData:GetItemLink(bag, slot, player)
 	if self:IsCachedBag(bag, player) then
 		return BagnonDB and (BagnonDB:GetItemData(bag, slot, player))
@@ -85,31 +84,11 @@ function InvData:GetItemLink(bag, slot, player)
 	return GetContainerItemLink(bag, slot)
 end
 
---returns the count of items in the given slot
-function InvData:GetItemCount(bag, slot, player)
-	if self:IsCachedBag(bag, player) then
-		if BagnonDB then
-			local link, count = BagnonDB:GetItemData(bag, slot, player)
-			if link then
-				return count or 1
-			end
-		else
-			return 0
-		end
-	end
-	return select(2, GetContainerItemInfo(bag, slot))
-end
-
-
 --[[ Bag Type Comparisons ]]--
 
 --returns true if the given bag is cached AND we have a way of reading data for it
 function InvData:IsCachedBag(bag, player)
 	return currentPlayer ~= (player or currentPlayer) or (self:IsBankBag(bag) and not self:AtBank())
-end
-
-function InvData:IsInventoryBag(bag)
-	return bag == KEYRING_CONTAINER or (bag > -1 and bag < 5)
 end
 
 function InvData:IsBankBag(bag)

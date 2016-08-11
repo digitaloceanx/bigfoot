@@ -11,7 +11,7 @@ local Item = Combuctor:NewClass('Button')
 Item.SIZE = 37
 Combuctor.Item = Item
 
-local ITEM_COLOR = {	
+local ITEM_COLOR = {
 	[0] = {0.8,	0.8,0.8,0.8},
 	[1] = {0.5,	0.5,0.5,0.8},
 	[2] = {0, 	1.0,0, 	0.8},
@@ -81,7 +81,7 @@ end
 local id = 1
 function Item:New()
 	local item = self:Bind(_G["CombuctorItem"..id] or CreateFrame('Button', 'CombuctorItem' .. id, nil, 'ContainerFrameItemButtonTemplate'))
-	
+
 	--5.4 add
 	local newItemTexture = item.NewItemTexture;
 	if newItemTexture then
@@ -200,14 +200,14 @@ function Item:Update()
 	else
 		SetItemButtonNormalTextureVertexColor(self, 1.0, 1.0, 1.0);
 	end
-	
-	self:UpdateBorder(quality,Combuctor.ItemSearch:Find(link,'quest'), questId, isActive)
+
+	self:UpdateBorder(quality,nil, questId, isActive)
 	self:UpdateCooldown()
 
 	if GameTooltip:IsOwned(self) then
 		self:UpdateTooltip()
 	end
-	
+
 	if not self.hasItem then	--若当前物品栏无物品则隐藏tooltip
 		GameTooltip:Hide();
 	end
@@ -217,13 +217,13 @@ end
 function Item:UpdateBorder(quality,quest, questId, isActive)
 	local border = self.border
 	local link = self.hasItem
-	
+
 	if questId then
 		if (not isActive) then
 			_G[self:GetName().."IconQuestTexture"]:SetTexture(TEXTURE_ITEM_QUEST_BANG);
 		else
 			_G[self:GetName().."IconQuestTexture"]:SetTexture(TEXTURE_ITEM_QUEST_BORDER);
-		end		
+		end
 		_G[self:GetName().."IconQuestTexture"]:Show();
 		return;
 	else
@@ -263,7 +263,7 @@ end
 
 --fade out slots, if not true
 function Item:Highlight(enable)
-	if enable then		
+	if enable then
 		self:LockHighlight()
 	else
 		self:UnlockHighlight()

@@ -75,28 +75,28 @@ function PorEnhanceConfigFunc()
 			end
 		)
 
-		ModManagement_RegisterCheckBox(
-			"PortraitEnhancement",
-			PORTRAIT_ENHANCEMENT_ENABLE_XP_BAR,
-			nil,
-			"ShowXPBar",
-			1,
-			function(arg)
-				if arg == 1 then
-					if not BigFoot_IsAddOnLoadedFromBigFoot("TUnitFrame") then
-						BigFoot_LoadAddOn("TUnitFrame")
-					end
-					if BigFoot_IsAddOnLoadedFromBigFoot("TUnitFrame") then
-						TUnitFrame_SwitchExpBar(true)
-					end
-				else
-					if BigFoot_IsAddOnLoadedFromBigFoot("TUnitFrame") then
-						TUnitFrame_SwitchExpBar(false)
-					end
-				end
-			end,
-			1
-		)
+		-- ModManagement_RegisterCheckBox(
+			-- "PortraitEnhancement",
+			-- PORTRAIT_ENHANCEMENT_ENABLE_XP_BAR,
+			-- nil,
+			-- "ShowXPBar",
+			-- 1,
+			-- function(arg)
+				-- if arg == 1 then
+					-- if not BigFoot_IsAddOnLoadedFromBigFoot("TUnitFrame") then
+						-- BigFoot_LoadAddOn("TUnitFrame")
+					-- end
+					-- if BigFoot_IsAddOnLoadedFromBigFoot("TUnitFrame") then
+						-- TUnitFrame_SwitchExpBar(true)
+					-- end
+				-- else
+					-- if BigFoot_IsAddOnLoadedFromBigFoot("TUnitFrame") then
+						-- TUnitFrame_SwitchExpBar(false)
+					-- end
+				-- end
+			-- end,
+			-- 1
+		-- )
 
 		ModManagement_RegisterCheckBox(
 			"PortraitEnhancement",

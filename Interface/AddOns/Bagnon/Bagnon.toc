@@ -6,7 +6,7 @@
 ## Notes-zhCN: |cff00ff00Bagnon|r
 ## Notes-zhTW: |cff00ff00Bagnon|r
 ## Author: Tuller & Jaliborc (João Cardoso)
-## Version: 7.0.3
+## Version: 7.0.4
 ## SavedVariables: Bagnon_Sets
 ## Dependencies: BigFoot
 ## X-Revision: BigFoot

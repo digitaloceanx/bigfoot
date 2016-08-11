@@ -28,7 +28,7 @@ function ItemSearch:Find(itemLink, search)
 	end
 
 	if search:match('\124') then
-		return self:FindUnionSearch(itemLink, strsplit('\124', search))
+		return self:FindUnionSearch(itemLink, strsplit('\124', search))		-- |
 	end
 	return self:FindUnionSearch(itemLink, search)
 end
@@ -37,7 +37,7 @@ function ItemSearch:FindUnionSearch(itemLink, ...)
 	for i = 1, select('#', ...) do
 		local search = select(i, ...)
 		if search and search ~= '' then
-			if search:match('\038') then
+			if search:match('\038') then	-- &
 				if self:FindIntersectSearch(itemLink, strsplit('\038', search)) then
 					return true
 				end
@@ -64,7 +64,7 @@ function ItemSearch:FindIntersectSearch(itemLink, ...)
 end
 
 function ItemSearch:FindNegatableSearch(itemLink, search)
-	local negatedSearch = search:match('^\033(.+)$')
+	local negatedSearch = search:match('^\033(.+)$')	--!
 	if negatedSearch then
 		return not self:FindPrimitiveSearch(itemLink, negatedSearch)
 	end
@@ -97,6 +97,20 @@ end
 --[[
 	'Primitive' Searches
 --]]
+
+--tooltip
+local tooltipSearches = {
+	['boe'] = ITEM_BIND_ON_EQUIP,
+	['bop'] = ITEM_BIND_ON_PICKUP,
+	['bou'] = ITEM_BIND_ON_USE,
+	['quest'] = ITEM_BIND_QUEST,
+	['boa'] = ITEM_BIND_TO_ACCOUNT,
+	['bob'] = ITEM_BNETACCOUNTBOUND,
+	['bob2'] = ITEM_BIND_TO_BNETACCOUNT,
+}
+
+local tooltipScanner = _G['CombuctoTooltipScanner'] or CreateFrame('GameTooltip', 'CombuctoTooltipScanner', UIParent, 'GameTooltipTemplate')
+
 local function search_IsInText(search, ...)
 	for i = 1, select('#', ...) do
 		local text = select(i, ...)
@@ -107,17 +121,6 @@ local function search_IsInText(search, ...)
 	end
 	return false
 end
-
---tooltip
-local tooltipSearches = {
-	['boe'] = ITEM_BIND_ON_EQUIP,
-	['bop'] = ITEM_BIND_ON_PICKUP,
-	['bou'] = ITEM_BIND_ON_USE,
-	['quest'] = ITEM_BIND_QUEST,
-	['boa'] = ITEM_BIND_TO_ACCOUNT
-}
-
-local tooltipScanner = _G['CombuctoTooltipScanner'] or CreateFrame('GameTooltip', 'CombuctoTooltipScanner', UIParent, 'GameTooltipTemplate')
 
 local function link_FindSearchInTooltip(itemLink, search)
 	if InCombatLockdown() then return end

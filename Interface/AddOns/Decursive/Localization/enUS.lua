@@ -1,7 +1,7 @@
 --[[
     This file is part of Decursive.
     
-    Decursive (v 2.7.4.5) add-on for World of Warcraft UI
+    Decursive (v 2.7.4.7) add-on for World of Warcraft UI
     Copyright (C) 2006-2014 John Wellesz (archarodim AT
     teaser.fr) ( http://www.2072productions.com/to/decursive.php )
 
@@ -21,7 +21,7 @@
     Decursive is distributed in the hope that it will be useful, but WITHOUT
     ANY WARRANTY.
 
-    This file was last updated on 2015-01-25T21:31:39Z
+    This file was last updated on 2016-07-25T09:26:06Z
 --]]
 -------------------------------------------------------------------------------
 
@@ -114,7 +114,7 @@ L["COLORSTATUS"] = "Set the color for the '%s' MUF status."
 L["CTRL"] = "Ctrl"
 L["CURE_PETS"] = "Scan and cure pets"
 L["CURSE"] = "Curse"
-L["DEBUG_REPORT_HEADER"] = [=[|cFF11FF33Please report the content of this window to Archarodim+DcrReport@teaser.fr|r
+L["DEBUG_REPORT_HEADER"] = [=[|cFF11FF33Please email the content of this window to <Archarodim+DcrReport@teaser.fr>|r
 |cFF009999(Use CTRL+A to select all and then CTRL+C to put the text in your clip-board)|r
 Also tell in your report if you noticed any strange behavior of Decursive.
 ]=]
@@ -487,4 +487,4 @@ L["UNSTABLERELEASE"] = "Unstable release"
 
 
 
-T._LoadedFiles["enUS.lua"] = "2.7.4.5";
+T._LoadedFiles["enUS.lua"] = "2.7.4.7";

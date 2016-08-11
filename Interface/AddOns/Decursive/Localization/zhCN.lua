@@ -1,7 +1,7 @@
 ﻿--[[
     This file is part of Decursive.
     
-    Decursive (v 2.7.4.5) add-on for World of Warcraft UI
+    Decursive (v 2.7.4.7) add-on for World of Warcraft UI
     Copyright (C) 2006-2014 John Wellesz (archarodim AT
     teaser.fr) ( http://www.2072productions.com/to/decursive.php )
 
@@ -74,7 +74,7 @@ T._LoadedFiles["zhCN.lua"] = false;
 local L = LibStub("AceLocale-3.0"):NewLocale("Decursive", "zhCN");
 
 if not L then
-    T._LoadedFiles["zhCN.lua"] = "2.7.4.5";
+    T._LoadedFiles["zhCN.lua"] = "2.7.4.7";
     return;
 end;
 
@@ -115,10 +115,10 @@ L["COLORSTATUS"] = "设定“%s”时微单元框体的颜色。"
 L["CTRL"] = "Ctrl"
 L["CURE_PETS"] = "检测并净化宠物"
 L["CURSE"] = "诅咒"
-L["DEBUG_REPORT_HEADER"] = [=[|cFF11FF33请报告此窗口的内容给 Archarodim+DcrReport@teaser.fr|r
+L["DEBUG_REPORT_HEADER"] = [=[|cFF11FF33请报告此窗口的内容给 <Archarodim+DcrReport@teaser.fr>|r
 |cFF009999（使用 Ctrl+A 选择所有 Ctrl+C 复制文本到剪切板）|r
 如果发现 Decursive 任何奇怪的行为也一并报告。
-]=]
+]=] -- Needs review
 L["DECURSIVE_DEBUG_REPORT"] = "**** |cFFFF0000Decursive 除错报告|r ****"
 L["DECURSIVE_DEBUG_REPORT_BUT_NEW_VERSION"] = [=[|cFF11FF33Decursive 崩溃了但是别怕！新版本的 Decursive 已经被检测到了（%s）。只需简单更新。请到 curse.com 并查询“Decursive”'或使用 Curse 客户端，将自动更新全部插件。|r
 |cFFFF1133别浪费时间在汇报臭虫上了，因为可能已被修复了。只需更新 Decursive 来摆脱这些问题！|r
@@ -486,4 +486,4 @@ L["UNSTABLERELEASE"] = "不稳定版本"
 
 
 
-T._LoadedFiles["zhCN.lua"] = "2.7.4.5";
+T._LoadedFiles["zhCN.lua"] = "2.7.4.7";

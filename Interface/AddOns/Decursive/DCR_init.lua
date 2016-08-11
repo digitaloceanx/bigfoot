@@ -1,7 +1,7 @@
 --[[
     This file is part of Decursive.
 
-    Decursive (v 2.7.4.5) add-on for World of Warcraft UI
+    Decursive (v 2.7.4.7) add-on for World of Warcraft UI
     Copyright (C) 2006-2014 John Wellesz (archarodim AT teaser.fr) ( http://www.2072productions.com/to/decursive.php )
 
     Starting from 2009-10-31 and until said otherwise by its author, Decursive
@@ -17,7 +17,7 @@
     Decursive is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY.
 
-    This file was last updated on 2015-06-29T22:54:41Z
+    This file was last updated on 2016-07-26T11:52:32Z
 --]]
 -------------------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ local function RegisterDecursive_Once() -- {{{
     --@end-debug@]===]
 
     D.name = "Decursive";
-    D.version = "2.7.4.5";
+    D.version = "2.7.4.7";
     D.author = "John Wellesz";
 
     D.DcrFullyInitialized = false;
@@ -79,13 +79,13 @@ local function RegisterLocals_Once() -- {{{
 
     D.L         = LibStub("AceLocale-3.0"):GetLocale("Decursive", true);
 
-    D.LC        = _G.LOCALIZED_CLASS_NAMES_MALE;
+    -- Make sure to never crash if some locals are missing (seen this happen on
+    -- Chinese clients when relying on LOCALIZED_CLASS_NAMES_MALE constant)
+    -- While that was probably caused by a badd-on redefining the constant,
+    -- it's best to stay on the safe side...
 
-    if not D.LC then
-        T._AddDebugText("DCR_init.lua: Couldn't get LOCALIZED_CLASS_NAMES_MALE!");
-        D.LC = {};
-    end
-
+    D.LC = setmetatable(FillLocalizedClassList({}, false), {__index = function(t,k) return k end});
+  
     RegisterLocals_Once = nil;
 end -- }}}
 
@@ -127,6 +127,7 @@ local function SetBasicConstants_Once() -- these are constants that may be used 
     DC.CLASS_WARRIOR     = 'WARRIOR';
     DC.CLASS_DEATHKNIGHT = 'DEATHKNIGHT';
     DC.CLASS_MONK        = 'MONK';
+    DC.CLASS_DEMONHUNTER = 'DEMONHUNTER';
 
     DC.MyClass = "NOCLASS";
     DC.MyName = "NONAME";
@@ -217,12 +218,13 @@ local function SetRuntimeConstants_Once () -- {{{
     local DS = T._C.DS;
     local DSI = T._C.DSI;
 
-    DC.IS_STEALTH_BUFF = D:tReverse({DS["Prowl"], DS["Stealth"], DS["Shadowmeld"],  DS["Invisibility"], DS["Lesser Invisibility"], DS["Camouflage"], DS["SHROUD_OF_CONCEALMENT"], DS['Greater Invisibility']});
+    -- XXX WOWL check
+    DC.IS_STEALTH_BUFF = D:tReverse({DS["Prowl"], DS["Stealth"], DS["Shadowmeld"],  DS["Invisibility"], DS["Lesser Invisibility"], DS['Greater Invisibility']});
 
     DC.IS_HARMFULL_DEBUFF = D:tReverse({DC.DS["Unstable Affliction"], DC.DS["Vampiric Touch"]}); --, , DC.DS["Fluidity"]}); --, "Test item"});
     DC.IS_DEADLY_DEBUFF   = D:tReverse({DC.DSI["Fluidity"]});
 
-    
+
 
     -- SPELL TABLE -- must be parsed after spell translations have been loaded {{{
     DC.SpellsToUse = {
@@ -233,11 +235,13 @@ local function SetRuntimeConstants_Once () -- {{{
             Pet = false,
         },
         -- Mages
+        --[=[ -- LEGION GONE
         [DSI["SPELL_REMOVE_CURSE"]] = {
             Types = {DC.CURSE},
             Better = 0,
             Pet = false,
         },
+        --]=]
         -- Shamans http://www.wowhead.com/?spell=51514
         [DSI["SPELL_HEX"]] = {
             Types = {DC.CHARMED},
@@ -250,25 +254,24 @@ local function SetRuntimeConstants_Once () -- {{{
             Better = 0,
             Pet = false,
         },
+        --[=[ -- LEGION GONE
         -- Hunters http://www.wowhead.com/?spell=19801
         [DSI["SPELL_TRANQUILIZING_SHOT"]] = {
             Types = {DC.ENEMYMAGIC},
             Better = 0,
             Pet = false,
         },
+        --]=]
         -- Monks
-        [DSI["SPELL_DETOX"]] = {
+        [DSI["SPELL_DETOX_1"]] = {
+            Types = {DC.MAGIC, DC.DISEASE, DC.POISON},
+            Better = 2,
+            Pet = false,
+        },
+        [DSI["SPELL_DETOX_2"]] = {
             Types = {DC.DISEASE, DC.POISON},
             Better = 2,
             Pet = false,
-
-            EnhancedBy = 'mistweather',
-            EnhancedByCheck = function ()
-                return (GetSpecialization() == 2) and true or false; -- mist?
-            end,
-            Enhancements = {
-                Types = {DC.MAGIC, DC.DISEASE, DC.POISON},
-            }
         },
         -- Monks
         [DSI["SPELL_DIFFUSEMAGIC"]] = {
@@ -280,36 +283,15 @@ local function SetRuntimeConstants_Once () -- {{{
             },
         },
         -- Paladins
-        [DSI["SPELL_CLEANSE"]] = {
+        [DSI["SPELL_CLEANSE_TOXINS"]] = {
             Types = {DC.DISEASE, DC.POISON},
+            Better = 0,
+            Pet = false,
+        },
+        [DSI["SPELL_CLEANSE"]] = {
+            Types = {DC.MAGIC, DC.DISEASE, DC.POISON},
             Better = 2,
             Pet = false,
-
-            EnhancedBy = 'holy',
-            EnhancedByCheck = function ()
-                return (GetSpecialization() == 1) and true or false; -- holy?
-            end,
-            Enhancements = {
-                Types = {DC.MAGIC, DC.DISEASE, DC.POISON},
-            }
-
-        },
-        [DSI["SPELL_HAND_OF_SACRIFICE"]] = {
-            Types = {},
-            Better = 1,
-            Pet = false,
-
-            EnhancedBy = 'retribution',
-            EnhancedByCheck = function ()
-                return (GetSpecialization() == 3) and true or false; -- ret?
-            end,
-            Enhancements = {
-                Types = {DC.MAGIC},
-                UnitFiltering = {
-                    [DC.MAGIC]  = 2, -- on raid/party only
-                },
-            }
-
         },
         -- Shaman
         [DSI["CLEANSE_SPIRIT"]] = { -- same name as PURIFY_SPIRIT in ruRU XXX
@@ -370,7 +352,7 @@ local function SetRuntimeConstants_Once () -- {{{
             Pet = false,
         },
         -- Warlocks
-        [DSI["PET_DEVOUR_MAGIC"]] = {
+        [DSI["PET_TORCH_MAGIC"]] = {
             Types = {DC.ENEMYMAGIC},
             Better = 0,
             Pet = true,
@@ -408,23 +390,13 @@ local function SetRuntimeConstants_Once () -- {{{
         -- Priests (Discipline, Holy)
         [DSI["SPELL_PURIFY"]] = {
             Types = {DC.MAGIC, DC.DISEASE},
-            Better = 0,
-            Pet = false,
-        },
-        -- Deakth Knights
-        [DSI["SPELL_ICY_TOUCH"]] = {
-            Types = {},
             Better = 1,
             Pet = false,
-
-            EnhancedBy = DS["GLYPH_OF_ICY_TOUCH"],
-            EnhancedByCheck = function ()
-                return (IsPlayerSpell(DSI["GLYPH_OF_ICY_TOUCH"])) and true or false;
-            end,
-            Enhancements = {
-                Types = {DC.ENEMYMAGIC},
-            }
-
+        },
+        [DSI["SPELL_PURIFY_DISEASE"]] = {
+            Types = {DC.DISEASE},
+            Better = 0,
+            Pet = false,
         },
     };
 
@@ -449,9 +421,9 @@ local function InitVariables_Once() -- {{{
     -- A table UnitID=>IsDebuffed (boolean)
     D.UnitDebuffed = {};
 
-    D.Revision = "496ac40"; -- not used here but some other add-on may request it from outside
-    D.date = "2016-07-19T23:19:02Z";
-    D.version = "2.7.4.5";
+    D.Revision = "f7919ae"; -- not used here but some other add-on may request it from outside
+    D.date = "2016-07-26T11:52:32Z";
+    D.version = "2.7.4.7";
 
     if D.date ~= "@project".."-date-iso@" then
         -- @project-timestamp@ doesn't work
@@ -520,7 +492,7 @@ function D:VersionWarnings(forceDisplay) -- {{{
 
             if time() - self.db.global.LastExpirationAlert > 48 * 3600 or forceDisplay then
 
-                T._ShowNotice ("|cff00ff00Decursive version: 2.7.4.5|r\n\n" .. "|cFFFFAA66" .. L["TOC_VERSION_EXPIRED"] .. "|r");
+                T._ShowNotice ("|cff00ff00Decursive version: 2.7.4.7|r\n\n" .. "|cFFFFAA66" .. L["TOC_VERSION_EXPIRED"] .. "|r");
 
                 self.db.global.LastExpirationAlert = time();
             end
@@ -529,7 +501,7 @@ function D:VersionWarnings(forceDisplay) -- {{{
         self.db.global.TocExpiredDetection = false;
     end
 
-    if (("2.7.4.5"):lower()):find("beta") or ("2.7.4.5"):find("RC") or ("2.7.4.5"):find("Candidate") or alpha then
+    if (("2.7.4.7"):lower()):find("beta") or ("2.7.4.7"):find("RC") or ("2.7.4.7"):find("Candidate") or alpha then
 
         D.RunningADevVersion = true;
 
@@ -542,7 +514,7 @@ function D:VersionWarnings(forceDisplay) -- {{{
                 DC.DevVersionExpired = true;
                 -- Display the expiration notice only once evry 48 hours
                 if time() - self.db.global.LastExpirationAlert > 48 * 3600 or forceDisplay then
-                    T._ShowNotice ("|cff00ff00Decursive version: 2.7.4.5|r\n\n" .. "|cFFFFAA66" .. L["DEV_VERSION_EXPIRED"] .. "|r");
+                    T._ShowNotice ("|cff00ff00Decursive version: 2.7.4.7|r\n\n" .. "|cFFFFAA66" .. L["DEV_VERSION_EXPIRED"] .. "|r");
 
                     self.db.global.LastExpirationAlert = time();
                 end
@@ -553,16 +525,16 @@ function D:VersionWarnings(forceDisplay) -- {{{
         end
 
         -- display a warning if this is a developpment version (avoid insults from people who don't know what they're doing)
-        if self.db.global.NonRelease ~= "2.7.4.5" then
-            self.db.global.NonRelease = "2.7.4.5";
-            T._ShowNotice ("|cff00ff00Decursive version: 2.7.4.5|r\n\n" .. "|cFFFFAA66" .. L["DEV_VERSION_ALERT"] .. "|r");
+        if self.db.global.NonRelease ~= "2.7.4.7" then
+            self.db.global.NonRelease = "2.7.4.7";
+            T._ShowNotice ("|cff00ff00Decursive version: 2.7.4.7|r\n\n" .. "|cFFFFAA66" .. L["DEV_VERSION_ALERT"] .. "|r");
         end
     end
 
     --[===[@debug@
     fromCheckOut = true;
     if time() - self.db.global.LastUnpackagedAlert > 24 * 3600  then
-        T._ShowNotice ("|cff00ff00Decursive version: 2.7.4.5|r\n\n" .. "|cFFFFAA66" ..
+        T._ShowNotice ("|cff00ff00Decursive version: 2.7.4.7|r\n\n" .. "|cFFFFAA66" ..
         [[
         |cFFFF0000You're using an unpackaged version of Decursive.|r
         Decursive is not meant to be used this way.
@@ -600,7 +572,7 @@ function D:VersionWarnings(forceDisplay) -- {{{
         if D.db.global.NewerVersionDetected > D.VersionTimeStamp and D.db.global.NewerVersionName ~= D.version then -- it's still newer than this one
             if time() - D.db.global.NewerVersionAlert > 3600 * 24 * 4 then -- it's been more than 4 days since the new version alert was shown
                 if not D.db.global.NewVersionsBugMeNot then -- the user did not disable new version alerts
-                    T._ShowNotice ("|cff55ff55Decursive version: 2.7.4.5|r\n\n" .. "|cFF55FFFF" .. (L["NEW_VERSION_ALERT"]):format(D.db.global.NewerVersionName or "none", date("%Y-%m-%d", D.db.global.NewerVersionDetected)) .. "|r");
+                    T._ShowNotice ("|cff55ff55Decursive version: 2.7.4.7|r\n\n" .. "|cFF55FFFF" .. (L["NEW_VERSION_ALERT"]):format(D.db.global.NewerVersionName or "none", date("%Y-%m-%d", D.db.global.NewerVersionDetected)) .. "|r");
                     D.db.global.NewerVersionAlert = time();
                 end
             end
@@ -868,7 +840,7 @@ function D:SetConfiguration() -- {{{
         end
 
     end
-    
+
 
     if type (D.profile.OutputWindow) == "string" then
         D.Status.OutputWindow = _G[D.profile.OutputWindow];
@@ -1049,6 +1021,12 @@ local function SpellIterator() -- {{{
             D:Debug("|cFF00FF00Shifting to user spells|r");
             --@end-debug@]===]
             return iter(); -- continue with the other table
+        elseif currentSpellTable == DC.SpellsToUse and D.classprofile.UserSpells[currentKey] and not D.classprofile.UserSpells[currentKey].Hidden and not D.classprofile.UserSpells[currentKey].Disabled then
+            -- if the user actively redefined that spell then skip the default one
+            --[===[@debug@
+            D:Debug("Skipping default", currentKey);
+            --@end-debug@]===]
+            return iter(); -- aka 'continue'
         end
 
         -- if it's already defined in the base table (but not editable) or if it's hidden, skip it
@@ -1222,7 +1200,7 @@ function D:Configure() --{{{
                         D.classprofile.UserSpells[spellID].EnhancedByCheck = spell.EnhancedByCheck;
                     end
 
-                    if spell.EnhancedByCheck() then -- we have the enhancement
+                    if spell.EnhancedByCheck and spell.EnhancedByCheck() then -- we have the enhancement
                         IsEnhanced = true;
 
                         Types = spell.Enhancements.Types; -- set the type to scan to the new ones
@@ -1261,7 +1239,7 @@ function D:Configure() --{{{
                         self.Status.HasSpell = true;
                     end
                 end
-                
+
                 if UnitFiltering then
                     local filteredTypeCount = 0;
                     local lastfilter = false;
@@ -1313,12 +1291,11 @@ function D:SetSpellsTranslations(FromDIAG) -- {{{
             ["SPELL_COUNTERSPELL"]          =  2139,
             ["SPELL_CYCLONE"]               =  33786,
             ["SPELL_CLEANSE"]               =  4987,
-            ["SPELL_HAND_OF_SACRIFICE"]     =  6940,
-            ['SPELL_TRANQUILIZING_SHOT']    =  19801,
+            ["SPELL_CLEANSE_TOXINS"]        =  213644,
             ['SPELL_HEX']                   =  51514, -- shamans
             ["CLEANSE_SPIRIT"]              =  51886,
             ["SPELL_PURGE"]                 =  370,
-            ["PET_DEVOUR_MAGIC"]            =  19505,
+            ["PET_TORCH_MAGIC"]             =  171021,
             ["PET_CLONE_MAGIC"]             =  115284,
             ["SPELL_FEAR"]                  =  5782,
             ["DCR_LOC_SILENCE"]             =  15487,
@@ -1341,7 +1318,6 @@ function D:SetSpellsTranslations(FromDIAG) -- {{{
             ['Arcane Blast']                =  30451,
             ['Prowl']                       =  5215,
             ['Stealth']                     =  1784,
-            ['Camouflage']                  =  51755,
             ['Shadowmeld']                  =  58984,
             ['Invisibility']                =  66,
             ['Lesser Invisibility']         =  7870,
@@ -1349,22 +1325,19 @@ function D:SetSpellsTranslations(FromDIAG) -- {{{
             ['Unstable Affliction']         =  30108,
             ['Fluidity']                    =  138002,
             ['Vampiric Touch']              =  34914,
-            ['Flame Shock']                 =  8050,
-            ["SPELL_REMOVE_CURSE"]          =  475, -- Druids/Mages
             ["SPELL_REMOVE_CORRUPTION"]     =  2782,
             ["PET_SINGE_MAGIC"]             =  89808, -- Warlock imp
             ["PET_SEAR_MAGIC"]              =  115276, -- Warlock Fel imp
             ["SPELL_PURIFY"]                =  527,
+            ["SPELL_PURIFY_DISEASE"]        =  213634,
             ["SPELL_DISPELL_MAGIC"]         =  528,
             ["PURIFY_SPIRIT"]               =  77130, -- resto shaman
             ["SPELL_NATURES_CURE"]          =  88423,
-            ["SHROUD_OF_CONCEALMENT"]       =  115834, -- rogue
-            ["SPELL_DETOX"]                 =  115450, -- monk
+            ["SPELL_DETOX_1"]               =  115450, -- monk mistweaver
+            ["SPELL_DETOX_2"]               =  218164, -- monk brewmaster and windwaker
             ["SPELL_DIFFUSEMAGIC"]          =  122783, -- monk
             ["SPELL_COMMAND_DEMON"]         =  119898, -- warlock
             ['Greater Invisibility']        =  110959,
-            ['GLYPH_OF_ICY_TOUCH']          =  58631, --DK
-            ['SPELL_ICY_TOUCH']             =  45477, --DK
         };
     end
 
@@ -1472,12 +1445,12 @@ function D:UpdateMacro () -- {{{
 
     --D:PrintLiteral(GetMacroIndexByName(D.CONF.MACRONAME));
     if GetMacroIndexByName(D.CONF.MACRONAME) ~= 0 then
-	if not D.profile.AllowMacroEdit then
-	    EditMacro(D.CONF.MACRONAME, unpack(MacroParameters));
-	    D:Debug("Macro updated");
-	else
-	    D:Debug("Macro not updated due to AllowMacroEdit");
-	end
+        if not D.profile.AllowMacroEdit then
+            EditMacro(D.CONF.MACRONAME, unpack(MacroParameters));
+            D:Debug("Macro updated");
+        else
+            D:Debug("Macro not updated due to AllowMacroEdit");
+        end
     elseif (GetNumMacros()) < MAX_ACCOUNT_MACROS then
         CreateMacro(unpack(MacroParameters));
     else
@@ -1516,7 +1489,7 @@ end -- }}}
 
 
 
-T._LoadedFiles["DCR_init.lua"] = "2.7.4.5";
+T._LoadedFiles["DCR_init.lua"] = "2.7.4.7";
 
 -------------------------------------------------------------------------------
 
@@ -1531,28 +1504,28 @@ Simple replacements
 @project-revision@
     Turns into the highest revision of the entire project in integer form. e.g. 1234
     Note: does not work for git
-3b6057e0e7ea38c8266c8155490d8b7bf838e070
+f7919ae5d2b9fb7d32aeaf3a02844d38c5f58f6a
     Turns into the hash of the file in hex form. e.g. 106c634df4b3dd4691bf24e148a23e9af35165ea
     Note: does not work for svn
-496ac40068de08dee4a75bb8fdbc04a6bd605c8c
+f7919ae5d2b9fb7d32aeaf3a02844d38c5f58f6a
     Turns into the hash of the entire project in hex form. e.g. 106c634df4b3dd4691bf24e148a23e9af35165ea
     Note: does not work for svn
-3b6057e
+f7919ae
     Turns into the abbreviated hash of the file in hex form. e.g. 106c63 Note: does not work for svn
-496ac40
+f7919ae
     Turns into the abbreviated hash of the entire project in hex form. e.g. 106c63
     Note: does not work for svn
 Archarodim
     Turns into the last author of the file. e.g. ckknight
 Archarodim
     Turns into the last author of the entire project. e.g. ckknight
-2015-06-29T22:54:41Z
+2016-07-26T11:52:32Z
     Turns into the last changed date (by UTC) of the file in ISO 8601. e.g. 2008-05-01T12:34:56Z
-2016-07-19T23:19:02Z
+2016-07-26T11:52:32Z
     Turns into the last changed date (by UTC) of the entire project in ISO 8601. e.g. 2008-05-01T12:34:56Z
-20150629225441
+20160726115232
     Turns into the last changed date (by UTC) of the file in a readable integer fashion. e.g. 20080501123456
-20160719231902
+20160726115232
     Turns into the last changed date (by UTC) of the entire project in a readable integer fashion. e.g. 2008050123456
 @file-timestamp@
     Turns into the last changed date (by UTC) of the file in POSIX timestamp. e.g. 1209663296
@@ -1560,7 +1533,7 @@ Archarodim
 @project-timestamp@
     Turns into the last changed date (by UTC) of the entire project in POSIX timestamp. e.g. 1209663296
     Note: does not work for git
-2.7.4.5
+2.7.4.7
     Turns into an approximate version of the project. The tag name if on a tag, otherwise it's up to the repo.
     :SVN returns something like "r1234"
     :Git returns something like "v0.1-873fc1"

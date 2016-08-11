@@ -39,6 +39,7 @@ EA_TTIP_SPELLCOND_ORDERWTD = "Set/Ignore, Set the Order-Weight(1-20) of an icon.
 
 EA_TTIP_SPECFLAG_CHECK_HOLYPOWER = "Show HolyPower in the left 1st position of Self-Buffs";
 EA_TTIP_SPECFLAG_CHECK_RUNICPOWER = "Show RunicPower in the left 1st position of Self-Buffs";
+EA_TTIP_SPECFLAG_CHECK_RUNES = "Show Runes in the top position of Self-Buffs";
 EA_TTIP_SPECFLAG_CHECK_SOULSHARDS = "Show SoulShards in the left 1st position of Self-Buffs";
 EA_TTIP_SPECFLAG_CHECK_LUNARPOWER = "Show Lunar Power in the left 1st position of Self-Buffs";
 EA_TTIP_SPECFLAG_CHECK_COMBOPOINT = "Show ComboPoint in the left 1st position of Target-DeBuffs";
@@ -328,6 +329,7 @@ EA_SPELL_POWER_MAELSTROM = 11;			-- Maelstrom (Enhanced Shaman and Element Shama
 
 EA_XOPT_SPECFLAG_HOLYPOWER = "HolyP ower";
 EA_XOPT_SPECFLAG_RUNICPOWER = "Runic Power";
+EA_XOPT_SPECFLAG_RUNES = "Runes";
 EA_XOPT_SPECFLAG_SOULSHARDS = "Soul Shards";
 EA_XOPT_SPECFLAG_LUNAR_POWER = "Lunar Power";
 EA_XOPT_SPECFLAG_COMBOPOINT = "Combo Points";
@@ -348,7 +350,7 @@ EA_XGRPALERT_POWERTYPES = {
 	[2]={text="Rage", value=EA_SPELL_POWER_RAGE},
 	[3]={text="Focus", value=EA_SPELL_POWER_FOCUS},
 	[4]={text="Energy", value=EA_SPELL_POWER_ENERGY},
-	[5]={text="Rune", value=EA_SPELL_POWER_RUNES},
+	[5]={text="Runes", value=EA_SPELL_POWER_RUNES},
 	[6]={text="Runic Power", value=EA_SPELL_POWER_RUNIC_POWER},
 	[7]={text="Soul Shards", value=EA_SPELL_POWER_SOUL_SHARDS},
 	[8]={text="Lunar Power", value=EA_SPELL_POWER_LUNAR_POWER},
@@ -363,6 +365,7 @@ EA_XGRPALERT_POWERTYPES = {
 
 EA_XSPECINFO_COMBOPOINT = "Combo Point";
 EA_XSPECINFO_RUNICPOWER	= "Runic Power";
+EA_XSPECINFO_RUNES	= "Runes";
 EA_XSPECINFO_SOULSHARDS	= "Soul Shards";
 EA_XSPECINFO_LUNAR_POWER	= "Lunar Power";		--7.0  support Lunar Power of Balance Druid.
 --EA_XSPECINFO_ECLIPSE	= "Eclipse(Luna)";

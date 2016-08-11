@@ -8,7 +8,7 @@
 ## Author: Jaliborc (João Cardoso)
 ## RequiredDeps: Bagnon
 ## LoadOnDemand: 1
-## Version: 7.0.3
+## Version: 7.0.4
 ## X-Revision: BigFoot
 
 localization\localization.xml

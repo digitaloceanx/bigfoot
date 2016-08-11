@@ -344,10 +344,13 @@ local function __BUnitFrame_Update(__frame, __part)
 		if (__part["powertype"] or __part["all"]) then
 			-- Update power type
 			local __powerType, __powerToken = UnitPowerType(__frame.unit);
-			local __info = __BUnitFrame_ManaBarColor[__powerType];
-			if __info then
-				__frame.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);
+			local __info;
+			if not __powerToken then
+				__info = __BUnitFrame_ManaBarColor[__powerType];
+			else
+				__info = PowerBarColor[__powerToken];
 			end
+			__frame.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);
 		end
 	end
 end
@@ -689,8 +692,13 @@ function BUnitFrame_OnEvent(self, event, ...)
 	elseif ((event == "UNIT_SPELLCAST_FAILED" or event == "UNIT_SPELLCAST_INTERRUPTED" or event == "UNIT_SPELLCAST_STOP" or event == "UNIT_SPELLCAST_CHANNEL_STOP") and UnitIsUnit(__unit, self.unit)) then
 		local __mana = UnitMana(self.unit);
 		local __manaMax = UnitManaMax(self.unit);
-		local __type = UnitPowerType(self.unit);
-		local __info = __BUnitFrame_ManaBarColor[__type];
+		local __type,__powerToken = UnitPowerType(self.unit);
+		local __info;
+		if not __powerToken then
+			__info = __BUnitFrame_ManaBarColor[__powerType];
+		else
+			__info = PowerBarColor[__powerToken];
+		end
 
 		self.manaBar:SetMinMaxValues(0, __manaMax);
 		self.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);
@@ -777,8 +785,13 @@ function BUnitFrame_OnUpdate(self, elapsed)
 		if (__percent > 100) then
 			local __mana = UnitMana(self.unit);
 			local __manaMax = UnitManaMax(self.unit);
-			local __type = UnitPowerType(self.unit);
-			local __info = __BUnitFrame_ManaBarColor[__type];
+			local __type,__powerToken = UnitPowerType(self.unit);
+			local __info;
+			if not __powerToken then
+				__info = __BUnitFrame_ManaBarColor[__powerType];
+			else
+				__info = PowerBarColor[__powerToken];
+			end
 
 			self.manaBar:SetMinMaxValues(0, __manaMax);
 			self.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);

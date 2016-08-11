@@ -5,7 +5,7 @@
 ## Notes: |cffbc8f8fArchaeology assistant.|r
 ## Notes-zhCN: |cff00ff00Archy|r
 ## Notes-zhTW: |cff00ff00Archy|r
-## Version: 7.0.3.7
+## Version: 7.0.3.11
 ## Author: Torhal
 ## SavedVariables: ArchyDB
 ## Dependencies: BigFoot

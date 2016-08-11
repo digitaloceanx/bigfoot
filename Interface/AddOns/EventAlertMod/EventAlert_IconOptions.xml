@@ -651,6 +651,31 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
+			<CheckButton name="$parent_SpecFlag_Runes" inherits="OptionsCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_SpecFlag_Maelstrom" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="100" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						_G[self:GetName().."Text"]:SetText(EA_XOPT_SPECFLAG_RUNES);
+					</OnLoad>
+					<OnClick>
+						EA_Config.SpecPowerCheck.Runes  = self:GetChecked()						
+						EventAlert_SpecialFrame_Update();
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText(EA_TTIP_SPECFLAG_CHECK_RUNES);
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
 
 			<Button name="$parent_ToggleAlertFrame" inherits="OptionsButtonTemplate" text="">
 				<Size>

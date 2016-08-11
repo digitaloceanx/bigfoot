@@ -1,7 +1,7 @@
 --[[
     This file is part of Decursive.
 
-    Decursive (v 2.7.4.5) add-on for World of Warcraft UI
+    Decursive (v 2.7.4.7) add-on for World of Warcraft UI
     Copyright (C) 2006-2014 John Wellesz (archarodim AT teaser.fr) ( http://www.2072productions.com/to/decursive.php )
 
     Starting from 2009-10-31 and until said otherwise by its author, Decursive
@@ -17,7 +17,7 @@
     Decursive is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY.
 
-    This file was last updated on 2016-05-29T23:56:42Z
+    This file was last updated on 2016-07-25T22:23:28Z
 --]]
 -------------------------------------------------------------------------------
 
@@ -84,7 +84,7 @@ local DebugTextTable    = T._DebugTextTable;
 local Reported          = {};
 
 local UNPACKAGED = "@pro" .. "ject-version@";
-local VERSION = "2.7.4.5";
+local VERSION = "2.7.4.7";
 
 T._LoadedFiles = {};
 T._LoadedFiles["Dcr_DIAG.lua"] = false; -- here for consistency but useless in this particular file
@@ -224,7 +224,7 @@ end -- }}}
 
 do
     local DebugHeader = false;
-    local HeaderFailOver = "|cFF11FF33Please report the content of this window to archarodim+DcrReport@teaser.fr|r\n|cFF009999(Use CTRL+A to select all and then CTRL+C to put the text in your clip-board)|r\n\n";
+    local HeaderFailOver = "|cFF11FF33Please email the content of this window to <archarodim+DcrReport@teaser.fr>|r\n|cFF009999(Use CTRL+A to select all and then CTRL+C to put the text in your clip-board)|r\n\n";
     local LoadedAddonNum = 0;
 
     local function GetAddonListAsString ()
@@ -270,7 +270,7 @@ do
         _Debug(unpack(TIandBI));
 
 
-        DebugHeader = ("%s\n2.7.4.5  %s(%s)  CT: %0.4f D: %s %s %s BDTHFAd: %s nDrE: %d Embeded: %s W: %d LA: %d TA: %d NDRTA: %d BUIE: %d TI: [dc:%d, lc:%d, y:%d, LEBY:%d, LB:%d, TTE:%u] (%s, %s, %s, %s)"):format(instructionsHeader, -- "%s\n
+        DebugHeader = ("%s\n2.7.4.7  %s(%s)  CT: %0.4f D: %s %s %s BDTHFAd: %s nDrE: %d Embeded: %s W: %d LA: %d TA: %d NDRTA: %d BUIE: %d TI: [dc:%d, lc:%d, y:%d, LEBY:%d, LB:%d, TTE:%u] (%s, %s, %s, %s)"):format(instructionsHeader, -- "%s\n
         tostring(DC.MyClass), tostring(UnitLevel("player") or "??"), NiceTime(), date(), GetLocale(), -- %s(%s)  CT: %0.4f D: %s %s
         BugGrabber and "BG" .. (T.BugGrabber and "e" or "") or "NBG", -- %s
         tostring(T._BDT_HotFix1_applyed), -- BDTHFAd: %s
@@ -353,7 +353,8 @@ local function CheckHHTD_Error(errorm, errorml)
         --or ( errorm:find("[\"']healers%-have%-to%-die[\"']") ) -- events
         --or ( errorm:find("healers%-have%-to%-die:") ) -- libraries error (AceLocal)
         --or ( errorml:find("healers%-have%-to%-die%.")) -- Aceconfig
-        ) then
+        )
+        or errorml:find("\\libnameplateregistry") then
         _Debug("CheckHHTD_Error()", true);
         return true;
     end
@@ -494,8 +495,6 @@ local _, _, _, tocversion = GetBuildInfo();
 
 T._CatchAllErrors = false;
 T._tocversion = tocversion;
-
-DC.WoWL = (tocversion >= 70000);
 
 function T._DecursiveErrorHandler(err, ...)
 
@@ -678,6 +677,37 @@ do
     local PrintMessage = function (message, ...) if T._DiagStatus ~= 2 then _Print("|cFFFFAA55Self diagnostic:|r ", format(message, ...)); end end;
 
 
+    function T._ExportCustomSpellConfiguration () -- (use pcall with this) -- {{{
+
+        local errorPrefix = function (message)
+            return "_ExportCustomSpellConfiguration: " .. message;
+        end
+
+        local customSpellConfText = {};
+        local D = T.Dcr;
+
+        if not D.classprofile or not D.classprofile.UserSpells then
+            return errorPrefix("D.classprofile.UserSpells not available");
+        end
+
+        customSpellConfText[1] = "\nCustom spells configuration:\n";
+
+        for spellID, spellData in pairs(D.classprofile.UserSpells) do
+            if not spellData.IsDefault then
+                 customSpellConfText[#customSpellConfText + 1] = ("    %s (id: %d) - %s - %s - %s - B: %d - Ts: %s -  Macro: %s\n"):format(
+                 (GetSpellInfo(spellID)), spellID, --                                 3    4    5       6        7            8
+                 spellData.Disabled and "OFF" or "ON", -- 3
+                 spellData.Pet and "PET" or "PLAYER", -- 4
+                 spellData.IsItem and "ITEM" or "SPELL", -- 5
+                 spellData.Better, -- 6
+                 table.concat(spellData.Types, ";"),
+                 spellData.MacroText and spellData.MacroText or "false" -- 8
+                 );
+            end
+        end
+
+        return table.concat(customSpellConfText, "\n");
+    end
     function T._ExportActionsConfiguration () -- (use pcall with this) -- {{{
 
         local errorPrefix = function (message)
@@ -685,7 +715,6 @@ do
         end
 
         local SpellAssignmentsTexts = {};
-        local result = "";
         local D = T.Dcr;
 
         if not D.Status then
@@ -904,6 +933,7 @@ do
                     AddDebugText("Event library functionning properly, Everything seems to be OK");
                     -- get a list of current actions assignments
                     AddDebugText(pcall(T._ExportActionsConfiguration));
+                    AddDebugText(pcall(T._ExportCustomSpellConfiguration));
                     -- open the diagnostic window
                     T._ShowDebugReport(true);
                     return;
@@ -950,4 +980,4 @@ do
     end
 end
 
-T._LoadedFiles["Dcr_DIAG.lua"] = "2.7.4.5";
+T._LoadedFiles["Dcr_DIAG.lua"] = "2.7.4.7";

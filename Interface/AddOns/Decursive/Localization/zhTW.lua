@@ -1,7 +1,7 @@
 --[[
     This file is part of Decursive.
     
-    Decursive (v 2.7.4.5) add-on for World of Warcraft UI
+    Decursive (v 2.7.4.7) add-on for World of Warcraft UI
     Copyright (C) 2006-2014 John Wellesz (archarodim AT
     teaser.fr) ( http://www.2072productions.com/to/decursive.php )
 
@@ -74,7 +74,7 @@ T._LoadedFiles["zhTW.lua"] = false;
 local L = LibStub("AceLocale-3.0"):NewLocale("Decursive", "zhTW");
 
 if not L then
-    T._LoadedFiles["zhTW.lua"] = "2.7.4.5";
+    T._LoadedFiles["zhTW.lua"] = "2.7.4.7";
     return;
 end;
 
@@ -114,10 +114,10 @@ L["COLORSTATUS"] = "設定當玩家狀態是 '%s' 時的 MUF 顏色."
 L["CTRL"] = "Ctrl"
 L["CURE_PETS"] = "檢測並淨化寵物"
 L["CURSE"] = "詛咒"
-L["DEBUG_REPORT_HEADER"] = [=[|cFF11FF33請報告此視窗的內容給 Archarodim+DcrReport@teaser.fr|r
+L["DEBUG_REPORT_HEADER"] = [=[|cFF11FF33請報告此視窗的內容給 <Archarodim+DcrReport@teaser.fr>|r
 |cFF009999（使用 CTRL+A 選擇所有 CTRL+C 復制文本到剪切板）|r
 如果發現 Decursive 任何奇怪的行為也一并報告。
-]=]
+]=] -- Needs review
 L["DECURSIVE_DEBUG_REPORT"] = "**** |cFFFF0000Decursive 除錯報告|r ****"
 L["DECURSIVE_DEBUG_REPORT_BUT_NEW_VERSION"] = [=[|cFF11FF33Decursive 啟動失敗但請勿擔心! 一個新版本的Decursive已經被偵測到 (%s)。你只需要執行更新。前往curse.com並搜索"Decursive" 或使用Curse Client，此服務會自動更新所有您最愛的UI。|r
 |cFFFF1133 所以請不要浪費你的時間回報此錯誤，因為它也許已被修正。安裝新更新並排除問題! |r
@@ -486,4 +486,4 @@ L["UNSTABLERELEASE"] = "不穩定釋出版"
 
 
 
-T._LoadedFiles["zhTW.lua"] = "2.7.4.5";
+T._LoadedFiles["zhTW.lua"] = "2.7.4.7";

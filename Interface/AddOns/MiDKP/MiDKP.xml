@@ -2354,7 +2354,7 @@
 					</Anchor>
 				</Anchors>
 			</Frame>
-			<EditBox name="$parentWhisperEditBox" autoFocus="false" toplevel="true" letters="24">
+			<EditBox name="$parentWhisperEditBox" autoFocus="false" letters="24">
 				<Size>
 					<AbsDimension x="150" y="34"/>
 				</Size>
@@ -3133,7 +3133,7 @@
 				</Anchors>
 
 			</Frame>
-			<EditBox name = "$parentPoint" toplevel="true" letters="255" >
+			<EditBox name = "$parentPoint" letters="255" >
 				<Size>
 					<AbsDimension x="565" y="40"/>
 				</Size>
@@ -3449,7 +3449,7 @@
 					</Anchor>
 				</Anchors>
 			</Frame>
-			<EditBox name = "$parentText" toplevel="true" letters="255" >
+			<EditBox name = "$parentText" letters="255" >
 				<Size>
 					<AbsDimension x="565" y="40"/>
 				</Size>
@@ -3599,7 +3599,7 @@
 				</Anchor>
 			</Anchors>
 		</Frame>
-		<EditBox name = "$parentText" toplevel="true" letters="255">
+		<EditBox name = "$parentText" letters="255">
 			<Size>
 				<AbsDimension x="565" y="40"/>
 			</Size>

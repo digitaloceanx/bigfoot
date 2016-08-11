@@ -66,11 +66,11 @@ function M:ToggleInfoPane(flag)
 		__InfoPane:SwitchInfoBar(true)
 
 		__InfoPane:SwitchBarText(false)
-		__MoveAlterManaBar()
+		-- __MoveAlterManaBar()
 	else
 		__InfoPane:SwitchInfoBar(false)
 		__InfoPane:SwitchBarText(true)
-		__ResetAlterManaBar()
+		-- __ResetAlterManaBar()
 	end
 end
 

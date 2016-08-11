@@ -304,8 +304,8 @@ local function OnEvent(self, event, arg1, arg2)
 		SetMoveHandler(ArchaeologyFrame);
 	elseif arg1 == "Blizzard_EncounterJournal" then
 		SetMoveHandler(EncounterJournal);
-	elseif arg1 == "Blizzard_PetJournal" then
-		SetMoveHandler(PetJournalParent);
+	elseif arg1 == "Blizzard_Collections" then
+		SetMoveHandler(CollectionsJournal);
 	elseif arg1 == "Blizzard_BlackMarketUI" then
 		SetMoveHandler(BlackMarketFrame);
 	elseif arg1 == "Blizzard_GarrisonUI" then

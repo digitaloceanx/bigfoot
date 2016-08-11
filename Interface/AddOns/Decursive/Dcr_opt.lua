@@ -1,7 +1,7 @@
 --[[
     This file is part of Decursive.
     
-    Decursive (v 2.7.4.5) add-on for World of Warcraft UI
+    Decursive (v 2.7.4.7) add-on for World of Warcraft UI
     Copyright (C) 2006-2014 John Wellesz (archarodim AT teaser.fr) ( http://www.2072productions.com/to/decursive.php )
 
     Starting from 2009-10-31 and until said otherwise by its author, Decursive
@@ -17,7 +17,7 @@
     Decursive is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY.
     
-    This file was last updated on 2015-06-29T22:54:41Z
+    This file was last updated on 2016-07-25T22:22:32Z
 --]]
 -------------------------------------------------------------------------------
 
@@ -386,6 +386,8 @@ function D:GetDefaultsSettings()
                 ["DEATHKNIGHT"] = {
                 },
                 ["MONK"] = {
+                },
+                ["DEMONHUNTER"] = {
                 }
             },
             -- }}}
@@ -1706,7 +1708,7 @@ local function GetStaticOptions ()
                                     "\n\n|cFFDDDD00 %s|r:\n   %s"..
                                     "\n\n|cFFDDDD00 %s|r:\n   %s\n\n   %s"
                                 ):format(
-                                    "2.7.4.5", "John Wellesz", ("2016-07-19T23:19:02Z"):sub(1,10),
+                                    "2.7.4.7", "John Wellesz", ("2016-07-26T11:52:32Z"):sub(1,10),
                                     L["ABOUT_NOTES"],
                                     L["ABOUT_LICENSE"],         GetAddOnMetadata("Decursive", "X-License") or 'All Rights Reserved',
                                     L["ABOUT_SHAREDLIBS"],      GetAddOnMetadata("Decursive", "X-Embeds")  or 'GetAddOnMetadata() failure',
@@ -2692,13 +2694,12 @@ do
         end,
         disabled = function (info) -- disable types edition if an enhancement is active (default types are not used in that case)
             if D.classprofile.UserSpells[TN(info[#info-2])] and D.classprofile.UserSpells[TN(info[#info-2])].EnhancedByCheck then
-
                 return D.classprofile.UserSpells[TN(info[#info-2])].EnhancedByCheck();
             end
 
-            if DC.SpellsToUse[TN(info[#info-2])] and D:tcheckforval(DC.SpellsToUse[TN(info[#info-2])].Types, DC.LocalizableTypeNamesToTypes[info[#info]]) then
-                return true;
-            end
+            --if DC.SpellsToUse[TN(info[#info-2])] and D:tcheckforval(DC.SpellsToUse[TN(info[#info-2])].Types, DC.LocalizableTypeNamesToTypes[info[#info]]) then
+            --    return true;
+            --end
 
             return false;
         end, 
@@ -2719,7 +2720,7 @@ do
             -- an enable checkbox
             header = {
                 type = 'header',
-                name = function (info) return GetColoredName(TN(info[#info - 1])); end,
+                name = function (info) return ("%s  (id: %d)"):format(GetColoredName(TN(info[#info - 1])), TN(info[#info - 1])); end,
                 order = 0,
             },
             enable = {
@@ -2774,9 +2775,9 @@ do
 
                     D.classprofile.UserSpells[TN(info[#info-1])].Pet = v;
 
-                    if isSpellUSable(TN(info[#info-1])) then
-                        D:ScheduleDelayedCall("Dcr_Delayed_Configure", D.Configure, 2, D);
-                    end
+                    --if isSpellUSable(TN(info[#info-1])) then
+                    D:ScheduleDelayedCall("Dcr_Delayed_Configure", D.Configure, 2, D);
+                    --end
                 end,
                 get = function(info,v)
                     return D.classprofile.UserSpells[TN(info[#info-1])].Pet;
@@ -3013,6 +3014,6 @@ function D:QuickAccess (CallingObject, button) -- {{{
 end -- }}}
 
 
-T._LoadedFiles["Dcr_opt.lua"] = "2.7.4.5";
+T._LoadedFiles["Dcr_opt.lua"] = "2.7.4.7";
 
 -- Closer

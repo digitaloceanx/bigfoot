@@ -1,6 +1,6 @@
 if GetLocale()~='zhCN' then return end
 local main= "7.0.0."
-local minor = "583"
+local minor = "584"
 BIGFOOT_VERSION = "zhCN"..main..minor;
 
 function GetMinorVersion()
@@ -9,11 +9,26 @@ end
 
 BigFootChangelog_ah();
 
-	BigFootChangelog_at("2016/8/02 (7.0.0.583)")
+	BigFootChangelog_at("2016/08/09 (7.0.0.584)")
+	BigFootChangelog_ar("冷却监控","逻辑优化。")
+	BigFootChangelog_ar("头像增强","移除经验条相关逻辑。")
+	BigFootChangelog_ar("背包整合","尝试修复部分卡顿问题。")
+	BigFootChangelog_ar("整合背包","升级至最新版本(7.0.4)。")
+	BigFootChangelog_ar("距离显示","升级至最新版本(4.5.0)。")
+	BigFootChangelog_ar("竞技助手","升级至最新版本(5.0.1)。")
+	BigFootChangelog_ar("技能触发","升级至最新版本(7.0.3)。")
+	BigFootChangelog_ar("伤害统计","升级至最新版本(7.0.3d)。")
+	BigFootChangelog_ar("考古助手","升级至最新版本(7.0.3.11)。")
+	BigFootChangelog_ar("一键驱散","升级至最新版本(2.7.4.7)。")
+	BigFootChangelog_ar("一键施法","升级至最新版本(70000-1.1.0)。")
+	BigFootChangelog_ar("首领报警","升级至最新版本(7.0.2.15100)。")
+
+
+	BigFootChangelog_at("2016/08/02 (7.0.0.583)")
 	BigFootChangelog_ar("魔兽达人","升级至最新版本(70000.01)。")
 
 
-	BigFootChangelog_at("2016/8/01 (7.0.0.582)")
+	BigFootChangelog_at("2016/08/01 (7.0.0.582)")
 	BigFootChangelog_ar("任务增强","修复无法正常通报的问题。")
 	BigFootChangelog_ar("要塞助手","升级至最新版本(0.99)。")
 	BigFootChangelog_ar("地图专家","升级至最新版本(1.7.2)。")
@@ -23,7 +38,7 @@ BigFootChangelog_ah();
 	BigFootChangelog_ar("首领报警","升级至最新版本(7.0.2.15091)。")
 
 
-	BigFootChangelog_at("2016/7/27 (7.0.0.581)")
+	BigFootChangelog_at("2016/07/27 (7.0.0.581)")
 	BigFootChangelog_ar("大脚插件","修复切换专精导致的卡顿问题。")
 	BigFootChangelog_ar("技能触发","升级至最新版本。")
 	BigFootChangelog_ar("头像增强","修复一处已知问题。")
@@ -31,7 +46,7 @@ BigFootChangelog_ah();
 	BigFootChangelog_ar("战斗增强","修复无法提示连击点数的问题。")
 
 
-	BigFootChangelog_at("2016/7/26 (7.0.0.580)")
+	BigFootChangelog_at("2016/07/26 (7.0.0.580)")
 	BigFootChangelog_ar("技能触发","屏蔽DK符文监视。")
 	BigFootChangelog_ar("背包整合","尝试修复部分卡顿问题。")
 	BigFootChangelog_ar("物品信息","修复功能无法正常显示的问题。")
@@ -2356,4 +2371,4 @@ BigFootChangelog_ah();
 BigFootChangelog_af();
 
 
-BF_VERSION_CHECKSUM = "56"
+BF_VERSION_CHECKSUM = "63"

@@ -17,7 +17,7 @@
 		called when an item slot's item or item count changes
 
 	COMBUCTOR_SLOT_UPDATE_LOCK
-		args:		bag, slot, locked
+	args:		bag, slot, locked
 		called when an item slot is locked or unlocked
 
 	COMBUCTOR_SLOT_UPDATE_COOLDOWN
