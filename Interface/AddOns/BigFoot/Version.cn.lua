@@ -1,6 +1,6 @@
 if GetLocale()~='zhCN' then return end
 local main= "7.0.0."
-local minor = "584"
+local minor = "585"
 BIGFOOT_VERSION = "zhCN"..main..minor;
 
 function GetMinorVersion()
@@ -8,6 +8,11 @@ function GetMinorVersion()
 end
 
 BigFootChangelog_ah();
+
+	BigFootChangelog_at("2016/08/12 (7.0.0.585)")
+	BigFootChangelog_ar("团队记录","添加恶魔猎手职业支持。")
+	BigFootChangelog_ar("技能触发","升级至最新版本(7.0.3)。")
+
 
 	BigFootChangelog_at("2016/08/09 (7.0.0.584)")
 	BigFootChangelog_ar("冷却监控","逻辑优化。")
@@ -2371,4 +2376,4 @@ BigFootChangelog_ah();
 BigFootChangelog_af();
 
 
-BF_VERSION_CHECKSUM = "63"
+BF_VERSION_CHECKSUM = "62"

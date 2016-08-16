@@ -350,7 +350,9 @@ local function __BUnitFrame_Update(__frame, __part)
 			else
 				__info = PowerBarColor[__powerToken];
 			end
-			__frame.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);
+			if __info then
+				__frame.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);
+			end
 		end
 	end
 end
@@ -692,18 +694,18 @@ function BUnitFrame_OnEvent(self, event, ...)
 	elseif ((event == "UNIT_SPELLCAST_FAILED" or event == "UNIT_SPELLCAST_INTERRUPTED" or event == "UNIT_SPELLCAST_STOP" or event == "UNIT_SPELLCAST_CHANNEL_STOP") and UnitIsUnit(__unit, self.unit)) then
 		local __mana = UnitMana(self.unit);
 		local __manaMax = UnitManaMax(self.unit);
+		self.manaBar:SetValue(__mana);
+		self.manaBar:SetMinMaxValues(0, __manaMax);
 		local __type,__powerToken = UnitPowerType(self.unit);
 		local __info;
 		if not __powerToken then
-			__info = __BUnitFrame_ManaBarColor[__powerType];
+			__info = __BUnitFrame_ManaBarColor[__type];
 		else
 			__info = PowerBarColor[__powerToken];
 		end
-
-		self.manaBar:SetMinMaxValues(0, __manaMax);
-		self.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);
-
-		self.manaBar:SetValue(__mana);
+		if __info then
+			self.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);
+		end
 
 		self.portrait:Show();
 		self.spellTexture:Hide();
@@ -785,18 +787,18 @@ function BUnitFrame_OnUpdate(self, elapsed)
 		if (__percent > 100) then
 			local __mana = UnitMana(self.unit);
 			local __manaMax = UnitManaMax(self.unit);
+			self.manaBar:SetValue(__mana);
+			self.manaBar:SetMinMaxValues(0, __manaMax);
 			local __type,__powerToken = UnitPowerType(self.unit);
 			local __info;
 			if not __powerToken then
-				__info = __BUnitFrame_ManaBarColor[__powerType];
+				__info = __BUnitFrame_ManaBarColor[__type];
 			else
 				__info = PowerBarColor[__powerToken];
 			end
-
-			self.manaBar:SetMinMaxValues(0, __manaMax);
-			self.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);
-
-			self.manaBar:SetValue(__mana);
+			if __info then
+				self.manaBar:SetStatusBarColor(__info.r, __info.g, __info.b);
+			end
 
 			if (BUnitFrame_Config["casting_icon"]) then
 				self.portrait:Show();

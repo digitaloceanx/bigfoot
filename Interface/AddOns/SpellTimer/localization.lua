@@ -354,6 +354,7 @@ if (GetLocale() =="zhCN") then
 	SPELL_TIMER_PATTERN_TABLE["DEATHKNIGHT"]["亡者大军"] = {"buff", nil, {["live"] = 1, ["spell"] = {"食尸鬼军团", 45}}};
 
 	SPELL_TIMER_PATTERN_TABLE["MONK"]={};
+	SPELL_TIMER_PATTERN_TABLE["DEMONHUNTER"]={};
 
 elseif (GetLocale() == "zhTW") then
 	SPELL_TIMER_TITLE = "法術計時器";
@@ -664,6 +665,7 @@ elseif (GetLocale() == "zhTW") then
 	SPELL_TIMER_PATTERN_TABLE["DEATHKNIGHT"]["亡靈大軍"] = {"buff", nil, {["live"] = 1, ["spell"] = {"亡靈军团", 45}}};
 
 	SPELL_TIMER_PATTERN_TABLE["MONK"]={};
+	SPELL_TIMER_PATTERN_TABLE["DEMONHUNTER"]={};
 else
 	SPELL_TIMER_TITLE = "SpellTimer";
 	SPELL_TIMER_TEXT_OPTION_SLIDER = "You can add some time on this spell .";
