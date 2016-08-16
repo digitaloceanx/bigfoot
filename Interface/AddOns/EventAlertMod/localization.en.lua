@@ -52,10 +52,11 @@ EA_TTIP_SPECFLAG_CHECK_SHADOWORBS = "Show Shadow Orbs in the left 1st position o
 EA_TTIP_SPECFLAG_CHECK_DEMONICFURY = "Show Demonic Fury in the left 1st position of Slef-Buffs";	--  ¤ä´©´cÅ]¤§«ã
 EA_TTIP_SPECFLAG_CHECK_BURNINGEMBERS = "Show Burning Embers in the left 1st position of Slef-Buffs";--  ¤ä´©¿U¤õ¾lÂu
 EA_TTIP_SPECFLAG_CHECK_ARCANECHARGES = "Show Arcane Charges in the left 1st position of Slef-Buffs";--  Support Mage's Arcane Charges
-EA_TTIP_SPECFLAG_CHECK_MAELSTROM = "Show Maelstrom in the left 1st position of Slef-Buffs";--  Support Shaman's Maelstrom
+EA_TTIP_SPECFLAG_CHECK_MAELSTROM = "Show Maelstrom in the left 1st position of Slef-Buffs";			--  Support Shaman's Maelstrom
+EA_TTIP_SPECFLAG_CHECK_FURY = "Show Fury in the left 1st position of Slef-Buffs";					--  Support Demonhunter's Fury 
 
 EA_TTIP_GRPCFG_ICONALPHA = "Change the alpha value of this Icon";
-EA_TTIP_GRPCFG_TALENT = "Only active at this talent";
+EA_TTIP_GRPCFG_TALENT = "Only active at this spec.";
 EA_TTIP_GRPCFG_HIDEONLEAVECOMBAT = "Hide when leave of combat";
 EA_TTIP_GRPCFG_HIDEONLOSTTARGET = "Hide when lost of target";
 
@@ -72,6 +73,7 @@ EA_CLASS_WARRIOR = "WARRIOR";
 EA_CLASS_MONK = "MONK";
 EA_CLASS_FUNKY = "FUNKY";
 EA_CLASS_OTHER = "OTHER";
+EA_CLASS_DEMONHUNTER = "DEMONHUNTER";
 
 EA_XOPT_ICONPOSOPT = "Icon Position Options";
 EA_XOPT_SHOW_ALTFRAME = "Show Alert Frame";
@@ -127,7 +129,7 @@ EA_XICON_LIGHT = "Light";
 EA_XICON_TAR_NEWLINE = "Target's Debuff in a new line";
 EA_XICON_TAR_HORSPACE = "Horizontal Spacing w/ Alert Frame";
 EA_XICON_TAR_VERSPACE = "Vertical Spacing w/ Alert Frame";
-EA_XICON_TOGGLE_ALERTFRAME = "Show Alert Sample";
+EA_XICON_TOGGLE_ALERTFRAME = "Adjust Alert Sample Position";
 EA_XICON_RESET_FRAMEPOS = "Reset Alert Position";
 EA_XICON_SELF_BUFF = "Self Buff";
 EA_XICON_SELF_SPBUFF = "Self Debuff(1)\nOr SpecFrame";
@@ -154,14 +156,16 @@ EX_XCLSALERT_HELP3 = "To look up the spellID, copy the following:";
 EX_XCLSALERT_HELP4 = "Alternate Alert is for some spells being";
 EX_XCLSALERT_HELP5 = "actived in Combat Event and without";
 EX_XCLSALERT_HELP6 = "any buff. Ex:Warrior's Revenge...etc.";
-EX_XCLSALERT_SPELLURL = "http://thottbot.com/spell=SPELLIDHERE";
+EX_XCLSALERT_SPELLURL = "http://www.wowhead.com/spells";
 
 EA_XTARALERT_TARGET_MYDEBUFF = "Debuffs only player casts";
 
 EA_XGRPALERT_ICONALPHA = "Icon Alpha";
 EA_XGRPALERT_GRPID = "GroupID:";
-EA_XGRPALERT_TALENT1 = "Primary";
-EA_XGRPALERT_TALENT2 = "Secondary";
+EA_XGRPALERT_TALENT1 = "1st SPEC";
+EA_XGRPALERT_TALENT2 = "2nd SPEC";
+EA_XGRPALERT_TALENT2 = "3rd SPEC";
+EA_XGRPALERT_TALENT2 = "4th SPEC";
 EA_XGRPALERT_HIDEONLEAVECOMBAT = "Hide NoCombat"
 EA_XGRPALERT_HIDEONLOSTTARGET = "Hide NoTarget"
 EA_XGRPALERT_TALENTS = "All Talent";
@@ -217,6 +221,8 @@ EA_XGRPALERT_COMPARES = {
 	[3]={text="=", value=3},
 	[4]={text=">=", value=4},
 	[5]={text=">", value=5}, 
+	[6]={text="<>", value=6}, 
+	[7]={text="*", value=7}, 	--any
 };
 EA_XGRPALERT_COMPARETYPES = {
 	[1]={text="Value", value=1},

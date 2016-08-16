@@ -3,7 +3,7 @@
 	<Script file="EventAlert_IconOptions.lua" />
 	<Frame name="EA_Icon_Options_Frame" hidden="true" parent="EA_Options_Frame" toplevel="true" movable="true" frameStrata="HIGH" enableMouse="true" enableKeyboard="true">
 		<Size>
-			<AbsDimension x="325" y="600" />
+			<AbsDimension x="370" y="600" />
 		</Size>
 		<Anchors>
 			<Anchor relativepoint="RIGHT" point="LEFT" />
@@ -638,7 +638,6 @@
 						_G[self:GetName().."Text"]:SetText(EA_XOPT_SPECFLAG_MAELSTROM);
 					</OnLoad>
 					<OnClick>
-						
 						EA_Config.SpecPowerCheck.Maelstrom  = self:GetChecked()
 						EventAlert_SpecialFrame_Update();
 					</OnClick>
@@ -670,6 +669,31 @@
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
 						GameTooltip:SetText(EA_TTIP_SPECFLAG_CHECK_RUNES);
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_SpecFlag_Fury" inherits="OptionsCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_SpecFlag_RunicPower" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="100" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						_G[self:GetName().."Text"]:SetText(EA_XOPT_SPECFLAG_FURY);
+					</OnLoad>
+					<OnClick>
+						EA_Config.SpecPowerCheck.Fury = self:GetChecked()						
+						EventAlert_SpecialFrame_Update();
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText(EA_TTIP_SPECFLAG_CHECK_FURY);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();

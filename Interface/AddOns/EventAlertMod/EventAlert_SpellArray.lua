@@ -1705,9 +1705,6 @@ function EventAlert_LoadSpellArray()
 			[204488] = {enable=true},		--集中怒氣(防戰盾牌猛擊增傷)
 			[12975] = {enable=true},		--破釜沉舟
 			
-			
-			
-			
 		},
 		-- GroupEvent Alert / 本職業條件技能區
 		["GRPITEMS"] = {
@@ -1762,6 +1759,46 @@ function EventAlert_LoadSpellArray()
 		["GRPITEMS"] = {
 		},
 	}
+--------------------------------------------------------------------------------
+-- DemonHunter / 惡魔獵人
+--------------------------------------------------------------------------------
+	EADef_Items[EA_CLASS_DEMONHUNTER]	= {
+	-- Primary Alert / 本職業提醒區
+		["ITEMS"] = {
+			[163073] = {enable=true,self=true},	--惡魔之魂
+			[188501] = {enable=true},				--靈視
+			
+		},
+		-- Alternate Alert / 本職業額外提醒區
+		["ALTITEMS"] = {
+		},
+		-- Target Alert / 目標提醒區
+		["TARITEMS"] = {						
+		},
+	-- Spell Cooldown Alert / 本職業技能CD區
+		["SCDITEMS"] = {
+			[131347] = {enable=true},				--
+			[162794] = {enable=true},				--
+			[188501] = {enable=true},				--
+			[192611] = {enable=true},				--
+			[195072] = {enable=true},				--
+			[202644] = {enable=true},				--
+			[178740] = {enable=true},				--
+			[185245] = {enable=true},				--
+			[187827] = {enable=true},				--
+			[189110] = {enable=true},				--
+			[203720] = {enable=true},				--
+			[204021] = {enable=true},				--
+			[204157] = {enable=true},				--
+			[204596] = {enable=true},				--
+			[207684] = {enable=true},				--
+			[218256] = {enable=true},				--
+			
+		},
+	-- GroupEvent Alert / 本職業條件技能區
+		["GRPITEMS"] = {
+		},
+	}
 
 
 --------------------------------------------------------------------------------
@@ -1801,6 +1838,7 @@ function EventAlert_LoadSpellArray()
 		[228600] = {enable=true,self=false},  	-- 目標DEBUFF:冰川長槍
 		
 	}
+	
 
 
 end

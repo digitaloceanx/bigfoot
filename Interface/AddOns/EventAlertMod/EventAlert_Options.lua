@@ -376,9 +376,13 @@ function EAFun_GroupEvent_LoadGroupEventToFrame(GroupID)
 	EA_GroupEventSetting_Frame_IconAlpha:SetValue(G_GroupItems.IconAlpha * 100);
 	EA_GroupEventSetting_Frame_Talent1:SetChecked(false);
 	EA_GroupEventSetting_Frame_Talent2:SetChecked(false);
+	EA_GroupEventSetting_Frame_Talent3:SetChecked(false);
+	EA_GroupEventSetting_Frame_Talent4:SetChecked(false);
 	if (G_GroupItems.ActiveTalentGroup) ~= nil then
 		if (G_GroupItems.ActiveTalentGroup==1) then EA_GroupEventSetting_Frame_Talent1:SetChecked(true) end;
 		if (G_GroupItems.ActiveTalentGroup==2) then EA_GroupEventSetting_Frame_Talent2:SetChecked(true) end;
+		if (G_GroupItems.ActiveTalentGroup==3) then EA_GroupEventSetting_Frame_Talent3:SetChecked(true) end;
+		if (G_GroupItems.ActiveTalentGroup==4) then EA_GroupEventSetting_Frame_Talent4:SetChecked(true) end;
 	end
 	EA_GroupEventSetting_Frame_HideOnLeaveCombat:SetChecked(false);
 	if (G_GroupItems.HideOnLeaveCombat) ~= nil then
@@ -624,6 +628,8 @@ function EAFun_GroupEvent_SaveFrameToGroupEvent()
 		aTempGroupItem.IconRelatePoint = EA_GroupEventSetting_Frame.IconRelatePoint;
 		if (EA_GroupEventSetting_Frame_Talent1:GetChecked()) then aTempGroupItem.ActiveTalentGroup = 1 end;
 		if (EA_GroupEventSetting_Frame_Talent2:GetChecked()) then aTempGroupItem.ActiveTalentGroup = 2 end;
+		if (EA_GroupEventSetting_Frame_Talent3:GetChecked()) then aTempGroupItem.ActiveTalentGroup = 3 end;
+		if (EA_GroupEventSetting_Frame_Talent4:GetChecked()) then aTempGroupItem.ActiveTalentGroup = 4 end;
 		if (EA_GroupEventSetting_Frame_HideOnLeaveCombat:GetChecked()) then aTempGroupItem.HideOnLeaveCombat = true end;
 		if (EA_GroupEventSetting_Frame_HideOnLostTarget:GetChecked()) then aTempGroupItem.HideOnLostTarget = true end;
 
@@ -857,12 +863,12 @@ function EAFun_GroupEvent_SpellTextOnEnterPressed(self)
 		local sName, sRank, sIcon = GetSpellInfo(iSpellID);
 		if (sRank ~= nil and sRank ~= "") then sName = sName.."("..sRank..")" end;
 		if self.SpellName ~= nil then self.SpellName:SetText(sName) end;
-		if self.SpellIcon ~= nil then 
-			--self.SpellIcon:SetBackdrop({bgFile = sIcon}) 
+		if self.SpellIcon ~= nil then
+			--self.SpellIcon:SetBackdrop({bgFile = sIcon})
 			--for 7.0
 			if not self.SpellIcon.texture then self.SpellIcon.texture = self.SpellIcon:CreateTexture() end
 			self.SpellIcon.texture:SetAllPoints(self.SpellIcon)
-			self.SpellIcon.texture:SetTexture(sIcon)	
+			self.SpellIcon.texture:SetTexture(sIcon)
 		end;
 		self:ClearFocus();
 	end
@@ -1025,12 +1031,12 @@ function EAFun_GroupEvent_AddNewSpellBtn_Click(self)
 	SpellIcon:SetHeight(50);
 	SpellIcon:SetPoint("TOPLEFT", SpellFrame, "TOPRIGHT", -58, -8);
 	--SpellIcon:SetBackdrop({bgFile = IconPath});
-	
+
 	--for 7.0
 	if not SpellIcon.texture then SpellIcon.texture = SpellIcon:CreateTexture() end
 	SpellIcon.texture:SetAllPoints(SpellIcon)
-	SpellIcon.texture:SetTexture(IconPath)	
-	
+	SpellIcon.texture:SetTexture(IconPath)
+
 	SpellIcon:Show();
 
 	local SpellText3 = _G[sSpellFramePrefix.."_SpellText3"];

@@ -308,9 +308,13 @@ function CreateFrames_SpecialFrames_Show(index)
 		eaf.texture:SetTexture(specIcon)
 	elseif index == EA_SpecPower.Maelstrom.frameindex[1] then
 		-- 薩滿元能圖案
-		--eaf:SetBackdrop({bgFile = "Interface/Icons/Arcane_Charges"});
 		local specIcon = select(3,GetSpellInfo(556))
 		specIcon = 136010
+		eaf.texture:SetTexture(specIcon)
+	elseif index == EA_SpecPower.Fury.frameindex[1] then		
+		-- 惡魔獵人魔怒圖案
+		local specIcon
+		specIcon = 1305156
 		eaf.texture:SetTexture(specIcon)
 	end
 end
@@ -962,10 +966,14 @@ function CreateFrames_EventsFrame_RefreshSpellList(FrameIndex)
 			EA_name, _, EA_icon = EACFFun_EventsFrame_CheckSpellID(aGrpChecks.Spells[1].SpellIconID, false);
 			EA_rank = EA_XGRPALERT_TALENTS;
 			if (aGrpChecks.ActiveTalentGroup ~= nil) then
-				if (aGrpChecks.ActiveTalentGroup == 1) then
-					EA_rank = EA_XGRPALERT_TALENT1;
+				if (aGrpChecks.ActiveTalentGroup == 1) then 
+					EA_rank = EA_XGRPALERT_TALENT1
 				elseif (aGrpChecks.ActiveTalentGroup == 2) then
-					EA_rank = EA_XGRPALERT_TALENT2;
+					EA_rank = EA_XGRPALERT_TALENT2
+				elseif (aGrpChecks.ActiveTalentGroup == 3) then
+					EA_rank = EA_XGRPALERT_TALENT3
+				elseif (aGrpChecks.ActiveTalentGroup == 4) then
+					EA_rank = EA_XGRPALERT_TALENT4
 				end
 			end
 			CreateFrames_CreateSpellListIcon(iGrpIndex, "EA_GroupFrame_Icon_", EA_Group_Events_Frame_SpellScrollFrameList, 0, LocOffsetY, EA_icon);
@@ -1159,7 +1167,7 @@ function CreateFrames_EventsFrame_AddSpell(FrameIndex)
 			if (sname ~= nil) then
 				CreateFrames_EventsFrame_ClearSpellList(FrameIndex);
 				-- 為了便於分享法術id 所以儲存時增加儲存法術名稱
-				local sname=GetSpellInfo(spellID);
+				local sname = GetSpellInfo(spellID);
 				if (FrameIndex==1 and EA_Items[EA_playerClass][spellID] == nil) then EA_Items[EA_playerClass][spellID] = {enable=true,name=sname} end;
 				if (FrameIndex==2 and EA_AltItems[EA_playerClass][spellID] == nil) then EA_AltItems[EA_playerClass][spellID] = {enable=true,name=sname} end;
 				if (FrameIndex==3 and EA_Items[EA_CLASS_OTHER][spellID] == nil) then EA_Items[EA_CLASS_OTHER][spellID] = {enable=true,name=sname} end;

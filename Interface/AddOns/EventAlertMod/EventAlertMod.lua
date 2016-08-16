@@ -63,6 +63,7 @@ EA_Config = {
 		LifeBloom,
 		ArcaneCharges,
 		Maelstrom,
+		Fury,
 	},
 }
 
@@ -154,10 +155,10 @@ local runeColors = {
 }
 
 local runeTypeText = {
-	[RUNETYPE_BLOOD] = '血魄符文',
-	[RUNETYPE_UNHOLY] = '穢邪符文',
-	[RUNETYPE_FROST] = '冰霜符文',
-	[RUNETYPE_DEATH] = '死亡符文',
+	[RUNETYPE_BLOOD] = "血魄",
+	[RUNETYPE_UNHOLY] = "穢邪",
+	[RUNETYPE_FROST] = "冰霜",
+	[RUNETYPE_DEATH] = "死亡",
 }
 
 local RUNE_MAPPING = {
@@ -394,6 +395,7 @@ function EventAlert_OnEvent(self, event, ...)
 			if EA_Pos[EA_CLASS_WARLOCK] == nil then EA_Pos[EA_CLASS_WARLOCK] = EA_Position end;
 			if EA_Pos[EA_CLASS_WARRIOR] == nil then EA_Pos[EA_CLASS_WARRIOR] = EA_Position end;
 			if EA_Pos[EA_CLASS_MONK] == nil then EA_Pos[EA_CLASS_MONK] = EA_Position end;
+			if EA_Pos[EA_CLASS_DEMONHUNTER] == nil then EA_Pos[EA_CLASS_DEMONHUNTER] = EA_Position end;
 
 			if (EA_Config.ShareSettings ~= true) then
 				EA_Position = EA_Pos[EA_playerClass];
@@ -1240,7 +1242,7 @@ function EventAlert_OnSCDUpdate(spellID)
 
 				FrameGlowShowOrHide(eaf,flag_usable and EA_Config2.SCD_GlowWhenUsable)
 
-				if EA_Config2.SCD_RemoveWhenCooldown==true then RemoveSingleSCDCurrentBuff(spellID) end
+				-- if EA_Config2.SCD_RemoveWhenCooldown==true then RemoveSingleSCDCurrentBuff(spellID) end
 			else
 				if eaf.useCooldown then
 					eaf.cooldown:SetCooldown(EA_ChargeStart, EA_ChargeDuration,EA_ChargeCurrent,EA_ChargeMax)
@@ -2211,12 +2213,21 @@ function EventAlert_UpdateRunes()
 					eaf[i].spellTimer:SetPoint("TOP", 0, EA_Config.TimerFontSize*0.5);
 				end
 
-				local start, duration, runeReady = GetRuneCooldown(slot);
-				local timeLeft=start+duration-GetTime()
-				if timeLeft > duration then timeLeft = duration end
+				local EA_start, EA_duration, runeReady = GetRuneCooldown(i)
+				local EA_timeLeft
 
-				if (timeLeft>0) then
-					EAFun_SetCountdownStackText(eaf[i],timeLeft,0,-1)
+				if not(EA_start) then return end
+
+				if (runeReady) then
+					EA_timeLeft = 0
+				else
+					EA_timeLeft = EA_start + EA_duration - GetTime()
+				end
+
+				if (EA_timeLeft > EA_duration) then EA_timeLeft = EA_duration end
+
+				if (EA_timeLeft > 0) then
+					EAFun_SetCountdownStackText(eaf[i],EA_timeLeft,0,-1)
 				else
 					EAFun_SetCountdownStackText(eaf[i],0,0,-1)
 				end
@@ -2230,9 +2241,9 @@ function EventAlert_UpdateRunes()
 				end
 				EventAlert_PositionFrames();
 			end
-			
+
 			--若脫戰則隱藏符文框架
-			if UnitAffectingCombat("player") == false then	
+			if UnitAffectingCombat("player") == false then
 				eaf[i]:Hide()
 			else
 				eaf[i]:Show()
@@ -2257,6 +2268,7 @@ function EventAlert_UpdateSinglePower(iPowerType)
 	if (iPowerType == EA_SPELL_POWER_LIGHT_FORCE) then iPowerName = EA_XSPECINFO_LIGHTFORCE end;
 	if (iPowerType == EA_SPELL_POWER_BURNING_EMBERS) then iPowerName = EA_XSPECINFO_BURNINGEMBERS end;
 	if (iPowerType == EA_SPELL_POWER_DEMONIC_FURY) then iPowerName = EA_XSPECINFO_DEMONICFURY end;
+	if (iPowerType == EA_SPELL_POWER_FURY) then iPowerName = EA_XSPECINFO_FURY end;
 
 	if (EA_Config.ShowFrame == true) then
 		EA_Main_Frame:ClearAllPoints();
@@ -2316,32 +2328,32 @@ function EventAlert_UpdateSinglePower(iPowerType)
 
 				--武僧真氣滿4即高亮
 				if (iPowerType == EA_SPELL_POWER_LIGHT_FORCE) then
-					--FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_LIGHT_FORCE)))
 					FrameGlowShowOrHide(eaf,(iUnitPower >= 4))
 				end
 
 				--死騎符能達到上限高亮
 				if (iPowerType == EA_SPELL_POWER_RUNIC_POWER) then
-					--FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_RUNIC_POWER)))
 					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_RUNIC_POWER)))
 				end
 
 				--術士靈魂碎片達到上限高亮
 				if (iPowerType == EA_SPELL_POWER_SOUL_SHARDS) then
-					--FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_RUNIC_POWER)))
 					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_SOUL_SHARDS)))
 				end
 
 				--秘法充能達到上限高亮
 				if (iPowerType == EA_SPELL_POWER_ARCANE_CHARGES) then
-					--FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_RUNIC_POWER)))
 					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_ARCANE_CHARGES)))
 				end
 
 				--增強薩、元素薩元能達到上限高亮
 				if (iPowerType == EA_SPELL_POWER_MAELSTROM) then
-					--FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_RUNIC_POWER)))
 					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_MAELSTROM)))
+				end
+
+				--惡魔獵人魔怒達到上限高亮
+				if (iPowerType == EA_SPELL_POWER_FURY) then
+					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_FURY)))
 				end
 			else
 				FrameGlowShowOrHide(eaf, false)
@@ -2881,6 +2893,10 @@ function EAFun_CurrValueCompCfgValue(CompType, CurrValue, CfgValue)
 		if (CurrValue >= CfgValue) then fResult = true end;
 	elseif (CompType == 5) then	-- Curr > Cfg
 		if (CurrValue > CfgValue) then fResult = true end;
+	elseif (CompType == 6) then	-- Curr <> Cfg
+		if (CurrValue ~= CfgValue) then fResult = true end;
+	elseif (CompType == 7) then	-- Cfg = any
+		fResult = true
 	end
 	return fResult;
 end
@@ -2985,7 +3001,9 @@ function EventAlert_GroupFrameCheck_OnEvent(self, event, ...)
 							if (SubCheck.CheckCD ~= nil) then
 								local iStart, iDuration, iEnable = GetSpellCooldown(SubCheck.CheckCD);
 								if (iStart <= 0) or (iStart >= 0 and iDuration <= 1.5) then
-									fShowResult = true;
+									if IsUsableSpell(SubCheck.CheckCD) then
+										fShowResult = true
+									end
 								else
 									fShowResult = false;
 								end
@@ -3087,16 +3105,16 @@ function EventAlert_GroupFrameCheck_OnEvent(self, event, ...)
 								end
 							end
 							-- ToDo: If Exists, Then Check seconds, stacks
+							-- Modify: Show When Stack "OR" Remain Time match config value
 							if (fShowResult) then
 								if (SubCheck.StackCompType ~= nil) then
-									fShowResult = EAFun_CurrValueCompCfgValue(SubCheck.StackCompType, iStack, SubCheck.StackLessThanValue);
+									fShowResult1 = EAFun_CurrValueCompCfgValue(SubCheck.StackCompType, iStack, SubCheck.StackLessThanValue);
 								end
-							end
-							if (fShowResult) then
 								if (SubCheck.TimeCompType ~= nil) then
 									local iLeftTime = iExpireTime - GetTime();
-									fShowResult = EAFun_CurrValueCompCfgValue(SubCheck.TimeCompType, iLeftTime, SubCheck.TimeLessThanValue);
+									fShowResult2 = EAFun_CurrValueCompCfgValue(SubCheck.TimeCompType, iLeftTime, SubCheck.TimeLessThanValue);
 								end
+								fShowResult = fShowResult1 and fShowResult2
 							end
 						end
 						if (SubCheck.CheckAuraNotExist ~= nil) then
@@ -3259,34 +3277,29 @@ function EventAlert_PlayerSpecPower_Update()
 	end
 
 	--7.0開始三系術士資源均統一為靈魂碎片
-	if (id == 265) then  EA_SpecPower.SoulShards.has = true	end
+	if (id == 265) then EA_SpecPower.SoulShards.has = true	end
 	if (id == 266) then EA_SpecPower.SoulShards.has = true 	end
 	if (id == 267) then EA_SpecPower.SoulShards.has = true 	end
 
 	--若玩家為德魯伊且專精是平衡，則表示有星能
 	if (id == 102) then EA_SpecPower.LunarPower.has = true end
-
 	--若玩家為聖騎，則表示有聖能
 	if (pClass == EA_CLASS_PALADIN) then EA_SpecPower.HolyPower.has = true 	end
-
 	--若玩家為盜賊表示擁有連擊點數
 	if (pClass == EA_CLASS_ROGUE) then 	EA_SpecPower.ComboPoint.has = true end
-
 	--若玩家為德魯伊表示擁有連擊點數
 	if (pClass == EA_CLASS_DRUID) then	EA_SpecPower.ComboPoint.has = true end
-
 	--若玩家為恢復德魯伊表示有生命之花
 	if (id == 105) then EA_SpecPower.LifeBloom.has = true end
-
 	--若玩家為暗影牧師表示有暗影能量
 	if (id == 258) then	EA_SpecPower.ShadowOrbs.has = true end
-
 	--若玩家為秘法表示有秘法充能
 	if (id == 62) then	EA_SpecPower.ArcaneCharges.has = true end
-
 	--若玩家為增強薩或元素薩表示有元能(漩渦值)
 	if (id == 262) then	EA_SpecPower.Maelstrom.has = true end
 	if (id == 263) then	EA_SpecPower.Maelstrom.has = true end
+	--若玩家為惡魔獵人表示有魔怒(痛苦值)
+	if (pClass == EA_CLASS_DEMONHUNTER) then EA_SpecPower.Fury.has = true end
 
 	EventAlert_SpecialFrame_Update();
 end
@@ -3295,7 +3308,7 @@ function EventAlert_SpecialFrame_Update()
 	for k,tblPower in pairs(EA_SpecPower) do
 		if (type(tblPower)=="table") then
 			if(tblPower.frameindex) then
-				for k2,f in pairs(tblPower.frameindex) do					
+				for k2,f in pairs(tblPower.frameindex) do
 					if ( f and (EA_Config.SpecPowerCheck[k]) and (tblPower.has) ) then
 						CreateFrames_SpecialFrames_Show(f)
 					else
@@ -3654,6 +3667,13 @@ EA_SpecPower = {
 		func=EventAlert_UpdateSinglePower,
 		has,
 		frameindex = {1000160},
+	},
+	Fury		= {
+		powerId = EA_SPELL_POWER_FURY,
+		powerType = "FURY",
+		func=EventAlert_UpdateSinglePower,
+		has,
+		frameindex = {1000170},
 	},
 	LifeBloom	= {
 		powerId,
