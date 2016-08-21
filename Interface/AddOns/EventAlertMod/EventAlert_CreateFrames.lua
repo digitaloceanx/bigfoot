@@ -85,7 +85,8 @@ function EventAlert_CreateFrames()
 	EA_Target_Events_Frame_SpellScrollFrame:SetHeight(EA_OptHeight - 100);
 	EA_SCD_Events_Frame_SpellScrollFrame:SetHeight(EA_OptHeight - 100);
 	EA_Group_Events_Frame_SpellScrollFrame:SetHeight(EA_OptHeight - 100);
-
+	
+	CreateFrames_CreateMinimapOptionFrame()
 end
 
 
@@ -160,7 +161,8 @@ function CreateFrames_CreateSpellFrame(index, typeIndex)
 	eaf.overgrow = false;
 
 	eaf.spellName:SetFontObject(ChatFontNormal);
-	eaf.spellName:SetPoint("BOTTOM", 0, -15);
+	eaf.spellName:SetPoint("TOP", eaf, "BOTTOM", 0, -0.1 * EA_Config.IconSize);
+	--eaf.spellName:SetPoint("BOTTOM", 0, -15);
 
 	eaf.spellTimer:SetFontObject(ChatFontNormal);
 	eaf.spellTimer:SetPoint("TOP", 0, EA_Config.TimerFontSize*1.1);
@@ -236,13 +238,13 @@ function CreateFrames_SpecialFrames_Show(index)
 	eaf:ClearAllPoints();
 	eaf:SetFrameStrata("HIGH");
 	eaf.spellName:SetFontObject(ChatFontNormal);
-	eaf.spellName:SetPoint("BOTTOM", 0, -15);
+	eaf.spellName:SetPoint("TOP", eaf, "BOTTOM", 0, -EA_Config.IconSize * 0.1);
 
 	eaf.spellTimer:SetFontObject(ChatFontNormal);
-	eaf.spellTimer:SetPoint("TOP", 0, EA_Config.TimerFontSize*1.1);
+	eaf.spellTimer:SetPoint("CENTER", eaf, "CENTER", 0, EA_Config.TimerFontSize * 0.8);
 
 	eaf.spellStack:SetFontObject(ChatFontNormal);
-	eaf.spellStack:SetPoint("BOTTOMRIGHT", 0, 15);
+	eaf.spellStack:SetPoint("BOTTOMRIGHT", eaf, "BOTTOMRIGHT", 0, EA_Config.IconSize * 0.1);
 
 	eaf:SetWidth(EA_Config.IconSize);
 	eaf:SetHeight(EA_Config.IconSize);
@@ -269,13 +271,8 @@ function CreateFrames_SpecialFrames_Show(index)
 		-- 術士靈魂碎片的圖案
 		eaf:SetBackdrop({bgFile = "Interface/Icons/Inv_Misc_Gem_Amethyst_02"});
 	elseif index == EA_SpecPower.LunarPower.frameindex[1] then
-		-- 鳥D日蝕能量的圖案
+		-- 鳥D星能的圖案
 		--eaf:SetBackdrop({bgFile = "Interface/Icons/Ability_Druid_Eclipse"});
-		local specIcon = select(3,GetSpellInfo(77492))
-		eaf.texture:SetTexture(specIcon)
-	elseif index == EA_SpecPower.LunarPower.frameindex[2] then
-		-- 鳥D月蝕能量的圖案
-		--eaf:SetBackdrop({bgFile = "Interface/Icons/Ability_Druid_EclipseOrange"});
 		local specIcon = select(3,GetSpellInfo(77492))
 		eaf.texture:SetTexture(specIcon)
 	elseif index == EA_SpecPower.HolyPower.frameindex[1] then
@@ -283,11 +280,12 @@ function CreateFrames_SpecialFrames_Show(index)
 		eaf:SetBackdrop({bgFile = "Interface/Icons/Spell_Holy_PowerwordBarrier"});
 	elseif index == EA_SpecPower.LightForce.frameindex[1] then
 		-- 武僧真氣的圖案
-		eaf:SetBackdrop({bgFile = "Interface/Icons/Ability_Monk_HealthSphere"});
-	elseif index == EA_SpecPower.ShadowOrbs.frameindex[1] then
+		eaf:SetBackdrop({bgFile = "Interface/Icons/Ability_Monk_HealthSphere"});			
+	elseif index == EA_SpecPower.Insanity.frameindex[1] then
 		-- 暗牧瘋狂值的圖案
-		--eaf:SetBackdrop({bgFile = "Interface/Icons/Spell_Priest_ShadowOrbs"});
-		local specIcon = select(3,GetSpellInfo(77486))
+		--eaf:SetBackdrop({bgFile = "Interface/Icons/Spell_Priest_Insanity"});			
+		--local specIcon = select(3,GetSpellInfo(77486))
+		local specIcon = 1386550
 		eaf.texture:SetTexture(specIcon)
 	elseif index == EA_SpecPower.BurningEmbers.frameindex[1] then
 		-- 術士燃火餘燼的圖案
@@ -315,6 +313,11 @@ function CreateFrames_SpecialFrames_Show(index)
 		-- 惡魔獵人魔怒圖案
 		local specIcon
 		specIcon = 1305156
+		eaf.texture:SetTexture(specIcon)
+	elseif index == EA_SpecPower.Pain.frameindex[1] then		
+		-- 惡魔獵人魔痛圖案
+		local specIcon
+		local specIcon = select(3,GetSpellInfo(203747))		
 		eaf.texture:SetTexture(specIcon)
 	end
 end
@@ -1283,3 +1286,40 @@ function CreateFrames_EventsFrame_RemoveAllSpells(FrameIndex)
 end
 
 --------------------------------------------------------------------------------
+
+function CreateFrames_CreateMinimapOptionFrame()
+	
+	local eaf = CreateFrame("BUTTON","EA_MinimapOption",Minimap)
+	
+	eaf:SetWidth(30)
+	eaf:SetHeight(30)
+	eaf:SetPoint("BOTTOMRIGHT",0,-40)
+	eaf:SetAlpha(0.7)
+	eaf:SetBackdrop({bgFile = "Interface/Icons/Trade_Engineering"})	
+	eaf:EnableMouse(true)	
+	eaf:RegisterForClicks("LeftButtonDown")
+	eaf:SetScript("OnClick", function(self,button)																	
+									if not(EA_Options_Frame:IsVisible()) then			
+										EA_Options_Frame:Show()
+									else						
+										EA_Options_Frame:Hide()
+									end
+							end
+				)
+	eaf:SetScript("OnEnter", function()	
+								eaf:SetAlpha(1)	
+								GameTooltip:SetOwner(eaf,"BOTTOM_LEFT")
+								local t=""
+								t = t..EA_XCMD_CMDHELP["TITLE"].."\n"
+								t = t..EA_XCMD_CMDHELP["OPT"].."\n"
+								t = t..EA_XCMD_CMDHELP["HELP"].."\n"
+								for k,v in pairs(EA_XCMD_CMDHELP) do
+									if v[1] then t = t..v[1].."\n"..v[2].."\n" end									
+								end
+								GameTooltip:SetText(t)
+							end	)
+	eaf:SetScript("OnLeave", function()	
+								eaf:SetAlpha(0.7)
+								GameTooltip:Hide()
+							end	)
+end

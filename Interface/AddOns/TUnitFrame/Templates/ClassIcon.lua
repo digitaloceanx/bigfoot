@@ -1,9 +1,9 @@
+
 --[[
 	Module\Templates\ClassIcon.lua
 	Terry@bf 10-11-29
 	增加职业的图标模板
 ]]
-
 
 local T = LibStub("AceAddon-3.0"):GetAddon("TUnitFrame")
 if not T then return end
@@ -13,7 +13,7 @@ T.Templates = T.Templates or {}
 AceOO = AceLibrary("AceOO-2.0")
 if not AceOO then return end
 
-local __CLASS_TEXTURE = [[Interface\Addons\TUnitFrame\Media\ClassIcon]]
+local __CLASS_TEXTURE = [[Interface\Addons\TUnitFrame\Media\UI-CHARACTERCREATE-CLASSES]]
 
 local ClassIconClass = AceOO.Class()
 
@@ -24,7 +24,7 @@ local function __CreateTexture(parent)
 	texture = parent:CreateTexture(parent:GetName().."Texture")
 
 	border:SetTexture([[Interface\Minimap\MiniMap-TrackingBorder]])
-	
+
 	border:SetAllPoints()
 	texture:SetPoint("TOPLEFT",border,"TOPLEFT",6,-4)
 	texture:SetHeight(20)

@@ -573,7 +573,7 @@
 					</OnLeave>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="$parent_SpecFlag_ShadowOrbs" inherits="OptionsCheckButtonTemplate">
+			<CheckButton name="$parent_SpecFlag_Insanity" inherits="OptionsCheckButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent_SpecFlag_Rage" relativePoint="BOTTOMLEFT">
 						<Offset>
@@ -583,16 +583,16 @@
 				</Anchors>
 				<Scripts>
 					<OnLoad>
-						_G[self:GetName().."Text"]:SetText(EA_XOPT_SPECFLAG_SHADOWORBS);
+						_G[self:GetName().."Text"]:SetText(EA_XOPT_SPECFLAG_INSANITY);
 					</OnLoad>
 					<OnClick>
 						
-						EA_Config.SpecPowerCheck.ShadowOrbs = self:GetChecked()
+						EA_Config.SpecPowerCheck.Insanity = self:GetChecked()
 						EventAlert_SpecialFrame_Update();
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-						GameTooltip:SetText(EA_TTIP_SPECFLAG_CHECK_SHADOWORBS);
+						GameTooltip:SetText(EA_TTIP_SPECFLAG_CHECK_INSANITY);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();
@@ -601,7 +601,7 @@
 			</CheckButton>
 			<CheckButton name="$parent_SpecFlag_ArcaneCharges" inherits="OptionsCheckButtonTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parent_SpecFlag_ShadowOrbs" relativePoint="TOPRIGHT">
+					<Anchor point="TOPLEFT" relativeTo="$parent_SpecFlag_Insanity" relativePoint="TOPRIGHT">
 						<Offset>
 							<AbsDimension x="100" y="0" />
 						</Offset>
@@ -627,7 +627,7 @@
 			</CheckButton>
 			<CheckButton name="$parent_SpecFlag_Maelstrom" inherits="OptionsCheckButtonTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parent_SpecFlag_ShadowOrbs" relativePoint="BOTTOMLEFT">
+					<Anchor point="TOPLEFT" relativeTo="$parent_SpecFlag_Insanity" relativePoint="BOTTOMLEFT">
 						<Offset>
 							<AbsDimension x="0" y="0" />
 						</Offset>
@@ -694,6 +694,31 @@
 					<OnEnter>
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
 						GameTooltip:SetText(EA_TTIP_SPECFLAG_CHECK_FURY);
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_SpecFlag_Pain" inherits="OptionsCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_SpecFlag_Fury" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						_G[self:GetName().."Text"]:SetText(EA_XOPT_SPECFLAG_PAIN);
+					</OnLoad>
+					<OnClick>
+						EA_Config.SpecPowerCheck.Pain = self:GetChecked()						
+						EventAlert_SpecialFrame_Update();
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+						GameTooltip:SetText(EA_TTIP_SPECFLAG_CHECK_PAIN);
 					</OnEnter>
 					<OnLeave>
 						GameTooltip:Hide();

@@ -10,6 +10,107 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 		</Scripts>
 	</GameTooltip>
 
+	<Frame name="Bigfoot_ArtifactBox" parent="UIParent" inherits="GlowBoxTemplate" frameStrata="HIGH" hidden="true">
+		<Size x="122" y="20"/>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString parentKey="Text" inherits="GameFontHighlightLeft" justifyV="TOP">
+					<Size x="188" y="0"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="16" y="-12"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame parentKey="Arrow" inherits="GlowBoxArrowTemplate">
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="LEFT" x="-2" y="16"/>
+				</Anchors>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self.Text:SetSpacing(4);
+				SetClampedTextureRotation(self.Arrow.Arrow, 270);
+				SetClampedTextureRotation(self.Arrow.Glow, 270);
+				self.Arrow.Glow:ClearAllPoints();
+			</OnLoad>
+			<OnShow>
+				self:SetHeight(self.Text:GetHeight()+20);
+			</OnShow>
+		</Scripts>
+	</Frame>
+	<Frame name="Bigfoot_ArtifactMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Anchors>
+			<Anchor point="BOTTOMLEFT" relativeTo="Bigfoot_Artifact" relativePoint="TOPRIGHT"/>
+		</Anchors>
+		<Scripts>
+			<OnLoad function="Bigfoot_ArtifactMenu_OnLoad"/>
+			<OnShow function="Bigfoot_ArtifactMenu_Show"/>
+		</Scripts>
+	</Frame>
+	<Frame name="WARRIORMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="WARRIORMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="PALADINMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="PALADINMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="DEATHKNIGHTMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="DEATHKNIGHTMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="HUNTERMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="HUNTERMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="SHAMANMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="SHAMANMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="ROGUEMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="ROGUEMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="DRUIDMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="DRUIDMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="MONKMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="MONKMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="DEMONHUNTERMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="DEMONHUNTERMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="MAGEMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="MAGEMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="PRIESTMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="PRIESTMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+	<Frame name="WARLOCKMenu" inherits="UIMenuTemplate" hidden="true" clampedToScreen="true" parent="Bigfoot_Artifact">
+		<Scripts>
+			<OnLoad function="WARLOCKMenu_OnLoad"/>
+		</Scripts>
+	</Frame>
+
 	<!-- <Frame name="BigFootURLFrame" toplevel="true" frameStrata="HIGH" parent="UIParent" enableMouse="true" hidden="true">
 		<Size>
 			<AbsDimension x="400" y="150"/>

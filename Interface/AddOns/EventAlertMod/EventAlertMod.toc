@@ -5,7 +5,7 @@
 ## Notes: |cffbc8f8fConvenient to set any spell you want to monitor.|r
 ## Notes-zhCN: |cff00ff00EventAlertMod|r|n|cffbc8f8f方便快捷的设置你想监视的任何法术。|r
 ## Notes-zhTW: |cff00ff00EventAlertMod|r|n|cffbc8f8f方便快捷的設置你想監視的任何法術。|r
-## Author: Whitep@雷鱗 (Thanks for ACDACD as previous author of 4.7.02)
+## Author: 死鬥
 ## Version: 7.0.3.20160727
 ## SavedVariables: EA_Config, EA_Position, EA_Items, EA_AltItems, EA_TarItems, EA_ScdItems, EA_GrpItems, EA_Pos
 ## Dependencies: BigFoot
@@ -15,6 +15,7 @@
 localization.en.lua
 localization.cn.lua
 localization.tw.lua
+localization.comm.lua
 
 EventAlertMod.xml
 EventAlert_Options.xml

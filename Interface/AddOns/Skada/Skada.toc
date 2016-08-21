@@ -6,7 +6,7 @@
 ## Notes-zhCN: |cff00ff00Skada|r
 ## Notes-zhTW: |cff00ff00Skada|r
 ## Author: Zarnivoop
-## Version: 1.4-34
+## Version: 1.5-3
 ## SavedVariables: SkadaDB
 ## SavedVariablesPerCharacter: SkadaPerCharDB
 ## Dependencies: BigFoot
@@ -23,5 +23,7 @@ Skada.lua
 Menus.lua
 Options.lua
 BarDisplay.lua
+InlineDisplay.lua
+BrokerDisplay.lua
 
 modules.xml

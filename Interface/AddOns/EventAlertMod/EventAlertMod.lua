@@ -57,13 +57,14 @@ EA_Config = {
 		HolyPower,
 		DarkForce,
 		LightForce,
-		ShadowOrbs,
+		Insanity,
 		BurningEmbers,
 		DemonicFury,
 		LifeBloom,
 		ArcaneCharges,
 		Maelstrom,
 		Fury,
+		Pain,
 	},
 }
 
@@ -112,7 +113,6 @@ local EA_SpecFrame_Target = false;
 local EA_SpecFrame_LifeBloom = { UnitID = "", UnitName = "", ExpireTime = 0, Stack = 0 };
 
 local EA_FormType_FirstTimeCheck = true;
-local fLock_EventAlert_Buffs_Update = false
 
 EA_COMBO_POINTS = 0;
 EA_playerClass  = nil;
@@ -471,10 +471,6 @@ local function EAFun_GetSpellConditionRedSecText(EAItems)
 end
 
 function EventAlert_Buffs_Update(...)
-	--防止重入
-	if fLock_EventAlert_Buffs_Update then return end
-	fLock_EventAlert_Buffs_Update = true
-
 	local arg1 = ...
 	local buffsCurrent = {};
 	local buffsToDelete = {};
@@ -791,7 +787,6 @@ function EventAlert_Buffs_Update(...)
 	if (EA_DEBUGFLAG11 or EA_DEBUGFLAG21) then
 		CreateFrames_EventsFrame_RefreshSpellList(3);
 	end
-	fLock_EventAlert_Buffs_Update = false
 end
 
 function EventAlert_TarBuffs_Update(...)
@@ -1240,9 +1235,7 @@ function EventAlert_OnSCDUpdate(spellID)
 					end
 				end
 
-				FrameGlowShowOrHide(eaf,flag_usable and EA_Config2.SCD_GlowWhenUsable)
-
-				-- if EA_Config2.SCD_RemoveWhenCooldown==true then RemoveSingleSCDCurrentBuff(spellID) end
+				if EA_Config2.SCD_GlowWhenUsable then FrameGlowShowOrHide(eaf,flag_usable) end
 			else
 				if eaf.useCooldown then
 					eaf.cooldown:SetCooldown(EA_ChargeStart, EA_ChargeDuration,EA_ChargeCurrent,EA_ChargeMax)
@@ -1253,7 +1246,7 @@ function EventAlert_OnSCDUpdate(spellID)
 					EAFun_SetCountdownStackText(eaf, EA_timeLeft , EA_ChargeCurrent, -1);
 				end
 
-				FrameGlowShowOrHide(eaf, false)
+				if EA_Config2.SCD_GlowWhenUsable then FrameGlowShowOrHide(eaf, false) end
 			end
 		else
 			if (EA_Enable == 1) then
@@ -1263,7 +1256,7 @@ function EventAlert_OnSCDUpdate(spellID)
 				if EA_GCD < 1 then EA_GCD = 1 end
 
 				if (EA_start > 0 and EA_duration > EA_GCD )  then
-					FrameGlowShowOrHide(eaf,false)
+					if EA_Config2.SCD_GlowWhenUsable then FrameGlowShowOrHide(eaf,false) end
 
 					if eaf.useCooldown then
 						eaf.cooldown:SetCooldown(EA_start, EA_duration)
@@ -1276,9 +1269,11 @@ function EventAlert_OnSCDUpdate(spellID)
 					end
 				else
 					eaf.spellTimer:SetText("")
-					FrameGlowShowOrHide(eaf,flag_usable and EA_Config2.SCD_GlowWhenUsable)
-
-					if EA_Config2.SCD_RemoveWhenCooldown==true then RemoveSingleSCDCurrentBuff(spellID) end
+					if EA_Config2.SCD_RemoveWhenCooldown==true then
+						RemoveSingleSCDCurrentBuff(spellID)
+					else
+						if EA_Config2.SCD_GlowWhenUsable then FrameGlowShowOrHide(eaf,flag_usable) end
+					end
 				end
 			end
 		end
@@ -1918,23 +1913,23 @@ function EAFun_SetCountdownStackText(eaf, EA_timeLeft, EA_count, SC_RedSecText)
 	if ((SC_RedSecText == nil) or (SC_RedSecText <= 0)) then SC_RedSecText = -1 end;
 	if (EA_timeLeft > 0) then
 		if (EA_Config.ChangeTimer == true) then
-			--eaf.spellTimer:SetPoint("CENTER", 0, 0);
-			eaf.spellTimer:SetPoint("CENTER", 0, eaf:GetHeight()/11);
+			eaf.spellTimer:SetPoint("CENTER", eaf, "CENTER", 0, 0);
 		else
-			eaf.spellTimer:SetPoint("TOP", 0, EA_Config.TimerFontSize);
+			--eaf.spellTimer:SetPoint("TOP", 0, EA_Config.TimerFontSize);
+			eaf.spellTimer:SetPoint("BOTTOM", eaf, "TOP" ,0, 0);
 		end
 		if (EA_timeLeft < SC_RedSecText + 1) then
 			if (not eaf.redsectext) then
-				--eaf.spellTimer:SetFont("Fonts\\FRIZQT__.TTF", EA_Config.TimerFontSize*1.1+5, "OUTLINE");
-				eaf.spellTimer:SetFont("Fonts\\FRIZQT__.TTF", eaf:GetWidth()*0.6+5, "OUTLINE");
+				--eaf.spellTimer:SetFont("Fonts\\FRIZQT__.TTF", 1*(EA_Config.TimerFontSize+5), "OUTLINE");
+				eaf.spellTimer:SetFont("Fonts\\FRIZQT__.TTF", (EA_Config.TimerFontSize+5), "OUTLINE");
 				eaf.spellTimer:SetTextColor(1, 0, 0);
 				eaf.redsectext = true;
 				eaf.whitesectext = false;
 			end
 		else
 			if (not eaf.whitesectext) then
-				--eaf.spellTimer:SetFont("Fonts\\FRIZQT__.TTF", EA_Config.TimerFontSize*1.1, "OUTLINE");
-				eaf.spellTimer:SetFont("Fonts\\FRIZQT__.TTF", eaf:GetWidth()*0.6, "OUTLINE");
+				--eaf.spellTimer:SetFont("Fonts\\FRIZQT__.TTF", 1*EA_Config.TimerFontSize, "OUTLINE");
+				eaf.spellTimer:SetFont("Fonts\\FRIZQT__.TTF",EA_Config.TimerFontSize, "OUTLINE");
 				eaf.spellTimer:SetTextColor(1, 1, 1);
 				eaf.redsectext = false;
 				eaf.whitesectext = true;
@@ -1949,11 +1944,9 @@ function EAFun_SetCountdownStackText(eaf, EA_timeLeft, EA_count, SC_RedSecText)
 	--if (EA_count > 0) then
 	--計數值大於1才顯示
 	if (EA_count > 1) then
-		--eaf.spellStack:SetPoint("CENTER", EA_Config.TimerFontSize/3*2, -EA_Config.TimerFontSize/3*2);
-		eaf.spellStack:SetPoint("CENTER", eaf:GetWidth()/3, -eaf:GetHeight()/3);
-		--eaf.spellStack:SetPoint("BOTTOMRIGHT", -eaf:GetWidth()*0.2 ,eaf:GetHeight()*0.2);
+		eaf.spellStack:SetPoint("BOTTOMRIGHT", eaf, "BOTTOMRIGHT", -eaf:GetWidth() * 0.0 , eaf:GetHeight() * 0.03)
 		--eaf.spellStack:SetFont("Fonts\\FRIZQT__.TTF", EA_Config.StackFontSize*1.05, "OUTLINE");
-		eaf.spellStack:SetFont("Fonts\\FRIZQT__.TTF", eaf:GetWidth()*0.3, "OUTLINE");
+		eaf.spellStack:SetFont("Fonts\\FRIZQT__.TTF", EA_Config.StackFontSize, "OUTLINE");
 		eaf.spellStack:SetFormattedText("%d", EA_count);
 	else
 		eaf.spellStack:SetFormattedText("");
@@ -2005,84 +1998,6 @@ function EventAlert_UpdateComboPoint()
 				eaf:Hide();
 			end
 			EventAlert_TarPositionFrames();
-		end
-	end
-end
-
--- Speciall Frame: UpdateLunarPower, for watching the eclipse of player
-function EventAlert_UpdateLunarPower()
-	local iUnitPower = UnitPower("player", 8);
-	if (EA_Config.ShowFrame == true) then
-		EA_Main_Frame:ClearAllPoints();
-		EA_Main_Frame:SetPoint(EA_Position.Anchor, UIParent, EA_Position.relativePoint, EA_Position.xLoc, EA_Position.yLoc);
-		local prevFrame = "EA_Main_Frame";
-		local xOffset = 100 + EA_Position.xOffset;
-		local yOffset = 0 + EA_Position.yOffset;
-		local SfontName, SfontSize = "", 0;
-		local eaf1 = _G["EAFrameSpec_1000081"];
-		local eaf2 = _G["EAFrameSpec_1000082"];
-
-		if ((eaf1 ~= nil) and (eaf2 ~= nil)) then
-			if (iUnitPower > 0) then
-				FrameGlowShowOrHide(eaf1, false)
-				EA_SpecFrame_Self = true;
-				eaf1:ClearAllPoints();
-				eaf2:ClearAllPoints();
-				eaf1:Hide();
-				eaf2:SetPoint(EA_Position.Anchor, prevFrame, EA_Position.Anchor, -3 * xOffset, -1 * yOffset);
-
-				if (EA_Config.ShowName == true) then
-					eaf2.spellName:SetText(EA_XSPECINFO_LUNARPOWER);
-					SfontName, SfontSize = eaf2.spellName:GetFont();
-					eaf2.spellName:SetFont(SfontName, EA_Config.SNameFontSize);
-				else
-					eaf2.spellName:SetText("");
-				end
-
-				eaf2.spellTimer:ClearAllPoints();
-				if (EA_Config.ChangeTimer == true) then
-					eaf2.spellTimer:SetPoint("CENTER", 0, 0);
-				else
-					eaf2.spellTimer:SetPoint("TOP", 0, EA_Config.TimerFontSize*1.1);
-				end
-				eaf2.spellTimer:SetFont("Fonts\\FRIZQT__.TTF", EA_Config.TimerFontSize, "OUTLINE");
-				eaf2.spellTimer:SetText(iUnitPower);
-				eaf2:Show();
-				FrameGlowShowOrHide(eaf2, (iUnitPower >= 100))
-			elseif (iUnitPower < 0) then
-				FrameGlowShowOrHide(eaf2, false)
-				EA_SpecFrame_Self = true;
-				eaf1:ClearAllPoints();
-				eaf2:ClearAllPoints();
-				eaf1:SetPoint(EA_Position.Anchor, prevFrame, EA_Position.Anchor, -5 * xOffset, -1 * yOffset);
-				eaf2:Hide();
-
-				if (EA_Config.ShowName == true) then
-					eaf1.spellName:SetText(EA_XSPECINFO_LUNAROWER);
-					SfontName, SfontSize = eaf1.spellName:GetFont();
-					eaf1.spellName:SetFont(SfontName, EA_Config.SNameFontSize);
-				else
-					eaf1.spellName:SetText("");
-				end
-
-				eaf1.spellTimer:ClearAllPoints();
-				if (EA_Config.ChangeTimer == true) then
-					eaf1.spellTimer:SetPoint("CENTER", 0, 0);
-				else
-					eaf1.spellTimer:SetPoint("TOP", 0, EA_Config.TimerFontSize*1.1);
-				end
-				eaf1.spellTimer:SetFont("Fonts\\FRIZQT__.TTF", EA_Config.TimerFontSize, "OUTLINE");
-				eaf1.spellTimer:SetText(-1 * iUnitPower);
-				eaf1:Show();
-				FrameGlowShowOrHide(eaf1, (iUnitPower <= -100))
-			else
-				FrameGlowShowOrHide(eaf1, false)
-				FrameGlowShowOrHide(eaf2, false)
-				EA_SpecFrame_Self = false;
-				eaf1:Hide();
-				eaf2:Hide();
-			end
-			EventAlert_PositionFrames();
 		end
 	end
 end
@@ -2261,14 +2176,19 @@ function EventAlert_UpdateSinglePower(iPowerType)
 	if (iPowerType == EA_SPELL_POWER_RUNIC_POWER) then iPowerName = EA_XSPECINFO_RUNICPOWER end;
 	if (iPowerType == EA_SPELL_POWER_SOUL_SHARDS) then iPowerName = EA_XSPECINFO_SOULSHARDS end;
 	if (iPowerType == EA_SPELL_POWER_HOLY_POWER) then iPowerName = EA_XSPECINFO_HOLYPOWER end;
-	if (iPowerType == EA_SPELL_POWER_SHADOW_ORBS) then iPowerName = EA_XSPECINFO_SHADOWORBS end;
+	if (iPowerType == EA_SPELL_POWER_INSANITY) then iPowerName = EA_XSPECINFO_INSANITY end;
 	if (iPowerType == EA_SPELL_POWER_RAGE) then iPowerName = EA_XSPECINFO_RAGE end;
 	if (iPowerType == EA_SPELL_POWER_FOCUS) then iPowerName = EA_XSPECINFO_FOCUS end;
+	if (iPowerType == EA_SPELL_POWER_PET_FOCUS) then iPowerName = EA_XSPECINFO_PET_FOCUS end;
 	if (iPowerType == EA_SPELL_POWER_ENERGY) then iPowerName = EA_XSPECINFO_ENERGY end;
 	if (iPowerType == EA_SPELL_POWER_LIGHT_FORCE) then iPowerName = EA_XSPECINFO_LIGHTFORCE end;
 	if (iPowerType == EA_SPELL_POWER_BURNING_EMBERS) then iPowerName = EA_XSPECINFO_BURNINGEMBERS end;
 	if (iPowerType == EA_SPELL_POWER_DEMONIC_FURY) then iPowerName = EA_XSPECINFO_DEMONICFURY end;
+	if (iPowerType == EA_SPELL_POWER_LUNAR_POWER) then iPowerName = EA_XSPECINFO_LUNARPOWER end;
+	if (iPowerType == EA_SPELL_POWER_ARCANE_CHARGES) then iPowerName = EA_XSPECINFO_ARCANECHARGES end;
+	if (iPowerType == EA_SPELL_POWER_MAELSTROM) then iPowerName = EA_XSPECINFO_MAELSTROM end;
 	if (iPowerType == EA_SPELL_POWER_FURY) then iPowerName = EA_XSPECINFO_FURY end;
+	if (iPowerType == EA_SPELL_POWER_PAIN) then iPowerName = EA_XSPECINFO_PAIN end;
 
 	if (EA_Config.ShowFrame == true) then
 		EA_Main_Frame:ClearAllPoints();
@@ -2298,6 +2218,10 @@ function EventAlert_UpdateSinglePower(iPowerType)
 					end
 				end
 
+				if (iPowerType == EA_SPELL_POWER_LUNAR_POWER) then
+					eaf:SetPoint(EA_Position.Anchor, prevFrame, EA_Position.Anchor, -3 * xOffset, -3 * yOffset)
+				end
+
 				if (EA_Config.ShowName == true) then
 					eaf.spellName:SetText(iPowerName);
 					SfontName, SfontSize = eaf.spellName:GetFont();
@@ -2322,8 +2246,8 @@ function EventAlert_UpdateSinglePower(iPowerType)
 				end
 
 				-- 暗牧瘋狂值達到上限高亮
-				if (iPowerType == EA_SPELL_POWER_SHADOW_ORBS) then
-					FrameGlowShowOrHide(eaf,(iUnitPower >= UnitPowerMax("player",EA_SPELL_POWER_SHADOW_ORBS)))
+				if (iPowerType == EA_SPELL_POWER_INSANITY) then
+					FrameGlowShowOrHide(eaf,(iUnitPower >= UnitPowerMax("player",EA_SPELL_POWER_INSANITY)))
 				end
 
 				--武僧真氣滿4即高亮
@@ -2346,6 +2270,11 @@ function EventAlert_UpdateSinglePower(iPowerType)
 					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_ARCANE_CHARGES)))
 				end
 
+				--星能達到上限高亮
+				if (iPowerType == EA_SPELL_POWER_LUNAR_POWER) then
+					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_LUNAR_POWER)))
+				end
+
 				--增強薩、元素薩元能達到上限高亮
 				if (iPowerType == EA_SPELL_POWER_MAELSTROM) then
 					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_MAELSTROM)))
@@ -2354,6 +2283,11 @@ function EventAlert_UpdateSinglePower(iPowerType)
 				--惡魔獵人魔怒達到上限高亮
 				if (iPowerType == EA_SPELL_POWER_FURY) then
 					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_FURY)))
+				end
+
+				--惡魔獵人魔痛達到上限高亮
+				if (iPowerType == EA_SPELL_POWER_FURY) then
+					FrameGlowShowOrHide(eaf,(iUnitPower >=UnitPowerMax("player",EA_SPELL_POWER_PAIN)))
 				end
 			else
 				FrameGlowShowOrHide(eaf, false)
@@ -3292,14 +3226,17 @@ function EventAlert_PlayerSpecPower_Update()
 	--若玩家為恢復德魯伊表示有生命之花
 	if (id == 105) then EA_SpecPower.LifeBloom.has = true end
 	--若玩家為暗影牧師表示有暗影能量
-	if (id == 258) then	EA_SpecPower.ShadowOrbs.has = true end
+	if (id == 258) then	EA_SpecPower.Insanity.has = true end
 	--若玩家為秘法表示有秘法充能
 	if (id == 62) then	EA_SpecPower.ArcaneCharges.has = true end
 	--若玩家為增強薩或元素薩表示有元能(漩渦值)
 	if (id == 262) then	EA_SpecPower.Maelstrom.has = true end
 	if (id == 263) then	EA_SpecPower.Maelstrom.has = true end
-	--若玩家為惡魔獵人表示有魔怒(痛苦值)
-	if (pClass == EA_CLASS_DEMONHUNTER) then EA_SpecPower.Fury.has = true end
+	--若玩家為惡魔獵人表示有魔怒,魔痛
+	if (pClass == EA_CLASS_DEMONHUNTER) then
+		if (id == 577) then	EA_SpecPower.Fury.has = true end
+		if (id == 581) then	EA_SpecPower.Pain.has = true end
+	end
 
 	EventAlert_SpecialFrame_Update();
 end
@@ -3526,7 +3463,7 @@ EA_EventList = {
 		["PLAYER_TALENT_WIPE"]			=EventAlert_PLAYER_TALENT_UPDATE,
 
 		["PLAYER_TARGET_CHANGED"]		=EventAlert_TARGET_CHANGED,
-		["PLAYER_SPECIALIZATION_CHANGED"]	=EventAlert_PLAYER_TALENT_UPDATE,
+		["PLAYER_SPECIALIZATION_CHANGED"]=EventAlert_PLAYER_TALENT_UPDATE,
 		["COMBAT_LOG_EVENT_UNFILTERED"]	=EventAlert_COMBAT_LOG_EVENT_UNFILTERED ,
 
 		["COMBAT_TEXT_UPDATE"]			=EventAlert_COMBAT_TEXT_UPDATE,
@@ -3604,12 +3541,11 @@ EA_SpecPower = {
 		frameindex = {1000070},
 	},
 	LunarPower	= {
-		powerId=EA_SPELLPOWER_LUNAR_POWER,
-		--powerType = "ECLIPSE",
+		powerId=EA_SPELL_POWER_LUNAR_POWER,
 		powerType = "LUNAR_POWER",
-		func=EventAlert_UpdateLunarPower,
+		func=EventAlert_UpdateSinglePower,
 		has,
-		frameindex = {1000081,1000082},
+		frameindex = {1000080},
 	},
 	HolyPower	= {
 		powerId=EA_SPELL_POWER_HOLY_POWER,
@@ -3639,9 +3575,8 @@ EA_SpecPower = {
 		has,
 		frameindex = {1000120},
 	},
-	ShadowOrbs	= {
-		powerId=EA_SPELL_POWER_SHADOW_ORBS,
-		--powerType = "SHADOW_ORBS",
+	Insanity	= {
+		powerId=EA_SPELL_POWER_INSANITY,
 		powerType = "INSANITY",
 		func=EventAlert_UpdateSinglePower,
 		has,
@@ -3674,6 +3609,13 @@ EA_SpecPower = {
 		func=EventAlert_UpdateSinglePower,
 		has,
 		frameindex = {1000170},
+	},
+	Pain		= {
+		powerId=EA_SPELL_POWER_PAIN,
+		powerType = "PAIN",
+		func=EventAlert_UpdateSinglePower,
+		has,
+		frameindex = {1000180},
 	},
 	LifeBloom	= {
 		powerId,

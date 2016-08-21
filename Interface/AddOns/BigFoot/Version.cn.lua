@@ -1,6 +1,6 @@
 if GetLocale()~='zhCN' then return end
 local main= "7.0.0."
-local minor = "585"
+local minor = "586"
 BIGFOOT_VERSION = "zhCN"..main..minor;
 
 function GetMinorVersion()
@@ -8,6 +8,16 @@ function GetMinorVersion()
 end
 
 BigFootChangelog_ah();
+
+	BigFootChangelog_at("2016/08/19 (7.0.0.586)")
+	BigFootChangelog_ar("大脚插件","添加简单的神器数据。")
+	BigFootChangelog_ar("技能触发","升级至最新版本(7.0.3)。")
+	BigFootChangelog_ar("竞技助手","升级至最新版本(5.0.2)。")
+	BigFootChangelog_ar("战斗统计","升级至最新版本(1.5-3)。")
+	BigFootChangelog_ar("伤害统计","升级至最新版本(7.0.3e)。")
+	BigFootChangelog_ar("考古助手","升级至最新版本(7.0.3.13)。")
+	BigFootChangelog_ar("首领报警","升级至最新版本(7.0.3.15139)。")
+
 
 	BigFootChangelog_at("2016/08/12 (7.0.0.585)")
 	BigFootChangelog_ar("团队记录","添加恶魔猎手职业支持。")
@@ -2376,4 +2386,4 @@ BigFootChangelog_ah();
 BigFootChangelog_af();
 
 
-BF_VERSION_CHECKSUM = "62"
+BF_VERSION_CHECKSUM = "61"

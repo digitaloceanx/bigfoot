@@ -4,10 +4,12 @@
 !/Interface/AddOns/
 Interface/AddOns/Blizzard_*
 Interface/AddOns/GladiatorosSA_zhCN
+Interface/AddOns/DBM-*
 *.mp3
 *.ogg
 *.tga
 *.blp
+*.bmp
 *.wav
 *.ttf
 !wow.exe
