@@ -15,7 +15,6 @@ L["Enable Class Color"]="显示职业颜色"
 L["Enable Level"]="显示级别"
 L["Please Do Not Talk Too Fast"]="请不要过快发言。"
 L["Please Do Not Send Same Message In 5s"]=" 5秒内请不要再次发送重复内容。"
-L["You entered contains sensitive words"]=" 您所输入内容包含敏感词,为维护频道和谐我们对其进行屏蔽,谢谢您的合作~"
 L["Kindly Reminder"]={"【大脚温馨提示】:通过其他途径下载或更新大脚插件,会导致插件失效或出现异常问题,为了保证玩家使用稳定,请登录大脚客户端更新。",}
 L["RollDice"] = "掷骰子"
 L["Report"] = "个人属性通报"

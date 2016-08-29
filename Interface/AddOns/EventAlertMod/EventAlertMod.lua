@@ -245,6 +245,12 @@ function EventAlert_TARGET_CHANGED(self, event, ...)
 	end
 end
 
+function EventAlert_UNIT_SPELLCAST_SUCCEEDED(self,event,...)
+	local unitCaster,spellName,_,_,spellID = ...
+	local surName = UnitName(unitCaster)
+	EventAlert_ScdBuffs_Update(surName, spellName, spellID)
+end
+
 function EventAlert_COMBAT_LOG_EVENT_UNFILTERED(self, event, ...)
 	local timestp, event, hideCaster, surGUID, surName, surFlags, surRaidFlags, dstGUID, dstName, dstFlags, dstRaidFlags, spellID, spellName = ...;
 	spellID = tonumber(spellID);
@@ -297,13 +303,14 @@ function EventAlert_UNIT_AURA(self, event, ...)
 	end
 end
 
+--[[
 function EventAlert_COMBAT_TEXT_UPDATE(self, event, ...)
 	local arg1, arg2 = ...;
 	if (arg1 == "SPELL_ACTIVE") then
 		EventAlert_COMBAT_TEXT_SPELL_ACTIVE(arg2);		--触发法术(额外技能提示)
 	end
 end
-
+]]
 function EventAlert_UNIT_HEALTH(self, event, ...)
 	local arg1 = ...;
 	if arg1 == "target" then
@@ -486,9 +493,9 @@ function EventAlert_Buffs_Update(...)
 		CreateFrames_EventsFrame_ClearSpellList(3);
 	end
 
-	local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID , canApplyAura, isBossDebuff, value1, value2, value3
+	local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3
 	for i=1,40 do
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID , canApplyAura, isBossDebuff, value1, value2, value3 = UnitBuff("player", i)
+		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff("player", i)
 		if (not spellID) then
 			break;
 		end
@@ -546,7 +553,7 @@ function EventAlert_Buffs_Update(...)
 		end
 	end
 	for i=1,40 do
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID , canApplyAura, isBossDebuff, value1, value2, value3= UnitBuff("pet", i)
+		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff("pet", i)
 		if (not spellID) then
 			break
 		end
@@ -605,7 +612,7 @@ function EventAlert_Buffs_Update(...)
 	end
 
 	for i=41,80 do
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID , canApplyAura, isBossDebuff, value1, value2, value3 = UnitDebuff("player", i-40)
+		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff("player", i-40)
 		if (not spellID) then
 			break;
 		end
@@ -660,29 +667,8 @@ function EventAlert_Buffs_Update(...)
 		end
 	end
 
-	-- Check: Buff dropped
-	local v1 = table.foreach(EA_CurrentBuffs,
-		function(i, v1)
-			-- DEFAULT_CHAT_FRAME:AddMessage("buff-check: "..i.." id: "..v1);
-			SpellEnable = false;
-			SpellEnable = EAFun_GetSpellItemEnable(EA_AltItems[EA_playerClass][v1]);
-			if (not SpellEnable) then
-				local v3 = table.foreach(buffsCurrent,
-					function(k, v2)
-						if (v1==v2) then
-							return v2
-						end
-					end
-				)
-				if(not v3) then
-					-- Buff dropped
-					table.insert(buffsToDelete, v1)
-				end
-			end
-		end
-	)
 	for i=41,80 do
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID, canApplyAura, isBossDebuff, value1, value2, value3 = UnitDebuff("pet", i-40)
+		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff("pet", i-40)
 		if (not spellID) then
 			break;
 		end
@@ -737,23 +723,27 @@ function EventAlert_Buffs_Update(...)
 	end
 
 	-- Check: Buff dropped
-	local v1 = table.foreach(EA_CurrentBuffs,
+	local v = table.foreach(EA_CurrentBuffs,
 		function(i, v1)
 			-- DEFAULT_CHAT_FRAME:AddMessage("buff-check: "..i.." id: "..v1);
 			SpellEnable = false;
 			SpellEnable = EAFun_GetSpellItemEnable(EA_AltItems[EA_playerClass][v1]);
+
 			if (not SpellEnable) then
 				local v3 = table.foreach(buffsCurrent,
 					function(k, v2)
+
 						if (v1==v2) then
 							return v2
 						end
 					end
 				)
+
 				if(not v3) then
 					-- Buff dropped
 					table.insert(buffsToDelete, v1)
 				end
+
 			end
 		end
 	)
@@ -796,13 +786,9 @@ function EventAlert_TarBuffs_Update(...)
 	local SpellEnable = false;
 	local ifAdd_buffCur = false;
 	local orderWtd = 1;
-	-- DEFAULT_CHAT_FRAME:AddMessage("EventAlert_Buffs_Update");
-	-- if (EA_DEBUGFLAG2) then
-	--  DEFAULT_CHAT_FRAME:AddMessage("--------"..EA_XCMD_TARGETLIST.."--------");
-	-- end
-	local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID , canApplyAura, isBossDebuff, value1, value2, value3
+	local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3
 	for i=1,40 do
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID , canApplyAura, isBossDebuff, value1, value2, value3 = UnitDebuff("target", i)
+		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff("target", i)
 		if (not spellID) then
 			break;
 		end
@@ -846,7 +832,7 @@ function EventAlert_TarBuffs_Update(...)
 	end
 
 	for i=41,80 do
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID, canApplyAura, isBossDebuff, value1, value2, value3 = UnitBuff("target", i-40)
+		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff("target", i-40)
 		if (not spellID) then
 			break;
 		end
@@ -1018,6 +1004,37 @@ function EventAlert_TarBuff_Applied(spellID)
 	EventAlert_TarPositionFrames();
 end
 
+function EventAlert_SPELL_UPDATE_USABLE()
+	local SpellEnable = false;
+	if (EA_Config.AllowAltAlerts==true) then
+		-- DEFAULT_CHAT_FRAME:AddMessage("spell-active: "..spellName);
+		-- searching for the spell-id, because we only get the name of the spell
+		for s,v in pairs(EA_AltItems[EA_playerClass]) do
+			spellID = tonumber(s);
+			SpellEnable = v.enable
+			local v2 = table.foreach(EA_CurrentBuffs,
+				function(i2, v2)
+					if v2==spellID then
+						return v2
+					end
+				end)
+			flag_usable,flag_nomana = IsUsableSpell(spellID)
+			if (SpellEnable and flag_usable) then
+				if (not v2) then
+					-- DEFAULT_CHAT_FRAME:AddMessage("EventAlert_Buff_Applied("..spellID..")");
+					EventAlert_Buff_Applied(spellID);
+					EventAlert_PositionFrames();
+				end
+			else
+				if (v2) then
+					EventAlert_Buff_Dropped(spellID)
+					EventAlert_PositionFrames();
+				end
+			end
+		end
+	end
+end
+--[[
 function EventAlert_COMBAT_TEXT_SPELL_ACTIVE(spellName)
 	local SpellEnable = false;
 	if (EA_Config.AllowAltAlerts==true) then
@@ -1051,7 +1068,7 @@ function EventAlert_COMBAT_TEXT_SPELL_ACTIVE(spellName)
 		end
 	end
 end
-
+]]--
 function EventAlert_COMBAT_TEXT_SPELL_ACTIVE_ById(spellID)
 	local SpellEnable = false;
 	if (EA_Config.AllowAltAlerts==true) then
@@ -1090,13 +1107,13 @@ function EventAlert_OnUpdate(spellID)
 		if (EA_Config.AllowAltAlerts == true) then
 			for s,v in pairs(EA_AltItems[EA_playerClass]) do
 				local SpellEnable = v.enable
-				if (SpellEnable) then
+				if (s==spellID and SpellEnable) then
 					local EA_usable, EA_nomana = IsUsableSpell(s);
-
-					if EA_usable  then
+					if EA_usable then
 						EA_SPELLINFO_SELF[s].count = 0;
 						EA_SPELLINFO_SELF[s].expirationTime = 0;
 						EA_SPELLINFO_SELF[s].isDebuff = false;
+						EventAlert_PositionFrames();
 					else
 						EventAlert_Buff_Dropped(s);
 						EventAlert_PositionFrames();
@@ -1635,6 +1652,31 @@ function EventAlert_SlashHandler(msg)
 		EA_Version_ScrollFrame_EditBox:Hide();
 		EA_Version_Frame:Show();
 
+    elseif (cmdtype == "minimap") then
+		if not EA_MinimapOption:IsVisible() then
+			EA_MinimapOption:Show();
+		else
+			EA_MinimapOption:Hide();
+		end
+
+	elseif (cmdtype == "scdremovewhencooldown") then
+		if EA_Config2.SCD_RemoveWhenCooldown == true then
+
+			EA_Config2.SCD_RemoveWhenCooldown = false
+			print("EA_Config2.SCD_RemoveWhenCooldown = false")
+
+		else
+			EA_Config2.SCD_RemoveWhenCooldown = true
+			print("EA_Config2.SCD_RemoveWhenCooldown = true")
+		end
+	elseif (cmdtype == "scdnocombatstillkeep") then
+		if EA_Config2.SCD_NocombatStillKeep == true then
+			EA_Config2.SCD_NocombatStillKeep = false
+			print("EA_Config2.SCD_NocombatStillKeep = false")
+		else
+			EA_Config2.SCD_NocombatStillKeep = true
+			print("EA_Config2.SCD_NocombatStillKeep = true")
+		end
 	elseif (cmdtype == "print") then
 		-- table.foreach(EA_ClassAltSpellName,
 		-- function(i, v)
@@ -3260,9 +3302,9 @@ end
 
 --取得法術ID在指定單位身上的BUFF索引
 function GetBuffIndexOfSpellID(unit,SID)
-	local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID
+	local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3
 	for i=1,40 do
-			name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID = UnitBuff(unit,i)
+			name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unit,i)
 			if (SID == spellID)	then
 				return(i)
 			end
@@ -3272,9 +3314,9 @@ end
 
 --取得法術ID在指定單位身上的DEBUFF索引
 function GetDebuffIndexOfSpellID(unit,SID)
-	local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID
+	local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3
 	for i=1,40 do
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID = UnitDebuff(unit,i)
+		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unit,i)
 		if (SID == spellID)	then
 			return(i)
 		end
@@ -3466,9 +3508,10 @@ EA_EventList = {
 		["PLAYER_SPECIALIZATION_CHANGED"]=EventAlert_PLAYER_TALENT_UPDATE,
 		["COMBAT_LOG_EVENT_UNFILTERED"]	=EventAlert_COMBAT_LOG_EVENT_UNFILTERED ,
 
-		["COMBAT_TEXT_UPDATE"]			=EventAlert_COMBAT_TEXT_UPDATE,
+		-- ["COMBAT_TEXT_UPDATE"]			=EventAlert_COMBAT_TEXT_UPDATE,
 		-- ["SPELL_UPDATE_COOLDOWN"]		=EventAlert_SPELL_UPDATE_COOLDOWN,
 		-- ["SPELL_UPDATE_CHARGES"]		=EventAlert_SPELL_UPDATE_CHARGES,
+		["SPELL_UPDATE_USABLE"]			=EventAlert_SPELL_UPDATE_USABLE,
 		["UPDATE_SHAPESHIFT_FORM"]		=EventAlert_PLAYER_TALENT_UPDATE,
 		["UNIT_AURA"]					=EventAlert_UNIT_AURA,
 		["UNIT_COMBO_POINTS"]			=EventAlert_COMBO_POINTS,
@@ -3479,7 +3522,7 @@ EA_EventList = {
 		["RUNE_TYPE_UPDATE"]			=EventAlert_UpdateRunes,
 		["RUNE_POWER_UPDATE"]			=EventAlert_UpdateRunes,
 		["SPELL_ACTIVATION_OVERLAY_GLOW_SHOW"]=EventAlert_GlowShow,
-		--["UNIT_SPELLCAST_SUCCEEDED"]		=EventAlert_UNIT_SPELLCAST_SUCCEEDED,
+		["UNIT_SPELLCAST_SUCCEEDED"]		=EventAlert_UNIT_SPELLCAST_SUCCEEDED,
 		--["UNIT_SPELLCAST_CAST"]			=EventAlert_UNIT_SPELLCAST_CAST	,
 };
 

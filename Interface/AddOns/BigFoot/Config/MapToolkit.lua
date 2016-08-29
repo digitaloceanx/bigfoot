@@ -6,8 +6,6 @@ function MapToolkitConfigFunc()
 		MAP_PLUS_ENABLE_TEXT = "开启地图标记";
 		MAP_PLUS_ENABLE_TEXT_TOOLTIP= "可在地图上需要标记的地方点击鼠标左键创建一个标记";
 
-		MAP_PLUS_ACCEPT_MAP_NOTE = "接收其他玩家发送的标记"; 	---未测试
-
 		MAP_MARK_ENABLE = "开启NPC位置";
 		MAP_MARK_ENABLE_TOOLTIP= "在地图上以图标方式显示NPC位置";
 
@@ -28,8 +26,6 @@ function MapToolkitConfigFunc()
 		MAP_PLUS_ENABLE_TEXT = "開啟地圖標記";
 		MAP_PLUS_ENABLE_TEXT_TOOLTIP="可在地圖上需要標記的地方那個點擊鼠標鄒建左鍵創建一個標記"
 
-		MAP_PLUS_ACCEPT_MAP_NOTE = "接收其他玩家發送的標記";
-
 		MAP_MARK_ENABLE = "開啟NPC位置";
 		MAP_MARK_ENABLE_TOOLTIP= "在地圖上以圖表方式顯示NPC位置";
 
@@ -46,7 +42,6 @@ function MapToolkitConfigFunc()
 	else
 		MOD_MAP_TOOLKIT = "Map Toolkit";
 		MAP_PLUS_ENABLE_TEXT = "Enable Map Note";
-		MAP_PLUS_ACCEPT_MAP_NOTE = "Accept notes from other players";
 		MAP_MARK_ENABLE = "Enable NPC locations";
 
 		MAP_WORLD_FLIGHT_MAP = "Enable World Flight Map";
@@ -128,27 +123,6 @@ function MapToolkitConfigFunc()
 				end
 			end
 		);
-
-		--[[
-		ModManagement_RegisterCheckBox(
-			"MapToolkit",
-			MAP_PLUS_ACCEPT_MAP_NOTE,
-			nil,
-			"AcceptMapNote",
-			1,
-			function (__arg)
-				if (__arg==1)then
-					if (not BigFoot_IsAddOnLoaded("MapPlus")) then
-						BigFoot_LoadAddOn("MapPlus");
-					end
-				end
-				if BigFoot_IsAddOnLoaded("MapPlus") then
-					MapPlus_ToggleReceive(__arg)
-				end
-			end,
-			1
-		);
-		]]
 	end
 
 	if IsConfigurableAddOn("BigFootMark") and (GetLocale()=="zhCN" or GetLocale()=="zhTW") then

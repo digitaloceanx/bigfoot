@@ -12,15 +12,15 @@
 			<AbsValue val="26"/>
 		</FontHeight>
 	</Font>
-	
+
 	<Font name="GDKPFontSmallDisable" inherits="NumberFont_Shadow_Small" virtual="true">
 		<Color r="0.62" g="0.62" b="0.62"/>
 	</Font>
-	
+
 	<Font name="GDKPFontSmall" inherits="NumberFont_Shadow_Small" virtual="true">
 		<Color r="1" g="0.82" b="0"/>
 	</Font>
-	
+
 	<Font name="GDKPFontNormalGray" inherits="NumberFont_Shadow_Med" virtual="true">
 		<Color r="0.62" g="0.62" b="0.62"/>
 	</Font>
@@ -28,11 +28,11 @@
 	<Font name="GDKPFontNormalGreen" inherits="NumberFont_Shadow_Med" virtual="true">
 		<Color r="0.54" g="0.76" b="0.16"/>
 	</Font>
-	
+
 	<Font name="GDKPFontNormal" inherits="NumberFont_Shadow_Med" virtual="true">
 		<Color r="1" g="0.82" b="0"/>
 	</Font>
-	
+
 	<Font name="GDKPFontNormalHilight" inherits="NumberFont_Shadow_Med" virtual="true">
 		<Color r="1" g="1" b="1"/>
 	</Font>
@@ -68,8 +68,8 @@
 						<Anchor point="RIGHT"/>
 					</Anchors>
 				</FontString>
-			
-				
+
+
 			</Layer>
 		</Layers>
 		<Scripts>
@@ -151,7 +151,7 @@
 			</Layer>
 		</Layers>
 	</CheckButton>
-	
+
 	<EditBox name="GDKPLargeInputBoxTemplate" enableMouse="true" virtual="true">
 		<Layers>
 			<Layer level="BACKGROUND">
@@ -194,10 +194,10 @@
 			</Layer>
 		</Layers>
 
-		
-			
+
+
 	</EditBox>
-	
+
 	<EditBox name="GDKPInputBoxTemplate" enableMouse="true" virtual="true">
 		<Layers>
 			<Layer level="BACKGROUND">
@@ -241,7 +241,7 @@
 		</Layers>
 		<Scripts>
 			<OnLoad>
-				
+
 				self:SetTextInsets(1, 4, 10, 0)
 			</OnLoad>
 			<OnEscapePressed>
@@ -257,15 +257,15 @@
 		<FontString inherits="GDKPFontNormalHilight"/>
 
 	</EditBox>
-	
-	<Frame name="GDKPFrameTemplate" hidden="true" parent="UIParent" movable="true" virtual="true" topLevel="true" enableKeyboard="true" >		
+
+	<Frame name="GDKPFrameTemplate" hidden="true" parent="UIParent" movable="true" virtual="true" topLevel="true" enableKeyboard="true" >
 		<Scripts>
 			<OnLoad>
 				GDKP_Frame_OnLoad(self)
 				self:RegisterForDrag("LeftButton")
-				
+
 			</OnLoad>
-			
+
 			<OnDragStart>
 				self:StartMoving()
 			</OnDragStart>
@@ -274,7 +274,7 @@
 			</OnDragStop>
 		</Scripts>
 	</Frame>
-	
+
 	<Frame name = "GDKPMainFrameTemplate" virtual="true" inherits="GDKPFrameTemplate" >
 		<Layers>
 			<Layer level="ARTWORK">
@@ -292,10 +292,10 @@
 				</Texture>
 			</Layer>
 		</Layers>
-	</Frame>	
-	
+	</Frame>
+
 	<Frame name="GDKPTabTemplate" hidden="true" virtual="true" >
-		
+
 		<Layers>
 			<Layer level="ARTWORK">
 				<Texture name="$parentHeaderColorLeft" file="Interface\AddOns\GDKP\img\tab-bg" >
@@ -342,7 +342,7 @@
 			</OnLoad>
 		</Scripts>
 	</Frame>
-	
+
 	<Frame name="GDKPMainFrame"  inherits="GDKPMainFrameTemplate" clampedToScreen="true">
 		<Size>
 			<AbsDimension x="290" y="115"/>
@@ -350,7 +350,7 @@
 		<Anchors>
 			<Anchor point="CENTER"/>
 		</Anchors>
-		<Frames>		
+		<Frames>
 			<EditBox name="$parentMemberEditBox" letters="2" autoFocus="false"  numeric="true" inherits="GDKPLargeInputBoxTemplate" enableMouse="true" frameStrata="MEDIUM">
 				<Size>
 					<AbsDimension x="40" y="40"/>
@@ -377,7 +377,7 @@
 						self:ClearFocus()
 					</OnEscapePressed>
 					<OnEnterPressed>
-						self:ClearFocus()						
+						self:ClearFocus()
 					</OnEnterPressed>
 					<OnEditFocusGained>
 						self:HighlightText(0,self:GetNumLetters())
@@ -418,7 +418,7 @@
 						<Anchor point="TOP"/>
 					</Anchors>
 				</HighlightTexture>
-				
+
 				<Scripts>
 					<OnLoad>
 						_G[self:GetName().."Texture"]:SetRotation(-math.pi*3/4)
@@ -456,7 +456,7 @@
 						<Anchor point="BOTTOM"/>
 					</Anchors>
 				</HighlightTexture>
-				
+
 				<Scripts>
 					<OnLoad>
 						_G[self:GetName().."Texture"]:SetRotation(math.pi/4)
@@ -486,16 +486,16 @@
 					</OnLoad>
 					<OnClick>
 						if not self.expand then
-							GDKPMainFrameAnimGroupExp:Play() 
+							GDKPMainFrameAnimGroupExp:Play()
 						else
-							GDKPMainFrameAnimGroupCol:Play() 
+							GDKPMainFrameAnimGroupCol:Play()
 						end
 						self.expand = not self.expand
-						
+
 					</OnClick>
 				</Scripts>
 			</Button>
-			
+
 		</Frames>
 		<Layers>
 			<Layer level="ARTWORK">
@@ -514,8 +514,8 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				
-				
+
+
 				<FontString inherits="NumberFont_Shadow_Med" text="GDKP_TEXT_NUM_MEMBER" justifyH="RIGHT">
 					<FontHeight>
 						<AbsValue val="20"/>
@@ -531,7 +531,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				
+
 				<FontString inherits="GDKPFontSmallDisable" text="GDKP_TEXT_TOTAL_INCOME" justifyH="RIGHT">
 					<Size>
 						<AbsDimension x="60" y="20"/>
@@ -556,7 +556,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				
+
 				<FontString inherits="GDKPFontSmallDisable" text="GDKP_TEXT_AVE_PROFIT" justifyH="RIGHT">
 					<Size>
 						<AbsDimension x="80" y="20"/>
@@ -581,7 +581,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				
+
 				<FontString name="$parentProfitLabel" inherits="GDKPFontSmallDisable" text="GDKP_TEXT_TOTAL_PROFIT" justifyH="RIGHT" hidden="true">
 					<Size>
 						<AbsDimension x="60" y="20"/>
@@ -606,7 +606,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				
+
 				<FontString name="$parentExpenseLabel" inherits="GDKPFontSmallDisable" text="GDKP_TEXT_TOTAL_EXPENSE" justifyH="RIGHT" hidden="true">
 					<Size>
 						<AbsDimension x="80" y="20"/>
@@ -631,7 +631,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				
+
 				<FontString name="$parentTankSubsideLabel" inherits="GDKPFontSmallDisable" text="GDKP_TEXT_TANK_SUBSIDE" justifyH="RIGHT" hidden="true">
 					<Size>
 						<AbsDimension x="80" y="20"/>
@@ -656,7 +656,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-			
+
 				<FontString name="$parentHealerSubsideLabel" inherits="GDKPFontSmallDisable" text="GDKP_TEXT_HEALER_SUBSIDE" justifyH="RIGHT" hidden="true">
 					<Size>
 						<AbsDimension x="80" y="20"/>
@@ -681,10 +681,10 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-			
+
 			</Layer>
 		</Layers>
-		
+
 		<Animations>
 			<AnimationGroup name="$parentAnimGroupExp" looping="NONE" smoothing ="IN_OUT">
 			<!--	<Animation  duration="0.1" maxFramerate="180">
@@ -706,7 +706,7 @@
 				</Animation>-->
 				<Animation  duration="0.2" maxFramerate="180">
 					<Scripts>
-						<OnLoad>							
+						<OnLoad>
 							self.regionParent = self:GetRegionParent()
 							self.maxy = 190
 							self.miny = 115
@@ -733,7 +733,7 @@
 			<AnimationGroup name="$parentAnimGroupCol" looping="NONE" smoothing ="IN_OUT">
 				<Animation  duration="0.2" maxFramerate="180">
 					<Scripts>
-						<OnLoad>							
+						<OnLoad>
 							self.regionParent = self:GetRegionParent()
 							self.maxy = 190
 							self.miny = 115
@@ -756,10 +756,10 @@
 						</OnFinished>
 					</Scripts>
 				</Animation>
-				
+
 			</AnimationGroup>
 		</Animations>
-		
+
 	</Frame>
 
 	<Frame name="GDKPNewIncomePanel" inherits="GDKPMainFrameTemplate" >
@@ -783,7 +783,7 @@
 				</FontString>
 			</Layer>
 		</Layers>
-		
+
 		<Anchors>
 			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
 				<Offset>
@@ -791,9 +791,9 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		
+
 	</Frame>
-	
+
 	<Button name="GDKPTabButtonTemplate" virtual="true" >
 		<Size>
             <AbsDimension x="130" y="32"/>
@@ -836,7 +836,7 @@
         			</Anchors>
 					<TexCoords left="0.25" right="0.75" top="0" bottom="1.0"/>
         		</Texture>
-				
+
 				<Texture name="$parentLeft" file="Interface\AddOns\GDKP\img\tabbutton-inactive">
         			<Size>
         				<AbsDimension x="8" y="32"/>
@@ -904,7 +904,7 @@
 			</Anchors>
 		</HighlightTexture>
     </Button>
-	
+
 	<Frame name="GDKPManageFrame"  inherits="GDKPMainFrameTemplate"  >
 		<Size>
 			<AbsDimension x="490" y="422"/>
@@ -960,14 +960,14 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
-		
+
 	</Frame>
-	
+
 	<CheckButton name="GDKPLogCellTemplate" virtual="true" >
 		<Size>
 			<AbsDimension x="450" y="38"/>
 		</Size>
-		
+
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString name ="$parentCTimeText" inherits="GDKPFontSmallDisable" justifyH="LEFT">
@@ -1020,14 +1020,14 @@
 				</FontString>
 			</Layer>
 		</Layers>
-		
+
 	</CheckButton>
-	
+
 	<CheckButton name="GDKPIncomeCellTemplate" virtual="true" >
 		<Size>
 			<AbsDimension x="450" y="40"/>
 		</Size>
-		
+
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString name ="$parentCTimeText" inherits="GDKPFontSmallDisable" justifyH="LEFT">
@@ -1093,7 +1093,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="$parentEditButton" inherits="GDKPEditButtonTemplate">		
+			<Button name="$parentEditButton" inherits="GDKPEditButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPRIGHT" >
 						<Offset>
@@ -1112,14 +1112,14 @@
 				</Anchors>
 			</Button>
 		</Frames>
-		
+
 	</CheckButton>
-	
+
 	<CheckButton name="GDKPExpenseCellTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="450" y="40"/>
 		</Size>
-		
+
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString name ="$parentCTimeText" inherits="GDKPFontSmallDisable" justifyH="LEFT">
@@ -1146,7 +1146,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				
+
 				<FontString name ="$parentExpenseText" inherits="GDKPFontNormalGray" justifyH="RIGHT">
 					<Size>
 						<AbsDimension x="60" y="20"/>
@@ -1163,7 +1163,7 @@
 		</Layers>
 		<Frames>
 			<Button name="$parentEditButton" inherits="GDKPEditButtonTemplate">
-		
+
 				<Anchors>
 					<Anchor point="TOPRIGHT" >
 						<Offset>
@@ -1173,7 +1173,7 @@
 				</Anchors>
 			</Button>
 			<Button name="$parentDeleteButton" inherits="GDKPDeleteButtonTemplate">
-	
+
 				<Anchors>
 					<Anchor point="TOPRIGHT" >
 						<Offset>
@@ -1183,9 +1183,9 @@
 				</Anchors>
 			</Button>
 		</Frames>
-		
+
 	</CheckButton>
-	
+
 	<CheckButton name="GDKPNewIncomeCellTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="450" y="40"/>
@@ -1229,7 +1229,7 @@
 					</Anchors>
 				</FontString>
 				<FontString name ="$parentIncomeText" inherits="GDKPFontNormalGray" justifyH="RIGHT">
-				
+
 					<Size>
 						<AbsDimension x="60" y="20"/>
 					</Size>
@@ -1257,7 +1257,7 @@
 		</Layers>
 		<Frames>
 			<Button name="$parentEditButton"  inherits="GDKPEditButtonTemplate">
-				
+
 				<Anchors>
 					<Anchor point="TOPRIGHT" >
 						<Offset>
@@ -1277,12 +1277,12 @@
 			</Button>
 		</Frames>
 	</CheckButton>
-			
+
 	<Frame name="GDKPItemEditableTemplate" hidden="true" virtual="true" frameStrata="HIGH" topLevel="true" inherits="GDKPFrameTemplate">
 		<Size>
 			<AbsDimension x="250" y="120"/>
 		</Size>
-		
+
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString text="GDKP_TEXT_INCOME_DESC" inherits="GDKPFontNormal">
@@ -1301,7 +1301,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<EditBox name = "$parentDescText" toplevel="true" letters="30" inherits="GDKPInputBoxTemplate">
+			<EditBox name = "$parentDescText" letters="30" inherits="GDKPInputBoxTemplate">
 				<Size>
 					<AbsDimension x="200" y="40"/>
 				</Size>
@@ -1339,7 +1339,7 @@
 			</Button>
 		</Frames>
 	</Frame>
-	
+
 	<Frame name="GDKPGoldEditableTemplate" hidden="true"  virtual="true" frameStrata="HIGH" topLevel="true" inherits="GDKPFrameTemplate">
 		<Size>
 			<AbsDimension x="180" y="100"/>
@@ -1399,15 +1399,15 @@
 				</Anchors>
 			</Button>
 		</Frames>
-		
-		
+
+
 	</Frame>
-	
+
 	<Frame name="GDKPExpenseEditableTemplate" hidden="true" virtual="true" frameStrata="HIGH" topLevel="true" inherits="GDKPFrameTemplate">
 		<Size>
 			<AbsDimension x="380" y="200"/>
 		</Size>
-		
+
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString text="GDKP_TEXT_GOLD_EXPENSE" inherits="GDKPFontNormal">
@@ -1474,7 +1474,7 @@
 				</Anchors>
 			</CheckButton>
 			<CheckButton name="$parentTankCheck" inherits="GDKPOptionsCheckButtonTemplate">
-				
+
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parentGeneralCheck" refPoint="RIGHT">
 						<Offset>
@@ -1484,7 +1484,7 @@
 				</Anchors>
 			</CheckButton>
 			<CheckButton name="$parentHealerCheck" inherits="GDKPOptionsCheckButtonTemplate">
-				
+
 				<Anchors>
 					<Anchor point="LEFT" relativeTo="$parentTankCheck" refPoint="RIGHT">
 						<Offset>
@@ -1494,7 +1494,7 @@
 				</Anchors>
 			</CheckButton>
 
-			
+
 			<EditBox name="$parentDescText" letters="20" autoFocus="false"  inherits="GDKPInputBoxTemplate" enableMouse="true">
 				<Size>
 					<AbsDimension x="280" y="40"/>
@@ -1533,7 +1533,7 @@
 			</Button>
 		</Frames>
 	</Frame>
-	
+
 	<Button name="GDKPAddRecordButtonTemplate" virtual="true" inherits="UIPanelButtonTemplate" frameStrata="HIGH">
 		<Size>
 			<AbsDimension x="100" y="25"/>
@@ -1543,7 +1543,7 @@
 			</OnClick>
 		</Scripts>
 	</Button>
-	
+
 	<Button name="GDKPColumnHeaderTemplate" virtual="true" >
 		<Size>
 			<AbsDimension x="10" y="28"/>
@@ -1576,10 +1576,10 @@
 						<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
 						<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT"/>
 					</Anchors>
-					
+
 					<TexCoords left="0.078125" right="0.90625" top="0" bottom="0.75"/>
 				</Texture>
-				
+
 			</Layer>-->
 			<Layer level="ARTWORK">
 				<FontString name="$parentName" inherits="GDKPFontSmall">

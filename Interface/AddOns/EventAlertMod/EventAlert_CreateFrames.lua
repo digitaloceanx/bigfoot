@@ -209,7 +209,7 @@ function CreateFrames_SpecialFrames_Show(index)
 		if (index == EA_SpecPower.LifeBloom.frameindex[1]) then
 			EventAlert_UpdateLifeBloom("player");
 		elseif ((index == EA_SpecPower.LunarPower.frameindex[1]) or (index == EA_SpecPower.LunarPower.frameindex[2])) then
-			EventAlert_UpdateLunarPower()
+			-- EventAlert_UpdateLunarPower()
 		elseif (index == EA_SpecPower.ComboPoint.frameindex[1]) then
 			EventAlert_UpdateComboPoint()
 		elseif (iPowerType == EA_SpecPower.Runes.powerId) then
@@ -989,8 +989,8 @@ function CreateFrames_EventsFrame_RefreshSpellList(FrameIndex)
 end
 
 
-local GC_PowerType={[0]="MANA", [1]="RAGE", [2]="FOCUS", [3]="ENERGY", [4]="HAPPINESS", [5]="RUNES", [6]="RUNIC_POWER", [7]="SOUL_SHARDS", [8]="LUNAR_POWER", 
-	[9]="HOLY_POWER", [10]="ALT_POWER", [11]="DARK_FORCE", [12]="LIGHT_FORCE", [13]="INSANITY", [14]="BURNING_EMBERS", [15]="DEMONIC_FURY"};
+local GC_PowerType={[0]="MANA", [1]="RAGE", [2]="FOCUS", [3]="ENERGY", [4]="COMBO_POINT", [5]="RUNES", [6]="RUNIC_POWER", [7]="SOUL_SHARDS", [8]="LUNAR_POWER", 
+	[9]="HOLY_POWER", [10]="ALT_POWER", [11]="MAELSTROM", [12]="LIGHT_FORCE", [13]="INSANITY", [14]="BURNING_EMBERS", [15]="DEMONIC_FURY", [16]="ARCANE_CHARGES", [17]="FURY",[18]="PAIN"};
 function CreateFrames_CreateGroupCheckFrame(iGroupIndex)
 	local FrameNamePrefix = "EAGrpFrame_";
 	local aGroupChecks = EA_GrpItems[EA_playerClass][iGroupIndex];
@@ -1293,11 +1293,18 @@ function CreateFrames_CreateMinimapOptionFrame()
 	
 	eaf:SetWidth(30)
 	eaf:SetHeight(30)
-	eaf:SetPoint("BOTTOMRIGHT",0,-40)
+	eaf:SetPoint("TOPRIGHT",Minimap,"BOTTOMRIGHT",10,-60)
 	eaf:SetAlpha(0.7)
 	eaf:SetBackdrop({bgFile = "Interface/Icons/Trade_Engineering"})	
+	--啟用滑鼠相關功能
 	eaf:EnableMouse(true)	
+	--啟用可移動框架功能
+	eaf:SetMovable(true)						
+	--註冊滑鼠左鍵按下事件
 	eaf:RegisterForClicks("LeftButtonDown")
+	--註冊滑鼠右鍵拖曳事件
+	eaf:RegisterForDrag("RightButton")
+	
 	eaf:SetScript("OnClick", function(self,button)																	
 									if not(EA_Options_Frame:IsVisible()) then			
 										EA_Options_Frame:Show()
@@ -1306,6 +1313,21 @@ function CreateFrames_CreateMinimapOptionFrame()
 									end
 							end
 				)
+	eaf:SetScript("OnDragStart", function(self,button)																	
+									eaf:StartMoving()
+							end
+				)					
+	eaf:SetScript("OnDragStop", function(self,button)																	
+									eaf:StopMovingOrSizing()
+							end
+				)					
+	eaf:SetScript("OnReceiveDrag", function(self)
+									--self 為拖曳後新位置的框架物件
+									local newX = self:GetLeft()
+									local newY = self:GetTop()
+									return
+							end
+				)									
 	eaf:SetScript("OnEnter", function()	
 								eaf:SetAlpha(1)	
 								GameTooltip:SetOwner(eaf,"BOTTOM_LEFT")
@@ -1319,7 +1341,7 @@ function CreateFrames_CreateMinimapOptionFrame()
 								GameTooltip:SetText(t)
 							end	)
 	eaf:SetScript("OnLeave", function()	
-								eaf:SetAlpha(0.7)
+								eaf:SetAlpha(0.8)
 								GameTooltip:Hide()
 							end	)
 end

@@ -8,8 +8,8 @@
 ## Author: foxlit
 ## X-Website: https://www.townlong-yak.com/master-plan/
 ## SavedVariablesPerCharacter: MasterPlanPC
-## Version: 0.99
-## X-Version-Key: journey
+## Version: 0.101
+## X-Version-Key: night
 ## Dependencies: BigFoot
 ## X-Revision: BigFoot
 ## LoadOnDemand: 1

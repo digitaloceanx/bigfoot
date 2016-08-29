@@ -12,10 +12,10 @@
 ## X-Revision: BigFoot
 ## LoadOnDemand: 1
 
+localization.comm.lua
 localization.en.lua
 localization.cn.lua
 localization.tw.lua
-localization.comm.lua
 
 EventAlertMod.xml
 EventAlert_Options.xml
