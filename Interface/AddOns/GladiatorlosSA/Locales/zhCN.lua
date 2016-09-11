@@ -4,12 +4,12 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("GladiatorlosSA", "zhCN")
 if not L then return end
 
-L["Spell cast success"] = "施法成功"
-L["Spell cast start"] = "施法开始"
-L["Spell aura applied"] = "增益获得"
-L["Spell aura removed"] = "增益消失"
-L["Spell interrupt"] = "法术打断"
-L["Spell summon"] = "法术召唤"
+L["Spell_CastSuccess"] = "施法成功"
+L["Spell_CastStart"] = "施法开始"
+L["Spell_AuraApplied"] = "增益获得"
+L["Spell_AuraRemoved"] = "增益消失"
+L["Spell_Interrupt"] = "法术打断"
+L["Spell_Summon"] = "法术召唤"
 L["Any"] = "任意"
 L["Player"] = "玩家"
 L["Target"] = "目标"
@@ -47,6 +47,7 @@ L["Dest type"] = "目标类型"
 
 L["Profiles"] = "配置文件"
 
+L["GladiatorlosSACredits"] = "Customizable PvP Announcer addon for vocalizing many important spells and cast by your enemies.|n|n|cffFFF569Created by|r |cff9482C9Abatorlos|r |cffFFF569of Spinebreaker|r|n|cffFFF569Legion update by|r |cffC79C6EOrunno|r |cffFFF569of Moon Guard (With permission from zuhligan)|r|n|n|cffFFF569Special Thanks|r|n|cffA330C9superk521|r (Past Project Manager)|n|cffA330C9DuskAshes|r (Chinese Support)|n|cffA330C9N30Ex|r (Mists of Pandaria Support)|n|cffA330C9zuhligan|r (Warlords of Draenor & French Support)|n|cffA330C9jungwan2|r (Korean Support)|n|cffA330C9Mini_Dragon|r (Chinese support for WoD & Legion)|n|cffA330C9LordKuper|r (Russian support for Legion)"
 L["PVP Voice Alert"] = "PVP技能语音提示"
 L["Load Configuration"] = "加载配置"
 L["Load Configuration Options"] = "加载配置选项"
@@ -106,6 +107,7 @@ L["|cff69CCF0Mage|r"] = "|cff69CCF0法师|r"
 L["|cffC41F3BDeath Knight|r"] = "|cffC41F3B死亡骑士|r"
 L["|cffABD473Hunter|r"] = "|cffABD473猎人|r"
 L["|cFF558A84Monk|r"] = "|cFF558A84武僧|r"
+L["|cffA330C9Demon Hunter|r"] = "|cffA330C9恶魔猎手|r"
 L["Buff Down"] = "敌方增益结束"
 L["Spell Casting"] = "敌方读条技能"
 L["Big Heals"] = "大型治疗法术"
@@ -116,6 +118,14 @@ L["|cff9482C9Warlock|r"] = "|cff9482C9术士|r"
 L["Special Abilities"] = "敌方特殊技能"
 L["Friendly Interrupt"] = "友方打断技能"
 L["Spell Lock, Counterspell, Kick, Pummel, Mind Freeze, Skull Bash, Rebuke, Solar Beam, Spear Hand Strike, Wind Shear"] = "法术封锁 法术反制 脚踢 拳击 心智冰封 碎颅猛击 责难 太阳光束"
+
+L["PvPWorldQuests"] = true
+L["DisablePvPWorldQuests"] = true
+L["DisablePvPWorldQuestsDesc"] = true
+L["OperationMurlocFreedom"] = true
+
+L["EnemyInterrupts"] = true
+L["EnemyInterruptsDesc"] = true
 
 L["Default / Female voice"] = "默认 / 女声"
 L["Select the default voice pack of the alert"] = "选择默认语音包"

@@ -201,6 +201,7 @@ function BigFoot_HideNewbieTooltip()
 	GameTooltip:Hide();
 end
 
+--[[
 local Artifact_Table = {
 	["WARRIOR"] = {
 		{
@@ -487,6 +488,7 @@ end
 function WARLOCKMenu_OnLoad(self)
 	bf_OnMenuLoad(self, Artifact_Table["WARLOCK"], Artifact_bShow);
 end
+]]
 
 --[[ 无调用
 

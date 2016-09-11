@@ -46,6 +46,7 @@ EA_TTIP_SPECFLAG_CHECK_COMBOPOINT = "开启/关闭, 于目标DEBUFF框架左侧�
 EA_TTIP_SPECFLAG_CHECK_LIFEBLOOM = "开启/关闭, 于本身BUFF框架左侧第一格显示生命之花堆叠与时间";
 EA_TTIP_SPECFLAG_CHECK_RAGE = "开启/关闭, 于本身BUFF框架左侧第一格显示怒气";					-- 支援怒气(战士,熊D)
 EA_TTIP_SPECFLAG_CHECK_FOCUS = "开启/关闭, 于本身BUFF框架左侧第一格显示集中值";					-- 支援集中值(猎人)
+EA_TTIP_SPECFLAG_CHECK_FOCUS_PET = "开启/关闭, 于本身BUFF框架左侧第二格显示宠物集中值";			-- 支援宠物集中值(猎人)
 EA_TTIP_SPECFLAG_CHECK_ENERGY = "开启/关闭, 于本身BUFF框架左侧第一格显示能量";					-- 支援能量(贼,猫D,武僧)
 EA_TTIP_SPECFLAG_CHECK_LIGHTFORCE = "开启/关闭, 于本身BUFF框架左侧第一格显示真气堆叠数";		-- 支援武僧真气
 EA_TTIP_SPECFLAG_CHECK_INSANITY = "开启/关闭, 于本身BUFF框架左侧第一格显示暗影宝珠";			-- 支援暗影狂亂(暗牧)

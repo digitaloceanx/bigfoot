@@ -10,7 +10,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 		</Scripts>
 	</GameTooltip>
 
-	<Frame name="Bigfoot_ArtifactBox" parent="UIParent" inherits="GlowBoxTemplate" frameStrata="HIGH" hidden="true">
+	<!-- <Frame name="Bigfoot_ArtifactBox" parent="UIParent" inherits="GlowBoxTemplate" frameStrata="HIGH" hidden="true">
 		<Size x="122" y="20"/>
 		<Layers>
 			<Layer level="ARTWORK">
@@ -109,7 +109,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 		<Scripts>
 			<OnLoad function="WARLOCKMenu_OnLoad"/>
 		</Scripts>
-	</Frame>
+	</Frame> -->
 
 	<!-- <Frame name="BigFootURLFrame" toplevel="true" frameStrata="HIGH" parent="UIParent" enableMouse="true" hidden="true">
 		<Size>

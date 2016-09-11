@@ -92,7 +92,7 @@
 	<!-- Options Setting Frames -->
 	<Frame name="EA_Options_Frame" hidden="true" parent="UIParent" toplevel="true" movable="true" frameStrata="HIGH" enableMouse="true" enableKeyboard="true">
 		<Size>
-			<AbsDimension x="300" y="570" />
+			<AbsDimension x="300" y="600" />
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER" />

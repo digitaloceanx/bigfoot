@@ -5,28 +5,33 @@ local AceConfig = LibStub("AceConfig-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("GladiatorlosSA")
 local LSM = LibStub("LibSharedMedia-3.0")
  local self, GSA, PlaySoundFile = GladiatorlosSA, GladiatorlosSA, PlaySoundFile
-local GSA_TEXT = "GladiatorlosSA"
-local GSA_VERSION = " v2.1"
+ local GSA_TEXT = "|cff69CCF0GladiatorlosSA|r (|cffFFF569/gsa|r)"
+ local GSA_VERSION = "|cffFF7D0A v1.7 |r(|cFF00FF967.0.3 Legion|r)"
+ local GSA_AUTHOR = " by |cffC79C6EOrunno-MoonGuard|r"
+ local gsadb
+ local soundz,sourcetype,sourceuid,desttype,destuid = {},{},{},{},{}
+
+ local LSM_GSA_SOUNDFILES = {
+	["GSA-Demo"] = "Interface\\AddOns\\GladiatorlosSA\\Voice_Custom\\Will-Demo.ogg",
+ }
 
 local GSA_LOCALEPATH = {
 	enUS = "GladiatorlosSA\\Voice_enUS",
-	zhTW = "GladiatorlosSA\\Voice",
-	zhCN = "GladiatorlosSA\\Voice"
+	zhCN = "GladiatorlosSA\\Voice_zhCN"
 }
 self.GSA_LOCALEPATH = GSA_LOCALEPATH
 local GSA_LANGUAGE = {
-	["GladiatorlosSA\\Voice"] = L["Chinese(female)"],
 	["GladiatorlosSA\\Voice_enUS"] = L["English(female)"],
-	["GladiatorlosSA\\Voice_zhCN"] = L["Chinese(Yike Xia)"],
+	["GladiatorlosSA\\Voice_zhCN"] = L["Chinese(female)"],
 }
 self.GSA_LANGUAGE = GSA_LANGUAGE
 local GSA_EVENT = {
-	SPELL_CAST_SUCCESS = L["Spell cast success"],
-	SPELL_CAST_START = L["Spell cast start"],
-	SPELL_AURA_APPLIED = L["Spell aura applied"],
-	SPELL_AURA_REMOVED = L["Spell aura removed"],
-	SPELL_INTERRUPT = L["Spell interrupt"],
-	SPELL_SUMMON = L["Spell summon"]
+	SPELL_CAST_SUCCESS = L["Spell_CastSuccess"],
+	SPELL_CAST_START = L["Spell_CastStart"],
+	SPELL_AURA_APPLIED = L["Spell_AuraApplied"],
+	SPELL_AURA_REMOVED = L["Spell_AuraRemoved"],
+	SPELL_INTERRUPT = L["Spell_Interrupt"],
+	SPELL_SUMMON = L["Spell_Summon"],
 	--UNIT_AURA = "Unit aura changed",
 }
 self.GSA_EVENT = GSA_EVENT
@@ -52,11 +57,12 @@ local GSA_TYPE = {
 	[COMBATLOG_FILTER_ME] = L["Myself"],
 	[COMBATLOG_FILTER_MINE] = L["Mine"],
 	[COMBATLOG_FILTER_MY_PET] = L["My pet"],
+	[COMBATLOG_FILTER_UNKNOWN_UNITS] = "Unknow unit",
 }
 self.GSA_TYPE = GSA_TYPE
-local sourcetype,sourceuid,desttype,destuid = {},{},{},{}
-local gsadb
-local PlaySoundFile = PlaySoundFile
+--local sourcetype,sourceuid,desttype,destuid = {},{},{},{}
+--local gsadb
+--local PlaySoundFile = PlaySoundFile
 local dbDefaults = {
 	profile = {
 		all = false,
@@ -64,9 +70,13 @@ local dbDefaults = {
 		battleground = true,
 		field = true,
 		path = GSA_LOCALEPATH[GetLocale()] or "GladiatorlosSA\\Voice_enUS",
+		path_male = GSA_LOCALEPATH[GetLocale()] or "GladiatorlosSA\\Voice_enUS", -- added to 2.3
+		path_neutral = GSA_LOCALEPATH[GetLocale()] or "GladiatorlosSA\\Voice_enUS", -- added to 2.3
+		path_menu = GSA_LOCALEPATH[GetLocale()] or "GladiatorlosSA\\Voice_enUS", -- added to 2.3
 		throttle = 0,
 		smartDisable = false,
-
+		outputUnlock = false,
+		output_menu = "MASTER",
 
 		aruaApplied = false,
 		aruaRemoved = false,
@@ -78,45 +88,66 @@ local dbDefaults = {
 		conlyTF= false,
 		sonlyTF = false,
 		ronlyTF = false,
-		drinking = true,
+		drinking = false,
 		class = false,
 
-		archangel = false,
-		--vendetta = false,
-		--desperatePrayer = false,
-		--redirect = false,
-		freezingTrap = false,
-		battlestance = false,
-		defensestance = false,
-		chakraChastise = false,
-		chakraSanctuary = false,
-		chakraSerenity = false,
-		--@ berserkerstance = false,
-		entanglingRoots = false,
-		--@ sMassDispell = false,
-		massDispell = false,
-		--@ sEntanglingRoots = false,
-		waterShield = false,
-		lichborneDown = false,
-		iceboundFortitudeDown = false,
-		--@ skullBanner = false,
-		mockingBanner = false,
-		--@ demoralizingBanner = false,
-		totemicProjection = false,
-		wildCharge = false,
-		--@ bindElemental = false,
+		--archangel = false,
+		--freezingTrap = false,
+		--battlestance = false,
+		--defensestance = false,
+		--chakraChastise = false,
+		--chakraSanctuary = false,
+		--chakraSerenity = false,
+		--entanglingRoots = false,
+		--massDispell = false,
+		--waterShield = false,
+		--lichborneDown = false,
+		--iceboundFortitudeDown = false,
+		--mockingBanner = false,
+		--totemicProjection = false,
+		--wildCharge = false,
 		rushingJadeWind = false,
-		paralysis = false,
-		manaTea = false,
-		purge = false, -- Added to 2.2.2
-		tranquilizingShot = false, -- Added to 2.2.2
+		--manaTea = false,
+		purge = false,
+		spellSteal = false,
+		--tranquilizingShot = false, -- Added to 2.2.2
 		powerWordShield = false, -- Added to 2.2.2
-		--@ sBarkskin = false,
+		diceRoll = false,
+		quakingPalm = false,
+		warStomp = false,
+		arcaneTorrent = false,
+		bloodLust = false,
+		cauterize = false,
+		purgatory = false,
+		cheatDeath = false,
+		implosion = false,
+		waterElemental = false,
+		littleMoon = false,
+		middleMoon = false,
+		explosiveKeg = false,
+		genderVoice = false, -- added to 2.3
 		custom = {},
+		--shieldBarrier = false,
+		--shieldBarrierDown = false,
 	}
 }
 
 GSA.log = function(msg) DEFAULT_CHAT_FRAME:AddMessage("|cFF33FF22GladiatorlosSA|r: "..msg) end
+ -- LSM BEGIN / inspired from MSBTMedia.lua
+ local function RegisterSound(soundName, soundPath)
+	if (type(soundName) ~= "string" or type(soundPath) ~= "string") then return end
+	if (soundName == "" or soundPath == "") then return end
+	soundz[soundName] = soundPath
+	LSM:Register("sound", soundName, soundPath)
+ end
+ for soundName, soundPath in pairs(LSM_GSA_SOUNDFILES) do RegisterSound(soundName, soundPath) end
+ for index, soundName in pairs(LSM:List("sound")) do soundz[soundName] = LSM:Fetch("sound", soundName) end
+ local function LSMRegistered(event, mediaType, name)
+	if (mediaType == "sound") then
+		soundz[name] = LSM:Fetch(mediaType, name)
+	end
+ end
+ -- LSM END
 
 function GladiatorlosSA:OnInitialize()
 	if not self.spellList then
@@ -129,10 +160,10 @@ function GladiatorlosSA:OnInitialize()
 	end
 
 	self.db1 = LibStub("AceDB-3.0"):New("GladiatorlosSADB",dbDefaults, "Default");
-	--DEFAULT_CHAT_FRAME:AddMessage(GSA_TEXT .. GSA_VERSION .. GSA_AUTHOR .."  - /gsa ");
-	--LibStub("AceConfig-3.0"):RegisterOptionsTable("GladiatorlosSA", GladiatorlosSA.Options, {"GladiatorlosSA", "SS"})
+	-- DEFAULT_CHAT_FRAME:AddMessage(GSA_TEXT .. GSA_VERSION .. GSA_AUTHOR .." ");
 	self:RegisterChatCommand("GladiatorlosSA", "ShowConfig")
 	self:RegisterChatCommand("gsa", "ShowConfig")
+	self:RegisterChatCommand("gsaz", "ShowConfig") -- ***** @
 	self.db1.RegisterCallback(self, "OnProfileChanged", "ChangeProfile")
 	self.db1.RegisterCallback(self, "OnProfileCopied", "ChangeProfile")
 	self.db1.RegisterCallback(self, "OnProfileReset", "ChangeProfile")
@@ -141,7 +172,20 @@ function GladiatorlosSA:OnInitialize()
 		name = "GladiatorlosSA",
 		desc = L["PVP Voice Alert"],
 		type = 'group',
-		args = {},
+		args = {
+			creditdesc = {
+			order = 1,
+			type = "description",
+			name = L["GladiatorlosSACredits"].."\n",
+			cmdHidden = true
+			},
+			gsavers = {
+			order = 2,
+			type = "description",
+			name = GSA_VERSION,
+			cmdHidden = true
+			},
+		},
 	}
 	local bliz_options = CopyTable(options)
 	bliz_options.args.load = {
@@ -160,38 +204,13 @@ function GladiatorlosSA:OnInitialize()
 	}
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("GladiatorlosSA_bliz", bliz_options)
 	AceConfigDialog:AddToBlizOptions("GladiatorlosSA_bliz", "GladiatorlosSA")
-
+	LSM.RegisterCallback(LSM_GSA_SOUNDFILES, "LibSharedMedia_Registered", LSMRegistered)
 	if (IsAddOnLoaded("GladiatorlosSA")) then		--bf@178.com
 		self:ADDON_LOADED("ADDON_LOADED", "GladiatorlosSA");
 	else
 		self:RegisterEvent("ADDON_LOADED");
 	end
 end
-
--- [[bf@178.com
-function GladiatorlosSA:ADDON_LOADED(event, addon)
-	if (addon == "GladiatorlosSA") then
-		local EnableGladiatorlosSA = BigFoot_GetModVariable("ArenaMod", "EnableGladiatorlosSA");
-		-- local EnableFireArena = BigFoot_GetModVariable("ArenaMod", "EnableGladiatorlosAlerter");
-		if (EnableGladiatorlosSA == 1) then
-			self:Toggle(true);
-		end
-		-- if (EnableFireArena == 1) then
-			-- self:FireToggle(true);
-		-- end
-	end
-end
-
-function GladiatorlosSA:Toggle(switch)
-	if (switch) then
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
-		self:RegisterEvent("UNIT_AURA");
-	else
-		self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
-		self:UnregisterEvent("UNIT_AURA");
-	end
-end
--- ]]
 
 function GladiatorlosSA:OnEnable()
 --[[bf@178.com
@@ -208,9 +227,17 @@ function GladiatorlosSA:OnDisable()
 
 end
 
+--local GSA_GENDER = {"gsadb.path_neutral","gsadb.path_male","gsadb.path"}
+ function GSA:GetGenderPath(genderZ)
+	if genderZ == 1 then return gsadb.path_neutral
+	elseif genderZ == 2 then return gsadb.path_male
+	else return gsadb.path
+	end
+ end
 -- play sound by file name
-function GSA:PlaySound(fileName, extend)
-	PlaySoundFile("Interface\\Addons\\"..gsadb.path.."\\"..fileName .. "." .. (extend or "ogg"), "Master")
+ function GSA:PlaySound(fileName, extend, genderZ)
+	local gender_path = self:GetGenderPath(genderZ)
+	PlaySoundFile("Interface\\Addons\\" ..gender_path.. "\\"..fileName .. "." .. (extend or "ogg"), gsadb.output_menu)
 end
 
 function GladiatorlosSA:ArenaClass(id)
@@ -225,8 +252,8 @@ function GladiatorlosSA:PLAYER_ENTERING_WORLD()
 	--CombatLogClearEntries()
 end
 
--- play sound by spell id and spell type
-function GladiatorlosSA:PlaySpell(listName, spellID, ...)
+-- play sound by spell id and spell type AND gender
+ function GladiatorlosSA:PlaySpell(listName, spellID, sourceGUID, destGUID, ...)
 	local list = self.spellList[listName]
 	if not list[spellID] then return end
 	if not gsadb[list[spellID]] then return	end
@@ -240,7 +267,22 @@ function GladiatorlosSA:PlaySpell(listName, spellID, ...)
 			self.smarter = 0
 		end
 	end
-	self:PlaySound(list[spellID]);
+	local genderZ
+	if gsadb.genderVoice then
+		if (sourceGUID ~= nil or destGUID ~= nil) then
+			if (sourceGUID == ('') or sourceGUID == nil ) then
+				local _, _, _, _, sex, _, _ = GetPlayerInfoByGUID(destGUID)
+				genderZ = sex
+			else
+				local _, _, _, _, sex, _, _ = GetPlayerInfoByGUID(sourceGUID)
+				genderZ = sex
+			end
+		else
+			GSA.log ("sourceGUID or destGUID error")
+			-- print("--",sourceGUID,destGUID,listName,spellID)
+		end
+	end
+		self:PlaySound(list[spellID],extend,genderZ)
 end
 function GladiatorlosSA:COMBAT_LOG_EVENT_UNFILTERED(event , ...)
 	local _,currentZoneType = IsInInstance()
@@ -252,8 +294,8 @@ function GladiatorlosSA:COMBAT_LOG_EVENT_UNFILTERED(event , ...)
 
 		--print(sourceName,sourceGUID,destName,destGUID,destFlags,"|cffFF7D0A" .. event.. "|r",spellName,"|cffFF7D0A" .. spellID.. "|r")
 		--print("|cffff0000timestamp|r",timestamp,"|cffff0000event|r",event,"|cffff0000hideCaster|r",hideCaster,"|cffff0000sourceGUID|r",sourceGUID,"|cffff0000sourceName|r",sourceName,"|cffff0000sourceFlags|r",sourceFlags,"|cffff0000sourceFlags2|r",sourceFlags2,"|cffff0000destGUID|r",destGUID,"|cffff0000destName|r",destName,"|cffff0000destFlags|r",destFlags,"|cffff0000destFlags2|r",destFlags2,"|cffff0000spellID|r",spellID,"|cffff0000spellName|r",spellName)
-		
-		
+
+
 	if (destFlags) then
 		for k in pairs(GSA_TYPE) do
 			desttype[k] = CombatLog_Object_IsA(destFlags,k)
@@ -302,23 +344,38 @@ function GladiatorlosSA:COMBAT_LOG_EVENT_UNFILTERED(event , ...)
 
 
 	if (event == "SPELL_AURA_APPLIED" and desttype[COMBATLOG_FILTER_HOSTILE_PLAYERS] and (not gsadb.aonlyTF or destuid.target or destuid.focus) and not gsadb.aruaApplied) then
-		self:PlaySpell("auraApplied", spellID)
+		self:PlaySpell("auraApplied", spellID, sourceGUID, destGUID);
 	elseif (event == "SPELL_AURA_REMOVED" and desttype[COMBATLOG_FILTER_HOSTILE_PLAYERS] and (not gsadb.ronlyTF or destuid.target or destuid.focus) and not gsadb.auraRemoved) then
-		self:PlaySpell("auraRemoved", spellID)
+		self:PlaySpell("auraRemoved", spellID, sourceGUID, destGUID)
 	elseif (event == "SPELL_CAST_START" and sourcetype[COMBATLOG_FILTER_HOSTILE_PLAYERS] and (not gsadb.conlyTF or sourceuid.target or sourceuid.focus) and not gsadb.castStart) then
-		self:PlaySpell("castStart", spellID)
+		self:PlaySpell("castStart", spellID, sourceGUID, destGUID)
 	elseif ((event == "SPELL_CAST_SUCCESS" or event == "SPELL_SUMMON") and sourcetype[COMBATLOG_FILTER_HOSTILE_PLAYERS] and (not gsadb.sonlyTF or sourceuid.target or sourceuid.focus) and not gsadb.castSuccess) then
 		if self:Throttle(tostring(spellID).."default", 0.05) then return end
-		if (spellID == 42292 or spellID == 59752) and gsadb.class and currentZoneType == "arena" then
-			local c = self:ArenaClass(sourceGUID)
-			if c then
-				self:PlaySound(c);
+		if gsadb.class and currentZoneType == "arena" then
+			if spellID == 42292 or spellID == 208683 or spellID == 195710 then
+				local c = self:ArenaClass(sourceGUID) -- PvP Trinket Class Callout
+					if c then
+					self:PlaySound(c);
+				end
+				-- Below code is a WIP. Struggling to get the Variable + Static extention.
+	--		elseif spellID == 59752 then -- Every Man Class Callout
+	--			local c = self:ArenaClass(SourceGUID)
+	--				if c then
+	--				self:PlaySound(tostring(c).."EveryMan"); -- NEW FIX, NOT TESTED YET
+	--			end
+	--		elseif spellID == 7744 then -- Will of the Forsaken Class Callout
+	--			local e = self:ArenaClass(SourceGUID).."WotF"
+	--				if e then
+	--				self:PlaySound(e);
+	--			end
+			else
+				self:PlaySpell("castSuccess", spellID, sourceGUID, destGUID)
 			end
 		else
-			self:PlaySpell("castSuccess", spellID)
+			self:PlaySpell("castSuccess", spellID, sourceGUID, destGUID)
 		end
 	elseif (event == "SPELL_INTERRUPT" and desttype[COMBATLOG_FILTER_HOSTILE_PLAYERS] and not gsadb.interrupt) then
-		self:PlaySpell ("friendlyInterrupt", spellID)
+		self:PlaySpell ("friendlyInterrupt", spellID, sourceGUID, destGUID)
 	end
 
 	-- play custom spells
@@ -333,23 +390,43 @@ function GladiatorlosSA:COMBAT_LOG_EVENT_UNFILTERED(event , ...)
 		else
 			sourceuid.custom = false
 		end
+
 		if css.eventtype[event] and destuid[css.destuidfilter] and desttype[css.desttypefilter] and sourceuid[css.sourceuidfilter] and sourcetype[css.sourcetypefilter] and spellID == tonumber(css.spellid) then
 			if self:Throttle(tostring(spellID)..css.name, 0.1) then return end
-			PlaySoundFile(css.soundfilepath, "Master")
+			--PlaySoundFile(css.soundfilepath, "Master")
+
+			if css.existingsound then -- Added to 2.3.3
+				if (css.existinglist ~= nil and css.existinglist ~= ('')) then
+					local soundz = LSM:Fetch('sound', css.existinglist)
+					PlaySoundFile(soundz, gsadb.output_menu)
+				else
+					GSA.log (L["No sound selected for the Custom alert : |cffC41F4B"] .. css.name .. "|r.") -- missing... added to 2.3.4
+				end
+			else
+				PlaySoundFile(css.soundfilepath, gsadb.output_menu)
+			end
 		end
 	end
-end
+ end
 
 -- play drinking in arena
  local DRINK_SPELL, REFRESHMENT_SPELL, FOOD_SPELL = GetSpellInfo(104270), GetSpellInfo(167152), GetSpellInfo(5006)
-function GladiatorlosSA:UNIT_AURA(event,uid)
+ function GladiatorlosSA:UNIT_AURA(event,uid)
+
 	if uid:find("arena") and gsadb.drinking then
+	-- if gsadb.drinking then
 		if UnitAura(uid,DRINK_SPELL) or UnitAura(uid,REFRESHMENT_SPELL) or UnitAura(uid,FOOD_SPELL) then
+
+			local genderZ
+			if gsadb.genderVoice then
+				genderZ = UnitSex(uid)
+			end
+
 			if self:Throttle(tostring(104270) .. uid, 3) then return end
-			self:PlaySound("drinking")
+			self:PlaySound("drinking",extend,genderZ)
 		end
 	end
-end
+ end
 
 function GladiatorlosSA:Throttle(key,throttle)
 	if (not self.throttled) then
@@ -366,3 +443,24 @@ function GladiatorlosSA:Throttle(key,throttle)
 		return true
 	end
 end
+
+-- [[bf@178.com
+function GladiatorlosSA:ADDON_LOADED(event, addon)
+	if (addon == "GladiatorlosSA") then
+		local EnableGladiatorlosSA = BigFoot_GetModVariable("ArenaMod", "EnableGladiatorlosSA");
+		if (EnableGladiatorlosSA == 1) then
+			self:Toggle(true);
+		end
+	end
+end
+
+function GladiatorlosSA:Toggle(switch)
+	if (switch) then
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+		self:RegisterEvent("UNIT_AURA");
+	else
+		self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+		self:UnregisterEvent("UNIT_AURA");
+	end
+end
+-- ]]

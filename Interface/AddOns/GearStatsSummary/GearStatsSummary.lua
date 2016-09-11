@@ -496,9 +496,20 @@ function GearStatsSummary_Sum(inspecting, tipUnit)
 	for i=INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED do --zhengruiw02
 		local link = GetInventoryItemLink(unit, i);
 		if (link) and i ~= INVSLOT_BODY and i ~= INVSLOT_TABARD then
-			local itemName, _, quality, lv, _, itemType, itemSubType, _, ItemEquipLoc = GetItemInfo(link); --TO DO: ADD UPGRADES
+			local itemName, _, quality, level, _, itemType, itemSubType, _, ItemEquipLoc = GetItemInfo(link); --TO DO: ADD UPGRADES
 			--local iLevel = ItemUpgradeInfo:GetUpgradedItemLevel(link);
 			local iLevel, iSet, GemsSlotCount, GemsEmptyCount = ScanItemTooltip(link);
+
+			if i == 17 then
+				-- if(quality == 6 and level == 750)then
+				if quality == 6 then
+					local itemTexture = GetInventoryItemTexture(unit, 16)
+					if itemTexture then
+						iLevel = ScanItemTooltip(GetInventoryItemLink(unit, 16))
+					end
+				end
+			end
+
 			local r, g, b = 1, 1, 1
 			if quality then
 				r, g, b = GetItemQualityColor(quality);

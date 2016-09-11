@@ -4,12 +4,12 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("GladiatorlosSA", "zhTW")
 if not L then return end
 
-L["Spell cast success"] = "施法成功"
-L["Spell cast start"] = "施法開始"
-L["Spell aura applied"] = "增益獲得"
-L["Spell aura removed"] = "增益消失"
-L["Spell interrupt"] = "法術打斷"
-L["Spell summon"] = "法術召喚"
+L["Spell_CastSuccess"] = "施法成功"
+L["Spell_CastStart"] = "施法開始"
+L["Spell_AuraApplied"] = "增益獲得"
+L["Spell_AuraRemoved"] = "增益消失"
+L["Spell_Interrupt"] = "法術打斷"
+L["Spell_Summon"] = "法術召喚"
 L["Any"] = "任意"
 L["Player"] = "玩家"
 L["Target"] = "目標"
@@ -47,6 +47,7 @@ L["Dest type"] = "目標類型"
 
 L["Profiles"] = "設定檔"
 
+L["GladiatorlosSACredits"] = "Customizable PvP Announcer addon for vocalizing many important spells and cast by your enemies.|n|n|cffFFF569Created by|r |cff9482C9Abatorlos|r |cffFFF569of Spinebreaker|r|n|cffFFF569Legion update by|r |cffC79C6EOrunno|r |cffFFF569of Moon Guard (With permission from zuhligan)|r|n|n|cffFFF569Special Thanks|r|n|cffA330C9superk521|r (Past Project Manager)|n|cffA330C9DuskAshes|r (Chinese Support)|n|cffA330C9N30Ex|r (Mists of Pandaria Support)|n|cffA330C9zuhligan|r (Warlords of Draenor & French Support)|n|cffA330C9jungwan2|r (Korean Support)|n|cffA330C9Mini_Dragon|r (Chinese support for WoD & Legion)|n|cffA330C9LordKuper|r (Russian support for Legion)"
 L["PVP Voice Alert"] = "PVP技能語音提示"
 L["Load Configuration"] = "加載配置"
 L["Load Configuration Options"] = "加載配置選項"
@@ -105,7 +106,8 @@ L["|cff0070daShaman|r"] = "|cff0070DE薩滿|r"
 L["|cff69CCF0Mage|r"] = "|cff69CCF0法師|r"
 L["|cffC41F3BDeath Knight|r"] = "|cffC41F3B死亡騎士|r"
 L["|cffABD473Hunter|r"] = "|cffABD473獵人|r"
-L["|cFF558A84Monk|r"] = "|cFF558A84武僧|r"
+L["|cFF00FF964Monk|r"] = "|cFF00FF96武僧|r"
+L["|cffA330C9Demon Hunter|r"] = "|cffA330C9?|r"
 L["Buff Down"] = "敵方增益結束"
 L["Spell Casting"] = "敵方讀條技能"
 L["Big Heals"] = "大型治療法術"
@@ -116,6 +118,14 @@ L["|cff9482C9Warlock|r"] = "|cff9482C9術士|r"
 L["Special Abilities"] = "敵方特殊技能"
 L["Friendly Interrupt"] = "友方打斷技能"
 L["Spell Lock, Counterspell, Kick, Pummel, Mind Freeze, Skull Bash, Rebuke, Solar Beam, Spear Hand Strike, Wind Shear"] = "法術封鎖 法術反制 腳踢 拳擊 心智冰封 碎顱猛擊 責難"
+
+L["PvPWorldQuests"] = true
+L["DisablePvPWorldQuests"] = true
+L["DisablePvPWorldQuestsDesc"] = true
+L["OperationMurlocFreedom"] = true
+
+L["EnemyInterrupts"] = true
+L["EnemyInterruptsDesc"] = true
 
 L["Default / Female voice"] = "默認 / 女聲"
 L["Select the default voice pack of the alert"] = "選擇默認語音包"

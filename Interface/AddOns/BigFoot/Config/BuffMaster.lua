@@ -52,7 +52,7 @@ function BuffMasterConfigFunc()
 		BUFFMASTER_SHOW_MY_BUFF = "Only show my buffs"
 	end
 
-	if IsConfigurableAddOn("TUnitFrame") or IsConfigurableAddOn("BFCooldown") then
+	if IsConfigurableAddOn("TUnitFrame") or IsConfigurableAddOn("BuffMaster") or IsConfigurableAddOn("BFCooldown") then
 		ModManagement_RegisterMod(
 			"BuffMaster",
 			"Interface\\Icons\\ability_hunter_displacement",

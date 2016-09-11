@@ -41,22 +41,24 @@ end
 local function ToShortLink(link)
 	if link then
 		local a,b,c,d,e,f,g,h
-		if string.find(link,"\124Hbattlepet")then
-			a,b,c,d,e,f,g,h= link:match(':(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+)')
-			if not h then
-				h = 0
-			end
-		else
-			a,b,c,d,e,f,g,h = link:match('(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+)')
-		end
-		if(b == '0' and b == c and c == d and d == e and e == f and f == g) then
-			return a
-		end
-		if not a then
-		 a = link:match('item:(%d+)')
-		 return a
-		end
-		return format('item:%s:%s:%s:%s:%s:%s:%s:%s', a, b, c, d, e, f, g, h)
+		-- if string.find(link,"\124Hbattlepet")then
+			-- a,b,c,d,e,f,g,h= link:match(':(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+)')
+			-- if not h then
+				-- h = 0
+			-- end
+		-- else
+			-- a,b,c,d,e,f,g,h = link:match('(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+):(%-?%d+)')
+		-- end
+		-- if(b == '0' and b == c and c == d and d == e and e == f and f == g) then
+			-- return a
+		-- end
+		-- if not a then
+			-- a = link:match('item:(%d+)')
+			-- return a
+		-- end
+		-- return format('item:%s:%s:%s:%s:%s:%s:%s:%s', a, b, c, d, e, f, g, h)
+		a = link:match('item:(%d+)')
+		return a
 	end
 end
 
@@ -68,7 +70,6 @@ local function GetBagSize(bag)
 end
 
 --[[ Addon Loading ]]--
-
 function BagnonDB:Initialize()
 	self:LoadSettings()
 
@@ -90,7 +91,7 @@ function BagnonDB:LoadSettings()
 		BagnonForeverDB = {version = CURRENT_VERSION}
 	else
 		if CURRENT_VERSION ~= BagnonForeverDB.version then
-			self:UpdateSettings()
+			BagnonForeverDB = {version = CURRENT_VERSION}
 		end
 	end
 
@@ -99,23 +100,17 @@ function BagnonDB:LoadSettings()
 		self.db[currentRealm] = {}
 	end
 	self.rdb = self.db[currentRealm]
-
 	if not self.rdb[currentPlayer] then
 		self.rdb[currentPlayer] = {}
 	end
 	self.pdb = self.rdb[currentPlayer]
 end
 
-function BagnonDB:UpdateSettings()
-	BagnonForeverDB = {version = CURRENT_VERSION}
-end
-
 --[[  Events ]]--
-
 function BagnonDB:PLAYER_LOGIN()
 	self:SaveMoney()
 	self:UpdateBag(BACKPACK_CONTAINER)
-	self:UpdateBag(KEYRING_CONTAINER)
+	-- self:UpdateBag(KEYRING_CONTAINER)
 	self:SaveEquipment()
 	self:SaveNumBankSlots()
 

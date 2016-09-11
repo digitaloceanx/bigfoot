@@ -1,6 +1,6 @@
 if GetLocale()~='zhCN' then return end
 local main= "7.0.0."
-local minor = "587"
+local minor = "589"
 BIGFOOT_VERSION = "zhCN"..main..minor;
 
 function GetMinorVersion()
@@ -8,6 +8,25 @@ function GetMinorVersion()
 end
 
 BigFootChangelog_ah();
+
+	BigFootChangelog_at("2016/09/07 (7.0.0.589)")
+	BigFootChangelog_ar("鼠标提示","修复装等显示不准确的问题。")
+	BigFootChangelog_ar("竞技助手","升级至最新版本(5.0.2)。")
+	BigFootChangelog_ar("战斗统计","升级至最新版本(1.5-8)。")
+	BigFootChangelog_ar("伤害统计","升级至最新版本(7.0.3g)。")
+	BigFootChangelog_ar("考古助手","升级至最新版本(7.0.3.14)。")
+	BigFootChangelog_ar("首领报警","升级至最新版本(7.0.4.15189)。")
+
+
+	BigFootChangelog_at("2016/08/31 (7.0.0.588)")
+	BigFootChangelog_ar("竞技语音","升级至最新版本(1.7)。")
+	BigFootChangelog_ar("技能触发","升级至最新版本(7.0.3)。")
+	BigFootChangelog_ar("界面调整","升级至最新版本(4.7.2)。")
+	BigFootChangelog_ar("战斗统计","升级至最新版本(1.5-7)。")
+	BigFootChangelog_ar("伤害统计","升级至最新版本(7.0.3f)。")
+	BigFootChangelog_ar("流线冷却","升级至最新版本(6.2.002)。")
+	BigFootChangelog_ar("首领报警","升级至最新版本(7.0.4.15182)。")
+
 
 	BigFootChangelog_at("2016/08/26 (7.0.0.587)")
 	BigFootChangelog_ar("地图增强","恢复地图标记插件(MapPlus)。")
@@ -2392,4 +2411,4 @@ BigFootChangelog_ah();
 BigFootChangelog_af();
 
 
-BF_VERSION_CHECKSUM = "60"
+BF_VERSION_CHECKSUM = "50"

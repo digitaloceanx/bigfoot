@@ -8,7 +8,6 @@
 do
 	-- 屏蔽界面失效的提醒
 	UIParent:UnregisterEvent("ADDON_ACTION_BLOCKED");
-
 	_G["ChatFrameEditBox"] = _G["ChatFrame1EditBox"]
 end
 
@@ -43,99 +42,6 @@ do
 	end)
 end
 
---切天赋污染的问题暂时处理
-do
-    local function hook()
-        PlayerTalentFrame_Toggle = function()
-            if ( not PlayerTalentFrame:IsShown() ) then
-                ShowUIPanel(PlayerTalentFrame);
-                TalentMicroButtonAlert:Hide();
-            else
-                PlayerTalentFrame_Close();
-            end
-        end
-
-        for i=1, 4 do
-            local tab = _G["PlayerTalentFrameTab"..i];
-            if not tab then break end
-            tab:SetScript("PreClick", function()
-                for index = 1, STATICPOPUP_NUMDIALOGS, 1 do
-                    local frame = _G["StaticPopup"..index];
-                    if(not issecurevariable(frame, "which")) then
-                        local info = StaticPopupDialogs[frame.which];
-                        if frame:IsShown() and info and not issecurevariable(info, "OnCancel") then
-                            info.OnCancel()
-                        end
-                        frame:Hide()
-                        frame.which = nil
-                    end
-                end
-            end)
-        end
-    end
-
-    if(IsAddOnLoaded("Blizzard_TalentUI")) then
-        hook()
-    else
-        local f = CreateFrame("Frame")
-        f:RegisterEvent("ADDON_LOADED")
-        f:SetScript("OnEvent", function(self, event, addon)
-            if(addon=="Blizzard_TalentUI")then
-                self:UnregisterEvent("ADDON_LOADED")
-                hook()
-            end
-        end)
-    end
-end
-
--- 5.4  禁用相关
-do
-	--宠物
-	local function Pet_hook()
-        setfenv(PetJournalParent_OnShow, setmetatable({UpdateMicroButtons=function()
-			if (PetJournalParent and PetJournalParent:IsShown()) then
-				CompanionsMicroButton:Enable();
-				CompanionsMicroButton:SetButtonState("PUSHED", 1);
-			end
-		end }, { __index = _G}))
-    end
-
-    if(IsAddOnLoaded("Blizzard_PetJournal")) then
-        Pet_hook()
-    else
-        local f = CreateFrame("Frame")
-        f:RegisterEvent("ADDON_LOADED")
-        f:SetScript("OnEvent", function(self, event, addon)
-            if(addon=="Blizzard_PetJournal")then
-                self:UnregisterEvent("ADDON_LOADED")
-                Pet_hook()
-            end
-        end)
-    end
-
-	--成就
-	local function Achievement_hook()
-        setfenv(AchievementFrame_OnShow, setmetatable({UpdateMicroButtons=function()
-			if (AchievementFrame and AchievementFrame:IsShown()) then
-				AchievementMicroButton:SetButtonState("PUSHED", 1);
-			end
-		end }, { __index = _G}))
-    end
-
-    if(IsAddOnLoaded("Blizzard_AchievementUI")) then
-        Achievement_hook()
-    else
-        local f = CreateFrame("Frame")
-        f:RegisterEvent("ADDON_LOADED")
-        f:SetScript("OnEvent", function(self, event, addon)
-            if(addon=="Blizzard_AchievementUI")then
-                self:UnregisterEvent("ADDON_LOADED")
-                Achievement_hook()
-            end
-        end)
-    end
-end
-
 -- 修改系统ADDON_ACTION_FORBIDDEN逻辑
 do
 	UIParent:UnregisterEvent("ADDON_ACTION_FORBIDDEN");
@@ -152,7 +58,7 @@ do
 		whileDead = 1,
 		hideOnEscape = 1
 	};
-	
+
 	local f = CreateFrame("Frame")
 	f:RegisterEvent("ADDON_ACTION_FORBIDDEN")
 	f:SetScript("OnEvent", function(self, event, ...)

@@ -209,15 +209,15 @@ function CreateFrames_SpecialFrames_Show(index)
 		if (index == EA_SpecPower.LifeBloom.frameindex[1]) then
 			EventAlert_UpdateLifeBloom("player");
 		elseif ((index == EA_SpecPower.LunarPower.frameindex[1]) or (index == EA_SpecPower.LunarPower.frameindex[2])) then
-			-- EventAlert_UpdateLunarPower()
+			EventAlert_UpdateSinglePower(iPowerType)
 		elseif (index == EA_SpecPower.ComboPoint.frameindex[1]) then
 			EventAlert_UpdateComboPoint()
 		elseif (iPowerType == EA_SpecPower.Runes.powerId) then
 			EventAlert_UpdateRunes()
 		else
-			EventAlert_UpdateSinglePower(iPowerType);
+			EventAlert_UpdateSinglePower(iPowerType)
 		end
-		return;
+		return
 	end
 
 	-- 尚未建立特殊能力框架，以下是第一次執行
@@ -514,7 +514,7 @@ function CreateFrames_CfgBtn_SaveSpellCondition(self)
 		Chk_Stack = false;
 		SC_Stack = nil;
 	end
-	SC_Self = EA_SpellCondition_Frame_Self:GetChecked();
+	SC_Self = EA_SpellCondition_Frame_Self:GetChecked()
 	Chk_OverGrow, SC_OverGrow = CreateFrames_CfgBtnFun_GetChkText(EA_SpellCondition_Frame_OverGrow, EA_SpellCondition_Frame_OverGrowEditBox);
 	if ((not Chk_OverGrow) or (SC_OverGrow == nil) or (SC_OverGrow <= 0) or (SC_OverGrow >= 100)) then
 		Chk_OverGrow = false;
@@ -1171,10 +1171,10 @@ function CreateFrames_EventsFrame_AddSpell(FrameIndex)
 				CreateFrames_EventsFrame_ClearSpellList(FrameIndex);
 				-- 為了便於分享法術id 所以儲存時增加儲存法術名稱
 				local sname = GetSpellInfo(spellID);
-				if (FrameIndex==1 and EA_Items[EA_playerClass][spellID] == nil) then EA_Items[EA_playerClass][spellID] = {enable=true,name=sname} end;
+				if (FrameIndex==1 and EA_Items[EA_playerClass][spellID] == nil) then EA_Items[EA_playerClass][spellID] = {enable=true,name=sname,self=true} end;
 				if (FrameIndex==2 and EA_AltItems[EA_playerClass][spellID] == nil) then EA_AltItems[EA_playerClass][spellID] = {enable=true,name=sname} end;
 				if (FrameIndex==3 and EA_Items[EA_CLASS_OTHER][spellID] == nil) then EA_Items[EA_CLASS_OTHER][spellID] = {enable=true,name=sname} end;
-				if (FrameIndex==4 and EA_TarItems[EA_playerClass][spellID] == nil) then EA_TarItems[EA_playerClass][spellID] = {enable=true,name=sname} end;
+				if (FrameIndex==4 and EA_TarItems[EA_playerClass][spellID] == nil) then EA_TarItems[EA_playerClass][spellID] = {enable=true,name=sname,self=true} end;
 				if (FrameIndex==5 and EA_ScdItems[EA_playerClass][spellID] == nil) then EA_ScdItems[EA_playerClass][spellID] = {enable=true,name=sname} end;
 				CreateFrames_CreateSpellFrame(spellID, typeIndex);
 				CreateFrames_EventsFrame_RefreshSpellList(FrameIndex);
@@ -1344,4 +1344,10 @@ function CreateFrames_CreateMinimapOptionFrame()
 								eaf:SetAlpha(0.8)
 								GameTooltip:Hide()
 							end	)
+							
+	if EA_Config.OPTION_ICON == true then
+		EA_MinimapOption:Show()
+	else
+		EA_MinimapOption:Hide()
+	end
 end

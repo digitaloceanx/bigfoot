@@ -30,6 +30,7 @@ function EventAlert_Icon_Options_Frame_Init()
 	EA_Icon_Options_Frame_SpecFlag_Energy:SetChecked(EA_Config.SpecPowerCheck.Energy);
 	EA_Icon_Options_Frame_SpecFlag_Rage:SetChecked(EA_Config.SpecPowerCheck.Rage);
 	EA_Icon_Options_Frame_SpecFlag_Focus:SetChecked(EA_Config.SpecPowerCheck.Focus);
+	EA_Icon_Options_Frame_SpecFlag_Focus_Pet:SetChecked(EA_Config.SpecPowerCheck.FocusPet);
 	EA_Icon_Options_Frame_SpecFlag_Insanity:SetChecked(EA_Config.SpecPowerCheck.Insanity);
 	--EA_Icon_Options_Frame_SpecFlag_DemonicFury:SetChecked(EA_Config.SpecPowerCheck.DemonicFury);
 	--EA_Icon_Options_Frame_SpecFlag_BurningEmbers:SetChecked(EA_Config.SpecPowerCheck.BurningEmbers);
@@ -245,18 +246,20 @@ function EventAlert_Icon_Options_Frame_PaintAlertFrame()
 end
 
 function EventAlert_Icon_Options_Frame_AdjustTimerFontSize()
+	--若計時顯示在框架內
 	if (EA_Config.ChangeTimer == true) then
-		if (EA_Config2.UseFloatSec > 0) then
-			EA_Config.TimerFontSize = 14 + (EA_Config.IconSize - 40) * 0.4;
-			EA_Config.StackFontSize = 16 + (EA_Config.IconSize - 40) * 0.3;
+		-- 若使用了小數點倒數
+		if (EA_Config.UseFloatSec > 0) then
+			EA_Config.TimerFontSize = (EA_Config.IconSize ) * 0.4		--框架內倒數大小比例(有小數點)
 		else
-			EA_Config.TimerFontSize = 32-- + (EA_Config.IconSize - 60) * 0.4;	bf@178.com
-			EA_Config.StackFontSize = 18 + (EA_Config.IconSize - 60) * 0.3;
+			EA_Config.TimerFontSize = (EA_Config.IconSize ) * 0.5		--框架內倒數大小比例(無小數點)
 		end
+		EA_Config.StackFontSize = (EA_Config.IconSize ) * 0.3			--堆疊計數大小比例
 	else
-		EA_Config.TimerFontSize = 18-- + (EA_Config.IconSize - 60) * 0.4;	bf@178.com
-		EA_Config.StackFontSize = 18 + (EA_Config.IconSize - 60) * 0.3;
+		EA_Config.TimerFontSize = (EA_Config.IconSize ) * 0.65			--框架外倒數大小比例
+		EA_Config.StackFontSize = (EA_Config.IconSize ) * 0.45			--堆疊計數大小比例
 	end
+
 	EA_Config.SNameFontSize = EA_Config.IconSize * 0.3
 	--if EA_Config.SNameFontSize < 10 then EA_Config.SNameFontSize = 10 end;
 
